@@ -32,3 +32,27 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+.loginPanel {
+	background-color: dimgray;
+}
+.errorLbl {
+	color: firebrick;
+	margin-left: 5px;
+}
+.loginText {
+	color: lightgray;
+	font-weight: bold;
+}
+.loginButton {
+	color: White;
+	background-color: lightgray;
+	font-weight:bold;
+	border : none;
+}
+.loginButton:hover {
+	background-color: darkgray;
+	cursor: pointer;
+}
+.menuItem {
+border: none;
+}
