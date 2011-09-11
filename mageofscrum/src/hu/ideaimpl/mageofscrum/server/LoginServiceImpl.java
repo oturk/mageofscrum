@@ -1,9 +1,9 @@
-package hu.ideaimpl.mageofscrum.server.entity;
+package hu.ideaimpl.mageofscrum.server;
 
 import javax.servlet.annotation.WebServlet;
 
 import hu.ideaimpl.mageofscrum.client.user.LoginService;
-import hu.ideaimpl.mageofscrum.server.HibernateUtil;
+import hu.ideaimpl.mageofscrum.server.entity.User;
 
 import org.hibernate.Session;
 
@@ -15,14 +15,13 @@ public class LoginServiceImpl extends RemoteServiceServlet implements
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public String getPassword(String email) {
-		System.out.println("get user password");
+	public boolean getUserSID(String email, String password) {
 		Session session = HibernateUtil.getSession();
 		User user = (User) session.get(User.class, email);
-		if(user != null){
-			return user.getPassword();
+		if(user != null && user.getPassword().equals(password)){
+			return true;
 		}
-		return null;
+		return false;
 	}
 
 }

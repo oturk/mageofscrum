@@ -54,5 +54,15 @@ h1 {
 	cursor: pointer;
 }
 .menuItem {
-border: none;
+	width:100%;
+	border: none;
+	text-align: left;
+	background-color: white;
+}
+.menuItem:hover {
+background-color: #aaaaaa;
+}
+.contentPanel {
+	margin: 5px;
+	border-left: 2px;
 }

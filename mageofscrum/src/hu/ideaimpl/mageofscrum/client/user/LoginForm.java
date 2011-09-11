@@ -1,10 +1,8 @@
 package hu.ideaimpl.mageofscrum.client.user;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
@@ -12,12 +10,14 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
 
 public class LoginForm extends Composite {
 	private static final int FORM_SIZE = 500;
 	private int width = Window.getClientWidth() - FORM_SIZE;
+	private Button btnLogin = new Button("login");
+	private TextBox emailTextBox = new TextBox();
+	private PasswordTextBox passwordTextBox = new PasswordTextBox();
+	private Label errorLabel = new Label("");
 	
 	public LoginForm() {
 		
@@ -28,9 +28,8 @@ public class LoginForm extends Composite {
 		
 		final HorizontalPanel horizontalPanel_2 = new HorizontalPanel();
 		horizontalPanel.add(horizontalPanel_2);
-		horizontalPanel_2.setSize(Integer.toString(width)+"px", "30");
+		horizontalPanel_2.setSize("100%", "30");
 		
-		final Label errorLabel = new Label("");
 		errorLabel.setStyleName("errorLbl");
 		horizontalPanel_2.add(errorLabel);
 		errorLabel.setSize(Integer.toString(width)+"px", "30");
@@ -44,34 +43,31 @@ public class LoginForm extends Composite {
 		lblEmail.setStyleName("loginText");
 		horizontalPanel_1.add(lblEmail);
 		
-		final TextBox emailTextBox = new TextBox();
 		horizontalPanel_1.add(emailTextBox);
 		
 		Label lblPassword = new Label("password:");
 		lblPassword.setStyleName("loginText");
 		horizontalPanel_1.add(lblPassword);
 		
-		PasswordTextBox passwordTextBox = new PasswordTextBox();
 		horizontalPanel_1.add(passwordTextBox);
 		
-		Button btnLogin = new Button("login");
-		btnLogin.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				LoginServiceAsync service = GWT.create(LoginService.class);
-				service.getPassword(emailTextBox.getText(), new AsyncCallback<String>() {
-					
-					@Override
-					public void onSuccess(String result) {
-						errorLabel.setText("You're successfully logged in!");
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						errorLabel.setText("Sorry, server error!");
-					}
-				});
-			}
-		});
+//		btnLogin.addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				LoginServiceAsync service = GWT.create(LoginService.class);
+//				service.getPassword(emailTextBox.getText(), new AsyncCallback<String>() {
+//					
+//					@Override
+//					public void onSuccess(String result) {
+//						errorLabel.setText("You're successfully logged in!");
+//					}
+//					
+//					@Override
+//					public void onFailure(Throwable caught) {
+//						errorLabel.setText("Sorry, server error!");
+//					}
+//				});
+//			}
+//		});
 		btnLogin.setStyleName("loginButton");
 		horizontalPanel_1.add(btnLogin);
 		btnLogin.setHeight("26px");
@@ -88,6 +84,22 @@ public class LoginForm extends Composite {
 				}
 			}
 		});
+	}
+
+	public Button getBtnLogin() {
+		return btnLogin;
+	}
+
+	public TextBox getEmailTextBox() {
+		return emailTextBox;
+	}
+
+	public PasswordTextBox getPasswordTextBox() {
+		return passwordTextBox;
+	}
+
+	public Label getErrorLabel() {
+		return errorLabel;
 	}
 
 }
