@@ -1,5 +1,6 @@
 package hu.ideaimpl.mageofscrum.server;
 
+import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 
 import org.hibernate.HibernateException;
@@ -14,7 +15,8 @@ public class HibernateUtil {
 	static {
 		try {
 			sessionFactory = new Configuration()
-					.addAnnotatedClass(User.class).configure()
+					.addAnnotatedClass(User.class)
+					.addAnnotatedClass(Role.class).configure()
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			throw new ExceptionInInitializerError(ex);
@@ -24,9 +26,24 @@ public class HibernateUtil {
 		Session session = getSession();
 		Transaction tx = session.beginTransaction();
 		tx.begin();
+		
+		Role adminRole = new Role();
+		adminRole.setId(1L);
+		adminRole.setName("admin");
+		adminRole.setDescription("Admin role");
+		session.persist(adminRole);
+		
+		Role userRole = new Role();
+		userRole.setId(2L);
+		userRole.setName("user");
+		userRole.setDescription("User role");
+		session.persist(userRole);
+		
 		User user = new User();
 		user.setEmail("test@test.hu");
 		user.setPassword("test");
+		user.addRole(adminRole);
+		user.addRole(userRole);
 		session.persist(user);
 		tx.commit();
 	}
