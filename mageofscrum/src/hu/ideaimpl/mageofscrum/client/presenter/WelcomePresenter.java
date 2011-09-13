@@ -1,7 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.presenter;
 
 import hu.ideaimpl.mageofscrum.client.event.UserLoggedInEvent;
-import hu.ideaimpl.mageofscrum.client.user.LoginServiceAsync;
+import hu.ideaimpl.mageofscrum.client.security.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.welcome.AboutContent;
 import hu.ideaimpl.mageofscrum.client.welcome.SendFeedbackPanel;
 import hu.ideaimpl.mageofscrum.client.welcome.WelcomeContent;
@@ -31,12 +31,12 @@ public class WelcomePresenter implements Presenter{
 		Widget asWidget();
 	}
 	
-	private final LoginServiceAsync loginService;
+	private final SecurityServiceAsync securityService;
 	private final HandlerManager eventBus;
 	private final Display display;
 	
-	public WelcomePresenter(LoginServiceAsync loginService, HandlerManager eventBus, Display display) {
-		this.loginService = loginService;
+	public WelcomePresenter(SecurityServiceAsync securityService, HandlerManager eventBus, Display display) {
+		this.securityService = securityService;
 		this.eventBus = eventBus;
 		this.display = display;
 	}
@@ -71,7 +71,7 @@ public class WelcomePresenter implements Presenter{
 	}
 
 	protected void loginUser(HasValue<String> email, HasValue<String> password) {
-		loginService.getUserSID(email.getValue(), password.getValue(), new AsyncCallback<Boolean>() {
+		securityService.loginUser(email.getValue(), password.getValue(),true, new AsyncCallback<Boolean>() {
 			
 			@Override
 			public void onSuccess(Boolean result) {
