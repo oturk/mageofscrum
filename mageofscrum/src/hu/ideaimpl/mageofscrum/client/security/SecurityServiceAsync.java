@@ -12,4 +12,6 @@ public interface SecurityServiceAsync {
 	void checkHasRole(String role, AsyncCallback<Boolean> callback);
 
 	void isAuthenticated(AsyncCallback<Boolean> callback);
+
+	void getEmail(AsyncCallback<String> callback);
 }

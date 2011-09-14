@@ -9,4 +9,5 @@ public interface SecurityService extends RemoteService {
 	public boolean logoutUser();
 	public boolean checkHasRole(String role);
 	public boolean isAuthenticated();
+	public String getEmail();
 }

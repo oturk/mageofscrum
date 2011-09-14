@@ -83,7 +83,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			if("welcome".equals(token)){
 				presenter = new WelcomePresenter(securityService, eventBus, new WelcomeView());
 			}else if("projects".equals(token)){
-				presenter = new ProjectPresenter(eventBus, new ProjectsView());
+				presenter = new ProjectPresenter(securityService, eventBus, new ProjectsView());
 			}
 			else{
 				presenter = new WelcomePresenter(securityService, eventBus, new WelcomeView());

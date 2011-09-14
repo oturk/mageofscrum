@@ -66,3 +66,7 @@ background-color: #aaaaaa;
 	margin: 5px;
 	border-left: 2px;
 }
+.userMenuList {
+	margin-right: 5px;
+	border: none;
+}

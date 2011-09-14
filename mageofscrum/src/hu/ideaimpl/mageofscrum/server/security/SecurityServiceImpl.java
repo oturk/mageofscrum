@@ -57,4 +57,9 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements
 		return currentUser.isAuthenticated();
 	}
 
+	@Override
+	public String getEmail() {
+		return (String) currentUser.getPrincipal();
+	}
+
 }
