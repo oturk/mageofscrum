@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.server;
 
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.User;
+import hu.ideaimpl.mageofscrum.server.entity.UserData;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -16,13 +17,13 @@ public class HibernateUtil {
 		try {
 			sessionFactory = new Configuration()
 					.addAnnotatedClass(User.class)
-					.addAnnotatedClass(Role.class).configure()
+					.addAnnotatedClass(Role.class)
+					.addAnnotatedClass(UserData.class).configure()
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			throw new ExceptionInInitializerError(ex);
 		}
 		
-		System.out.println("Add first user");
 		Session session = getSession();
 		Transaction tx = session.beginTransaction();
 		tx.begin();
@@ -45,6 +46,17 @@ public class HibernateUtil {
 		user.addRole(adminRole);
 		user.addRole(userRole);
 		session.persist(user);
+		
+		UserData data = new UserData();
+		data.setId(100000L);
+		data.setForeName("Ottó");
+		data.setSureName("Türk");
+		data.setAddress("4028");
+		data.setCity("Debrecen");
+		data.setAddress("Tölgyfa utca 26/B 35");
+		data.setPhone("20/2665292");
+		data.setUser(user);
+		session.persist(data);
 		tx.commit();
 	}
 	
