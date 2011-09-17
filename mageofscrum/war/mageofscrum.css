@@ -70,3 +70,17 @@ background-color: #aaaaaa;
 	margin-right: 5px;
 	border: none;
 }
+.loginLbl {
+	background-color: lightgray;
+}
+.loginHeader {
+	background-color: lightblue;
+}
+.loginForm {
+	border: 1px lightblue;
+}
+.loginBtn {
+	border: none;
+	background-color: lightblue;
+	cursor: pointer;
+}

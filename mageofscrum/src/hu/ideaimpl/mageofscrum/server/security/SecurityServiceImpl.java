@@ -1,7 +1,9 @@
 package hu.ideaimpl.mageofscrum.server.security;
 
 import hu.ideaimpl.mageofscrum.client.security.SecurityService;
+import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.auth.MosRealm;
+import hu.ideaimpl.mageofscrum.server.entity.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.hibernate.Session;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -41,9 +44,8 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements
 	}
 
 	@Override
-	public boolean logoutUser() {
-		// TODO Auto-generated method stub
-		return false;
+	public void logoutUser() {
+		currentUser.logout();
 	}
 
 	@Override
@@ -54,12 +56,23 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public boolean isAuthenticated() {
-		return currentUser.isAuthenticated();
+		return (currentUser.isRemembered() && currentUser.isAuthenticated());
 	}
 
 	@Override
 	public String getEmail() {
 		return (String) currentUser.getPrincipal();
+	}
+
+	@Override
+	public boolean forgotPassword(String email) {
+		Session session = HibernateUtil.getSession();
+		User user = (User) session.get(User.class, email);
+		//TODO emailt küldeni a passwordrõl
+		if(user != null){
+			return true;
+		}
+		return false;
 	}
 
 }

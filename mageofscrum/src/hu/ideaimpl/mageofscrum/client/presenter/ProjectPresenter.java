@@ -1,30 +1,36 @@
 package hu.ideaimpl.mageofscrum.client.presenter;
 
+import hu.ideaimpl.mageofscrum.client.event.LogoutEvent;
 import hu.ideaimpl.mageofscrum.client.security.SecurityServiceAsync;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ProjectPresenter implements Presenter{
-	
-	public interface Display{
-//		Widget getUserMenuList();
+public class ProjectPresenter implements Presenter {
+
+	public interface Display {
+		// Widget getUserMenuList();
+		HasClickHandlers getLogoutButton();
+
 		Widget asWidget();
 	}
-	
-	public ProjectPresenter(SecurityServiceAsync securityService, HandlerManager eventBus, Display display) {
+
+	public ProjectPresenter(SecurityServiceAsync securityService,
+			HandlerManager eventBus, Display display) {
 		this.securityService = securityService;
 		this.eventBus = eventBus;
 		this.display = display;
 	}
 
 	private final SecurityServiceAsync securityService;
-	private final HandlerManager eventBus; 
+	private final HandlerManager eventBus;
 	private Display display;
-	
+
 	@Override
 	public void go(HasWidgets container) {
 		bind();
@@ -34,28 +40,32 @@ public class ProjectPresenter implements Presenter{
 
 	private void bind() {
 		fillUserMenuList();
-		
+		display.getLogoutButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new LogoutEvent());
+			}
+		});
 	}
 
 	private void fillUserMenuList() {
-//		final ListBox listBox = (ListBox) display.getUserMenuList();
-//		securityService.getEmail(new AsyncCallback<String>() {
-//			
-//			@Override
-//			public void onSuccess(String result) {
-//				if(result != null){
-//					listBox.addItem(result);
-//					listBox.addItem("profile");
-//					listBox.addItem("logout");
-//				}
-//			}
-//			
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				//TODO ha a kérés nem sikerül akkor dobjon egy login event-et
-//			}
-//		});
-		
+		// final ListBox listBox = (ListBox) display.getUserMenuList();
+		// securityService.getEmail(new AsyncCallback<String>() {
+		//
+		// @Override
+		// public void onSuccess(String result) {
+		// if(result != null){
+		// listBox.addItem(result);
+		// listBox.addItem("profile");
+		// listBox.addItem("logout");
+		// }
+		// }
+		//
+		// @Override
+		// public void onFailure(Throwable caught) {
+		// //TODO ha a kérés nem sikerül akkor dobjon egy login event-et
+		// }
+		// });
+
 	}
 
 }
