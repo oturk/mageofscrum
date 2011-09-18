@@ -15,6 +15,7 @@ import hu.ideaimpl.mageofscrum.client.view.WelcomeView;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -98,7 +99,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	@Override
 	public void onValueChange(ValueChangeEvent<String> event) {
 		String token = event.getValue();
-
 		if (token != null) {
 			Presenter presenter = null;
 			if ("login".equals(token)) {
