@@ -2,12 +2,12 @@ package hu.ideaimpl.mageofscrum.client.presenter;
 
 import hu.ideaimpl.mageofscrum.client.event.LogoutEvent;
 import hu.ideaimpl.mageofscrum.client.security.SecurityServiceAsync;
+import hu.ideaimpl.mageofscrum.client.user.UserDataForm;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -16,7 +16,8 @@ public class ProjectPresenter implements Presenter {
 	public interface Display {
 		// Widget getUserMenuList();
 		HasClickHandlers getLogoutButton();
-
+		HasClickHandlers getManageAccountButton();
+		HasWidgets getContentPanel();
 		Widget asWidget();
 	}
 
@@ -43,6 +44,12 @@ public class ProjectPresenter implements Presenter {
 		display.getLogoutButton().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				eventBus.fireEvent(new LogoutEvent());
+			}
+		});
+		display.getManageAccountButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				display.getContentPanel().clear();
+				display.getContentPanel().add(new UserDataForm());
 			}
 		});
 	}
