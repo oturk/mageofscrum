@@ -2,8 +2,6 @@ package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.security.SecurityService;
 import hu.ideaimpl.mageofscrum.client.security.SecurityServiceAsync;
-import hu.ideaimpl.mageofscrum.client.user.LoginService;
-import hu.ideaimpl.mageofscrum.client.user.LoginServiceAsync;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -14,11 +12,12 @@ public class MageOfScrum implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-		LoginServiceAsync loginService = GWT.create(LoginService.class);
+		RootLayoutPanel container = RootLayoutPanel.get();
 		SecurityServiceAsync securityService = GWT.create(SecurityService.class);
 		HandlerManager eventBus = new HandlerManager(null);
-		AppController controller = new AppController(securityService, eventBus);
-		controller.go(RootLayoutPanel.get());
+		LoginController controller = new LoginController(securityService, eventBus);
+		controller.go(container);
+		
 	}
 
 }
