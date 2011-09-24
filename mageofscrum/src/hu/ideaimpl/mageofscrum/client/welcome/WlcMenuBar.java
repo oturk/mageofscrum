@@ -1,10 +1,15 @@
 package hu.ideaimpl.mageofscrum.client.welcome;
 
+import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 
 public class WlcMenuBar extends Composite {
 
@@ -14,35 +19,33 @@ public class WlcMenuBar extends Composite {
 	private Button projects = new Button("Projects");
 	private Button backlog = new Button("Backlog");
 	private Button sprint = new Button("Sprint");
-	private Button manageAcc = new Button("Manage account");
-	private Button manageUsers = new Button("Manage users");
+	private Button users = new Button("Users");
+	private Button teams = new Button("Teams");
 	private Button logout = new Button("Logout");
-	private VerticalPanel verticalPanel = new VerticalPanel();
+	private AbsolutePanel verticalPanel = new AbsolutePanel();
 
 	public WlcMenuBar() {
+		verticalPanel.setStyleName("menuBar");
 		
 		initWidget(verticalPanel);
-		verticalPanel.setHeight("100%");
+		verticalPanel.setSize("150px", "400px");
+		Label lblUserName = new Label("Logged in user");
+		lblUserName.setStyleName("menuBarHeader");
+		lblUserName.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		verticalPanel.add(lblUserName);
+		lblUserName.setHeight("30px");
 		
-		Image image = new Image("mageofscrum/images/mageofscrum-logo.png");
-		verticalPanel.add(image);
-		
-		VerticalPanel verticalPanel_1 = new VerticalPanel();
-		verticalPanel.add(verticalPanel_1);
-		verticalPanel_1.setSize("", "50px");
-		
-		Label lblNewLabel = new Label("");
-		verticalPanel_1.add(lblNewLabel);
-		lblNewLabel.setHeight("50px");
-		
+		Label label = new Label("");
+		verticalPanel.add(label);
+		label.setHeight("40px");
 		addMenuItem(welcomeBtn);
 		addMenuItem(aboutBtn);
 		addMenuItem(feedbackBtn);
 		addMenuItem(projects);
 		addMenuItem(backlog);
 		addMenuItem(sprint);
-		addMenuItem(manageAcc);
-		addMenuItem(manageUsers);
+		addMenuItem(users);
+		addMenuItem(teams);
 		addMenuItem(logout);
 		setCanShowWelcomBar();
 	}
@@ -54,8 +57,8 @@ public class WlcMenuBar extends Composite {
 		projects.setVisible(false);
 		backlog.setVisible(false);
 		sprint.setVisible(false);
-		manageAcc.setVisible(false);
-		manageUsers.setVisible(false);
+		users.setVisible(false);
+		teams.setVisible(false);
 		logout.setVisible(false);
 	}
 	
@@ -66,8 +69,8 @@ public class WlcMenuBar extends Composite {
 		projects.setVisible(true);
 		backlog.setVisible(true);
 		sprint.setVisible(true);
-		manageAcc.setVisible(true);
-		manageUsers.setVisible(false);
+		users.setVisible(true);
+		teams.setVisible(false);
 		logout.setVisible(true);
 	}
 	
@@ -78,49 +81,62 @@ public class WlcMenuBar extends Composite {
 		projects.setVisible(true);
 		backlog.setVisible(true);
 		sprint.setVisible(true);
-		manageAcc.setVisible(true);
-		manageUsers.setVisible(true);
+		users.setVisible(true);
+		teams.setVisible(true);
+		logout.setVisible(true);
+	}
+	
+	public void setCanShowAll(){
+		welcomeBtn.setVisible(true);
+		aboutBtn.setVisible(true);
+		feedbackBtn.setVisible(true);
+		projects.setVisible(true);
+		backlog.setVisible(true);
+		sprint.setVisible(true);
+		users.setVisible(true);
+		teams.setVisible(true);
 		logout.setVisible(true);
 	}
 	
 	public void addMenuItem(Button mItem){
 		mItem.setStyleName("menuItem");
+//		mItem.setSize("120px", "30px");
 		verticalPanel.add(mItem);
 	}
 
-	public Button getWelcomeBtn() {
+	public HasClickHandlers getWelcomeBtn() {
 		return welcomeBtn;
 	}
 
-	public Button getAboutBtn() {
+	public HasClickHandlers getAboutBtn() {
 		return aboutBtn;
 	}
 
-	public Button getFeedbackBtn() {
+	public HasClickHandlers getFeedbackBtn() {
 		return feedbackBtn;
 	}
 
-	public Button getProjects() {
+	public HasClickHandlers getProjects() {
 		return projects;
 	}
 
-	public Button getBacklog() {
+	public HasClickHandlers getBacklog() {
 		return backlog;
 	}
 
-	public Button getSprint() {
+	public HasClickHandlers getSprint() {
 		return sprint;
 	}
 
-	public Button getManageAcc() {
-		return manageAcc;
+	public HasClickHandlers getUsers() {
+		return users;
 	}
 
-	public Button getManageUsers() {
-		return manageUsers;
+	public HasClickHandlers getTeams() {
+		return teams;
 	}
 
-	public Button getLogout() {
+	public HasClickHandlers getLogout() {
 		return logout;
 	}
 

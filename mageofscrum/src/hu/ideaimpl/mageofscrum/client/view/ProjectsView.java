@@ -36,15 +36,15 @@ public class ProjectsView extends Composite implements Display {
 		return this;
 	}
 
-	@Override
-	public HasClickHandlers getLogoutButton() {
-		return wlcMenuBar.getLogout();
-	}
-
-	@Override
-	public HasClickHandlers getManageAccountButton() {
-		return wlcMenuBar.getManageAcc();
-	}
+//	@Override
+//	public HasClickHandlers getLogoutButton() {
+//		return wlcMenuBar.getLogout();
+//	}
+//
+//	@Override
+//	public HasClickHandlers getManageAccountButton() {
+//		return wlcMenuBar.getManageAcc();
+//	}
 	
 	@Override
 	public HasWidgets getContentPanel(){

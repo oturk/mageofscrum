@@ -15,8 +15,8 @@ public class ProjectPresenter implements Presenter {
 
 	public interface Display {
 		// Widget getUserMenuList();
-		HasClickHandlers getLogoutButton();
-		HasClickHandlers getManageAccountButton();
+//		HasClickHandlers getLogoutButton();
+//		HasClickHandlers getManageAccountButton();
 		HasWidgets getContentPanel();
 		Widget asWidget();
 	}
@@ -41,17 +41,17 @@ public class ProjectPresenter implements Presenter {
 
 	private void bind() {
 		fillUserMenuList();
-		display.getLogoutButton().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				eventBus.fireEvent(new LogoutEvent());
-			}
-		});
-		display.getManageAccountButton().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				display.getContentPanel().clear();
-				display.getContentPanel().add(new UserDataForm());
-			}
-		});
+//		display.getLogoutButton().addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				eventBus.fireEvent(new LogoutEvent());
+//			}
+//		});
+//		display.getManageAccountButton().addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				display.getContentPanel().clear();
+//				display.getContentPanel().add(new UserDataForm());
+//			}
+//		});
 	}
 
 	private void fillUserMenuList() {

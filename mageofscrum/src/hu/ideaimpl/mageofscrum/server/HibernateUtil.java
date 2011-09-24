@@ -47,6 +47,12 @@ public class HibernateUtil {
 		user.addRole(userRole);
 		session.persist(user);
 		
+		User user2 = new User();
+		user2.setEmail("user2@user.hu");
+		user2.setPassword("user");
+		user2.addRole(userRole);
+		session.persist(user2);
+		
 		UserData data = new UserData();
 		data.setId(100000L);
 		data.setForeName("Ottó");
