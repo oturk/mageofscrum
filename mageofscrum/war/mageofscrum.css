@@ -33,7 +33,11 @@ h1 {
   margin: 15px 6px 6px;
 }
 .loginPanel {
-	background-color: dimgray;
+	background-color: white;
+	border-left: 2px solid #464440;
+	margin-top: -10px;
+	margin-left : 5px;
+	padding-left:5px;
 }
 .errorLbl {
 	color: firebrick;
@@ -54,32 +58,33 @@ h1 {
 	cursor: pointer;
 }
 .menuItem {
-border-top-right-radius: 10px;
-border-bottom-right-radius: 10px;
-	width:120px;
+	/*border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;*/
+	width:150px;
 	height: 30px;
-	color: White;
 	margin-bottom: 2px;
 	font-weight: bold;
 	text-align: left;
-	background-color: lightblue;
+	background-color: white;
 	cursor: pointer;
 	border: none;
 }
 .menuItem:hover {
-border-top-right-radius: 10px;
-border-bottom-right-radius: 10px;
-	width:140px;
+/*border-top-right-radius: 10px;
+border-bottom-right-radius: 10px;*/
+	width:150px;
 	height: 30px;
-	border: none;
+	border-top: 2px solid #464440;
+	border-bottom: 2px solid #464440;
 	text-align: left;
-	background-color: lightblue;
-		cursor:pointer;
+	background-color: white;
+	cursor:pointer;
 }
 .contentPanel {
-	margin: 5px;
-	padding: 5px;
-	border: 2px solid lightblue;
+	padding-top: 10px;
+	padding-left:5px;
+	margin-top: -5px;
+	border-left: 2px solid #464440;
 }
 .userMenuList {
 	margin-right: 5px;
@@ -107,15 +112,15 @@ border-bottom-right-radius: 10px;
 .headerPanel {
 -moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
-	margin: 5px;
-	padding: 5px;
+	margin-top: 5px;
+	margin-left: 5px;
 	background-color: #464440;
 }
 .menuBar {
--moz-border-radius: 10px;
+/*-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border: 10px;
-	background-color: #464440;
+	background-color: #464440;*/
 	margin-left: 5px;
 }
 .menuBarHeader {
@@ -123,4 +128,15 @@ border-bottom-right-radius: 10px;
 	margin-top: 15px;
 	font-weight: bold;
 	background-color: forestgreen;
+}
+.welcomeContent {
+padding-left:5px;
+padding-top: 5px;
+}
+.menuSection {
+border-top: 2px solid #464440;
+border-bottom: 2px solid #464440;
+font-weight: bold;
+	text-align: left;
+	background-color: white;
 }

@@ -9,8 +9,10 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.hibernate.Session;
@@ -19,6 +21,9 @@ public class MosRealm extends AuthorizingRealm{
 
 	public MosRealm() {
 		setName("MosRealm");
+		HashedCredentialsMatcher cred = new HashedCredentialsMatcher();
+		cred.setHashAlgorithmName(Sha256Hash.ALGORITHM_NAME);
+		setCredentialsMatcher(cred);
 	}
 
 	@Override
@@ -30,7 +35,7 @@ public class MosRealm extends AuthorizingRealm{
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             for( Role role : user.getRoles() ) {
                 info.addRole(role.getName());
-                info.addStringPermission("");
+//                info.addStringPermission("");
             }
             return info;
         } else {

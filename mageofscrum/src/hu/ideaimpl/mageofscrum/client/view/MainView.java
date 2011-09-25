@@ -1,7 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
 import hu.ideaimpl.mageofscrum.client.presenter.MainPresenter.Display;
-import hu.ideaimpl.mageofscrum.client.welcome.WlcMenuBar;
+import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -19,9 +19,9 @@ public class MainView extends Composite implements Display{
 	private final int clientHeight = Window.getClientHeight();
 	private final AbsolutePanel headerPanel = new AbsolutePanel();
 	private final HorizontalPanel horizontalPanel = new HorizontalPanel();
-	private final WlcMenuBar wlcMenuBar = new WlcMenuBar();
+	private final MenuBar wlcMenuBar = new MenuBar();
 	private final AbsolutePanel contentPanel = new AbsolutePanel();
-	private final Image image = new Image("mageofscrum/images/moslogo.png");
+	private final Image image = new Image("mageofscrum/images/logo.png");
 
 	public MainView() {
 		
@@ -47,7 +47,7 @@ public class MainView extends Composite implements Display{
 	}
 	
 	@Override
-	public WlcMenuBar getWlcMenuBar() {
+	public MenuBar getWlcMenuBar() {
 		return wlcMenuBar;
 	}
 
@@ -63,11 +63,11 @@ public class MainView extends Composite implements Display{
 
 	@Override
 	public void showAdminMenuBar() {
-		wlcMenuBar.setCanShowAdminBar();
+		wlcMenuBar.showAdminMenuBar();
 	}
 
 	@Override
 	public void showUserMenuBar() {
-		wlcMenuBar.setCanShowMainBar();
+		wlcMenuBar.showUserMenuBar();
 	}
 }

@@ -2,27 +2,29 @@ package hu.ideaimpl.mageofscrum.server.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class UserData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String sureName;
 	private String foreName;
+	private String nickname;
 	private String zone;
 	private String city;
 	private String address;
 	private String phone;
-	@OneToOne(cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
-	private User user;
+
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @PrimaryKeyJoinColumn
+	// private User user;
 
 	public UserData() {
 	}
@@ -35,13 +37,13 @@ public class UserData implements Serializable {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	// public User getUser() {
+	// return user;
+	// }
+	//
+	// public void setUser(User user) {
+	// this.user = user;
+	// }
 
 	public String getSureName() {
 		return sureName;
@@ -89,6 +91,14 @@ public class UserData implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 }

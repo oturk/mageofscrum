@@ -1,12 +1,14 @@
 package hu.ideaimpl.mageofscrum.client.presenter;
 
-import java.util.ArrayList;
-
 import hu.ideaimpl.mageofscrum.client.service.UserService;
 import hu.ideaimpl.mageofscrum.client.service.UserServiceAsync;
-import hu.ideaimpl.mageofscrum.shared.User;
+import hu.ideaimpl.mageofscrum.shared.UserDetails;
 
-import com.google.gwt.user.client.Window;
+import java.util.ArrayList;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -15,15 +17,16 @@ import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.HasSelectionChangedHandlers;
-import com.google.gwt.view.client.SelectionModel;
 
 public class UsersPresenter implements Presenter{
 
 	public interface Display{
 		Widget asWidget();
-		HasData<User> getList();
+		HasData<UserDetails> getTable();
 		HasSelectionChangedHandlers getSelectionList();
-		User getSelectedRow();
+		HasClickHandlers getCreateBtn();
+		HasClickHandlers getDeleteBtn();
+		UserDetails getSelectedRow();
 	}
 	
 	private final Display display;
@@ -35,12 +38,13 @@ public class UsersPresenter implements Presenter{
 	}
 	
 	private void renderUsers() {
-		AsyncDataProvider<User> provider = new AsyncDataProvider<User>() {
+		AsyncDataProvider<UserDetails> provider = new AsyncDataProvider<UserDetails>() {
 			@Override
-			protected void onRangeChanged(HasData<User> display) {
+			protected void onRangeChanged(HasData<UserDetails> display) {
 				final Range range = display.getVisibleRange();
-				service.requestRows(range, new AsyncCallback<ArrayList<User>>() {
-					public void onSuccess(ArrayList<User> result) {
+
+				service.requestRows(range.getStart(), new AsyncCallback<ArrayList<UserDetails>>() {
+					public void onSuccess(ArrayList<UserDetails> result) {
 						updateRowData(range.getStart(), result);
 					}
 					
@@ -51,18 +55,35 @@ public class UsersPresenter implements Presenter{
 			}
 		};
 		
-		provider.addDataDisplay(display.getList());
+		provider.addDataDisplay(display.getTable());
 	}
 
 	private void bind(){
 		display.getSelectionList().addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
-				User user = display.getSelectedRow();
+				UserDetails user = display.getSelectedRow();
 				if(user != null){
 					loadUserDetails();
 				}
 			}
 		});
+		display.getCreateBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				doOnCreateUser();
+			}
+		});
+		display.getDeleteBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				doOnUserDelete();
+			}
+		});
+	}
+
+	protected void doOnUserDelete() {
+		display.getSelectedRow();
+	}
+
+	protected void doOnCreateUser() {
 		
 	}
 

@@ -1,12 +1,15 @@
 package hu.ideaimpl.mageofscrum.client.presenter;
 
 import hu.ideaimpl.mageofscrum.client.event.LogoutEvent;
-import hu.ideaimpl.mageofscrum.client.welcome.WlcMenuBar;
+import hu.ideaimpl.mageofscrum.client.security.SecurityService;
+import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
+import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -15,7 +18,7 @@ public class MainPresenter implements Presenter {
 	public interface Display {
 		Widget asWidget();
 		HasWidgets getContentPanel();
-		WlcMenuBar getWlcMenuBar();
+		MenuBar getWlcMenuBar();
 		void showAdminMenuBar();
 		void showUserMenuBar();
 	}
@@ -26,7 +29,25 @@ public class MainPresenter implements Presenter {
 	public MainPresenter(Display display, HandlerManager eventBus) {
 		this.display = display;
 		this.eventBus = eventBus;
-		this.display.showAdminMenuBar();
+		SecurityService.Util.getService().getRole(new AsyncCallback<Roles>() {
+			public void onSuccess(Roles role) {
+				if(role == Roles.ADMIN){
+					MainPresenter.this.display.showAdminMenuBar();
+				}else if(role == Roles.OWNER){
+					MainPresenter.this.display.showAdminMenuBar();
+				}else if(role == Roles.MASTER){
+					MainPresenter.this.display.showUserMenuBar();
+				}else if(role == Roles.USER){
+					MainPresenter.this.display.showUserMenuBar();
+				}else if(role == Roles.UNKNOWN){
+					MainPresenter.this.display.showUserMenuBar();
+				}
+			}
+			
+			public void onFailure(Throwable caught) {
+				//TODO show error page
+			}
+		});
 	}
 
 	private void bind() {

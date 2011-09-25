@@ -1,7 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
 import hu.ideaimpl.mageofscrum.client.presenter.ProjectPresenter.Display;
-import hu.ideaimpl.mageofscrum.client.welcome.WlcMenuBar;
+import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Composite;
@@ -12,7 +12,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class ProjectsView extends Composite implements Display {
 
-	private WlcMenuBar wlcMenuBar;
+	private MenuBar wlcMenuBar;
 	private HorizontalPanel contentPanel = new HorizontalPanel();
 
 	public ProjectsView() {
@@ -23,8 +23,8 @@ public class ProjectsView extends Composite implements Display {
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		verticalPanel.add(horizontalPanel);
 		
-		wlcMenuBar = new WlcMenuBar();
-		wlcMenuBar.setCanShowMainBar();
+		wlcMenuBar = new MenuBar();
+		wlcMenuBar.showUserMenuBar();
 		horizontalPanel.add(wlcMenuBar);
 		
 		horizontalPanel.add(contentPanel);

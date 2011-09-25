@@ -2,9 +2,10 @@ package hu.ideaimpl.mageofscrum.client.main;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
-import hu.ideaimpl.mageofscrum.client.welcome.WlcMenuBar;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
+
+import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 import hu.ideaimpl.mageofscrum.client.user.LoginForm;
 
 public class MainPanel extends Composite {
@@ -24,7 +25,7 @@ public class MainPanel extends Composite {
 		HorizontalPanel horizontalPanel_1 = new HorizontalPanel();
 		verticalPanel.add(horizontalPanel_1);
 		
-		WlcMenuBar wlcMenuBar = new WlcMenuBar();
+		MenuBar wlcMenuBar = new MenuBar();
 		horizontalPanel_1.add(wlcMenuBar);
 		
 		HTMLPanel panel = new HTMLPanel("New HTML");

@@ -1,6 +1,6 @@
 package hu.ideaimpl.mageofscrum.client.service;
 
-import hu.ideaimpl.mageofscrum.shared.User;
+import hu.ideaimpl.mageofscrum.shared.UserDetails;
 
 import java.util.ArrayList;
 
@@ -21,5 +21,5 @@ public interface UserService extends RemoteService {
 		}
 	}
 	
-	public ArrayList<User> requestRows(Range range);
+	public ArrayList<UserDetails> requestRows(int start);
 }
