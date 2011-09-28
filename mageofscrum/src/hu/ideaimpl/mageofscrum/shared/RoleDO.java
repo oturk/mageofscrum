@@ -2,13 +2,13 @@ package hu.ideaimpl.mageofscrum.shared;
 
 import java.io.Serializable;
 
-public class Role implements Serializable {
+public class RoleDO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String name;
 
-	public Role() {
+	public RoleDO() {
 	}
 
 	public Long getId() {

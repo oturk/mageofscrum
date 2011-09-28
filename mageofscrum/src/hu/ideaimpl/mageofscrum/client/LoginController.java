@@ -6,7 +6,8 @@ import hu.ideaimpl.mageofscrum.client.event.UserLoggedInEvent;
 import hu.ideaimpl.mageofscrum.client.event.UserLoggedInHandler;
 import hu.ideaimpl.mageofscrum.client.presenter.Presenter;
 import hu.ideaimpl.mageofscrum.client.presenter.WelcomePresenter;
-import hu.ideaimpl.mageofscrum.client.security.SecurityServiceAsync;
+import hu.ideaimpl.mageofscrum.client.service.SecurityService;
+import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.user.LoginFormType;
 import hu.ideaimpl.mageofscrum.client.view.WelcomeView;
 
@@ -18,14 +19,12 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 
 public class LoginController implements Presenter, ValueChangeHandler<String> {
-	private final SecurityServiceAsync securityService;
+	private final SecurityServiceAsync securityService = SecurityService.Util.getService();
 	private final HandlerManager eventBus;
 	private HasWidgets container;
 
-	public LoginController(SecurityServiceAsync securityService,
-			HandlerManager eventBus) {
-		this.securityService = securityService;
-		this.eventBus = eventBus;
+	public LoginController(ClientFactory clientFactory) {
+		this.eventBus = clientFactory.getEventBus();
 		bind();
 	}
 
@@ -61,8 +60,8 @@ public class LoginController implements Presenter, ValueChangeHandler<String> {
 
 	protected void doOnUserLoggedIn() {
 //		History.newItem("projects");
-		AppController appController = new AppController(securityService, eventBus);
-		appController.go(container);
+//		AppController appController = new AppController(securityService, eventBus);
+//		appController.go(container);
 	}
 
 	@Override
@@ -73,7 +72,6 @@ public class LoginController implements Presenter, ValueChangeHandler<String> {
 			@Override
 			public void onSuccess(Boolean result) {
 				if (result) {
-//					History.newItem("projects");
 					doOnUserLoggedIn();
 				} else {
 					History.newItem("login");
@@ -85,15 +83,6 @@ public class LoginController implements Presenter, ValueChangeHandler<String> {
 				History.newItem("welcome");
 			}
 		});
-
-		// if(UserInfo.userName.isEmpty()){
-		// if("".equals(History.getToken())){
-		// History.newItem("welcome");
-		// }else{
-		// History.fireCurrentHistoryState();
-		// }
-		// }
-
 	}
 
 	@Override

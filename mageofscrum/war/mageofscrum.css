@@ -140,3 +140,10 @@ font-weight: bold;
 	text-align: left;
 	background-color: white;
 }
+.mosCellList {
+border: 2px solid #464440;
+}
+.simpleLbl {
+background-color:lightblue;
+padding-left:5px;
+}

@@ -2,7 +2,6 @@ package hu.ideaimpl.mageofscrum.client.service;
 
 import java.util.ArrayList;
 
-import hu.ideaimpl.mageofscrum.shared.User;
 import hu.ideaimpl.mageofscrum.shared.UserDetails;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;

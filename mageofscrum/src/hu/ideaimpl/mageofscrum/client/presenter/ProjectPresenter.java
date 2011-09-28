@@ -1,7 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.presenter;
 
 import hu.ideaimpl.mageofscrum.client.event.LogoutEvent;
-import hu.ideaimpl.mageofscrum.client.security.SecurityServiceAsync;
+import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.user.UserDataForm;
 
 import com.google.gwt.event.dom.client.ClickEvent;

@@ -1,5 +1,7 @@
 package hu.ideaimpl.mageofscrum.server.entity;
 
+import hu.ideaimpl.mageofscrum.shared.RoleDO;
+
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -37,5 +39,10 @@ public class Role implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	public RoleDO getRoleDO(){
+		RoleDO role = new RoleDO();
+		role.setId(id);
+		role.setName(name);
+		return role;
+	}
 }

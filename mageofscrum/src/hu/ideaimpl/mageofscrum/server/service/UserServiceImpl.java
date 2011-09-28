@@ -3,8 +3,8 @@ package hu.ideaimpl.mageofscrum.server.service;
 import hu.ideaimpl.mageofscrum.client.service.UserService;
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
-import hu.ideaimpl.mageofscrum.shared.Role;
-import hu.ideaimpl.mageofscrum.shared.Team;
+import hu.ideaimpl.mageofscrum.shared.RoleDO;
+import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDetails;
 
 import java.util.ArrayList;
@@ -45,9 +45,9 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 				newUser.setNickname(data.getNickname() != null ? data.getNickname() : "");
 			}
 			List<hu.ideaimpl.mageofscrum.server.entity.Team> teams = user.getTeams();
-			List<Team> detTeams = new ArrayList<Team>();
+			List<TeamDO> detTeams = new ArrayList<TeamDO>();
 			for(hu.ideaimpl.mageofscrum.server.entity.Team team : teams){
-				Team t = new Team();
+				TeamDO t = new TeamDO();
 				t.setId(team.getId());
 				t.setName(team.getName());
 				detTeams.add(t);
@@ -55,9 +55,9 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 			newUser.setTeams(detTeams);
 			
 			List<hu.ideaimpl.mageofscrum.server.entity.Role> roles = user.getRoles();
-			List<Role> detRoles = new ArrayList<Role>();
+			List<RoleDO> detRoles = new ArrayList<RoleDO>();
 			for(hu.ideaimpl.mageofscrum.server.entity.Role role : roles){
-				Role t = new Role();
+				RoleDO t = new RoleDO();
 				t.setId(role.getId());
 				t.setName(role.getName());
 				detRoles.add(t);

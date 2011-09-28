@@ -1,4 +1,4 @@
-package hu.ideaimpl.mageofscrum.client.security;
+package hu.ideaimpl.mageofscrum.client.service;
 
 import hu.ideaimpl.mageofscrum.shared.Roles;
 

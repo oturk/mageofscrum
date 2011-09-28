@@ -10,8 +10,8 @@ public class UserDetails implements Serializable {
 	private String nickname;
 	private String fullName;
 	private String address;
-	private List<Team> teams;
-	private List<Role> roles;
+	private List<TeamDO> teams;
+	private List<RoleDO> roles;
 
 	public UserDetails() {
 	}
@@ -48,25 +48,25 @@ public class UserDetails implements Serializable {
 		this.nickname = nickname;
 	}
 
-	public List<Team> getTeams() {
+	public List<TeamDO> getTeams() {
 		return teams;
 	}
 
-	public void setTeams(List<Team> teams) {
+	public void setTeams(List<TeamDO> teams) {
 		this.teams = teams;
 	}
 	
-	public List<Role> getRoles() {
+	public List<RoleDO> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<RoleDO> roles) {
 		this.roles = roles;
 	}
 
 	public String teamsToString(){
 		String result ="";
-		for(Team team : teams){
+		for(TeamDO team : teams){
 			if(!result.isEmpty()){
 				result += ", ";
 			}
@@ -77,7 +77,7 @@ public class UserDetails implements Serializable {
 	
 	public String rolesToString(){
 		String result ="";
-		for(Role role : roles){
+		for(RoleDO role : roles){
 			if(!result.isEmpty()){
 				result += ", ";
 			}

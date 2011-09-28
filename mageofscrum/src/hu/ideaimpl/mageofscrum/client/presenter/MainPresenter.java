@@ -1,7 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.presenter;
 
 import hu.ideaimpl.mageofscrum.client.event.LogoutEvent;
-import hu.ideaimpl.mageofscrum.client.security.SecurityService;
+import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 

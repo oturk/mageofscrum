@@ -1,6 +1,6 @@
-package hu.ideaimpl.mageofscrum.server.security;
+package hu.ideaimpl.mageofscrum.server.service;
 
-import hu.ideaimpl.mageofscrum.client.security.SecurityService;
+import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.Roles;
