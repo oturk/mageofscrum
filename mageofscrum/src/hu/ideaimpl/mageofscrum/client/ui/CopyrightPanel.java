@@ -1,4 +1,4 @@
-package hu.ideaimpl.mageofscrum.client;
+package hu.ideaimpl.mageofscrum.client.ui;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;

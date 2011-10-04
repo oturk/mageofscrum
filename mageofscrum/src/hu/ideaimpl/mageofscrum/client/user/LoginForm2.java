@@ -1,7 +1,10 @@
 package hu.ideaimpl.mageofscrum.client.user;
 
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -64,19 +67,19 @@ public class LoginForm2 extends Composite {
 		lblError.setSize("305px", "30px");
 	}
 
-	public TextBox getTextBoxEmail() {
+	public HasValue<String> getTextBoxEmail() {
 		return textBoxEmail;
 	}
 
-	public PasswordTextBox getTextBoxPassword() {
+	public HasValue<String> getTextBoxPassword() {
 		return textBoxPassword;
 	}
 
-	public CheckBox getChckbxRememberMe() {
+	public HasValue<Boolean> getChckbxRememberMe() {
 		return chckbxRememberMe;
 	}
 
-	public Button getBtnLogin() {
+	public HasClickHandlers getBtnLogin() {
 		return btnLogin;
 	}
 
@@ -84,7 +87,7 @@ public class LoginForm2 extends Composite {
 		return btnForgotPassword;
 	}
 
-	public Label getLblError() {
+	public HasText getLblError() {
 		return lblError;
 	}
 

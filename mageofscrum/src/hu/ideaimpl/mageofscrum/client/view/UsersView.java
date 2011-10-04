@@ -3,10 +3,8 @@ package hu.ideaimpl.mageofscrum.client.view;
 import hu.ideaimpl.mageofscrum.client.presenter.UsersPresenter.Display;
 import hu.ideaimpl.mageofscrum.shared.UserDetails;
 
-import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;

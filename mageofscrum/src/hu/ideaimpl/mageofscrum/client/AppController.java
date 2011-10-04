@@ -7,12 +7,8 @@ import hu.ideaimpl.mageofscrum.client.event.UserLoggedInHandler;
 import hu.ideaimpl.mageofscrum.client.presenter.MainPresenter;
 import hu.ideaimpl.mageofscrum.client.presenter.Presenter;
 import hu.ideaimpl.mageofscrum.client.presenter.UsersPresenter;
-import hu.ideaimpl.mageofscrum.client.presenter.WelcomePresenter;
 import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
-import hu.ideaimpl.mageofscrum.client.user.LoginFormType;
-import hu.ideaimpl.mageofscrum.client.view.MainView;
 import hu.ideaimpl.mageofscrum.client.view.UsersView;
-import hu.ideaimpl.mageofscrum.client.view.WelcomeView;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -111,13 +107,13 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void beforeLogin(String token){
 		Presenter presenter = null;
 		if("login".equals(token)){
-			presenter = new WelcomePresenter(securityService, eventBus,
-					new WelcomeView(), LoginFormType.LOGIN);
-			presenter.go(container);
+//			presenter = new WelcomePresenter(securityService, eventBus,
+//					new WelcomeView(), LoginFormType.LOGIN);
+//			presenter.go(container);
 		}else if("forgotPassword".equals(token)){
-			presenter = new WelcomePresenter(securityService, eventBus,
-					new WelcomeView(),LoginFormType.FORGOT);
-			presenter.go(container);
+//			presenter = new WelcomePresenter(securityService, eventBus,
+//					new WelcomeView(),LoginFormType.FORGOT);
+//			presenter.go(container);
 		}
 		if(presenter != null){
 			presenter.go(container);

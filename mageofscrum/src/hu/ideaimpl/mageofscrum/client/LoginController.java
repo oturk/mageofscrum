@@ -91,11 +91,11 @@ public class LoginController implements Presenter, ValueChangeHandler<String> {
 		if (token != null) {
 			Presenter presenter = null;
 			if ("login".equals(token)) {
-				presenter = new WelcomePresenter(securityService, eventBus,
-						new WelcomeView(), LoginFormType.LOGIN);
+//				presenter = new WelcomePresenter(securityService, eventBus,
+//						new WelcomeView(), LoginFormType.LOGIN);
 			}else if("forgotPassword".equals(token)){
-				presenter = new WelcomePresenter(securityService, eventBus,
-						new WelcomeView(),LoginFormType.FORGOT);
+//				presenter = new WelcomePresenter(securityService, eventBus,
+//						new WelcomeView(),LoginFormType.FORGOT);
 			}
 //			else if ("projects".equals(token)) {
 //				presenter = new ProjectPresenter(securityService, eventBus,

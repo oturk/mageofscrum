@@ -1,6 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
-import hu.ideaimpl.mageofscrum.client.presenter.WelcomePresenter.Display;
+import hu.ideaimpl.mageofscrum.client.activity.WelcomeActivity;
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.user.ForgotPasswordForm;
 import hu.ideaimpl.mageofscrum.client.user.LoginForm2;
@@ -17,7 +18,7 @@ import com.google.gwt.user.client.ui.InlineHTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class WelcomeView extends Composite implements Display{
+public class WelcomeView extends Composite implements WelcomeActivity.Display{
 
 	private final int clientHeight = Window.getClientHeight();
 	private LoginForm2 loginForm = new LoginForm2();
@@ -30,7 +31,7 @@ public class WelcomeView extends Composite implements Display{
 		initWidget(vPanel);
 		vPanel.setSize("100%", "100%");
 		
-		Header header = new Header();
+		Header header = new Header(Resources.Util.getResources().mageofscrumLogo());
 		vPanel.add(header);
 		
 		HorizontalPanel horizontalPanel_2 = new HorizontalPanel();

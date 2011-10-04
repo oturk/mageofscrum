@@ -147,3 +147,20 @@ border: 2px solid #464440;
 background-color:lightblue;
 padding-left:5px;
 }
+.menuIcon {
+margin-top: 12px;
+margin-left: 12px;
+}
+.menuButton {
+border:none;
+color: blue;
+cursor: pointer;
+background-color:transparent;
+}
+.menuItemPanel {
+border: 2px solid white;
+}
+.menuItemPanel:hover {
+-webkit-border-bottom-right-radius: 10px;
+border: 2px solid grey;
+}

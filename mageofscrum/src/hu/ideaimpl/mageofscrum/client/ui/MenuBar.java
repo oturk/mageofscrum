@@ -1,15 +1,10 @@
 package hu.ideaimpl.mageofscrum.client.ui;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.AbsolutePanel;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 
 public class MenuBar extends Composite {
 
@@ -168,6 +163,10 @@ public class MenuBar extends Composite {
 
 	public HasClickHandlers getTeams() {
 		return teams;
+	}
+	
+	public HasClickHandlers getRoles() {
+		return roles;
 	}
 
 	public HasClickHandlers getLogout() {
