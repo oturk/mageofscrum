@@ -14,18 +14,16 @@ public class ListToList extends Composite {
 
 	private Label fromListLbl = new Label();
 	private Label toListLbl = new Label();
-	private Button addBtn = new Button("< add");
+	private Button addBtn = new Button("<< add");
 	private Button removeBtn = new Button("remove >");
-	private Button addAllBtn = new Button("<< add all");
-	private Button removeAllBtn = new Button("remove all >>");
 	private CellList<?> toList;
 	private CellList<?> fromList;
+	private AbsolutePanel absolutePanel = new AbsolutePanel();
 
 	public ListToList(CellList<?> toList, CellList<?> fromList) {
 		this.toList = toList;
 		this.fromList = fromList;
 		
-		AbsolutePanel absolutePanel = new AbsolutePanel();
 		initWidget(absolutePanel);
 		absolutePanel.setSize("571px", "500px");
 
@@ -35,9 +33,9 @@ public class ListToList extends Composite {
 //				// TODO
 //			}
 //		});
-		toList.setStyleName("mosCellList");
-		absolutePanel.add(toList, 0, 30);
-		toList.setSize("200px", "466px");
+		this.toList.setStyleName("mosCellList");
+		absolutePanel.add(this.toList, 0, 30);
+		this.toList.setSize("200px", "466px");
 
 //		fromList = new CellList<Object>(new AbstractCell<Object>() {
 //			@Override
@@ -45,21 +43,18 @@ public class ListToList extends Composite {
 //				// TODO
 //			}
 //		});
-		fromList.setStyleName("mosCellList");
-		absolutePanel.add(fromList, 370, 30);
-		fromList.setSize("196px", "466px");
+		this.fromList.setStyleName("mosCellList");
+		absolutePanel.add(this.fromList, 370, 30);
+		this.fromList.setSize("196px", "466px");
+		addBtn.setStyleName("menuButton");
 
 		absolutePanel.add(addBtn, 235, 90);
 		addBtn.setSize("100px", "30px");
+		removeBtn.setText("remove >>");
+		removeBtn.setStyleName("menuButton");
 
 		absolutePanel.add(removeBtn, 235, 135);
 		removeBtn.setSize("100px", "30px");
-
-		absolutePanel.add(addAllBtn, 235, 180);
-		addAllBtn.setSize("100px", "30px");
-
-		absolutePanel.add(removeAllBtn, 235, 225);
-		removeAllBtn.setSize("100px", "30px");
 
 		toListLbl.setStyleName("simpleLbl");
 		absolutePanel.add(toListLbl, 0, 0);
@@ -68,6 +63,12 @@ public class ListToList extends Composite {
 		fromListLbl.setStyleName("simpleLbl");
 		absolutePanel.add(fromListLbl, 370, 0);
 		fromListLbl.setSize("199px", "30px");
+	}
+	
+	public void setHeight(int height){
+		absolutePanel.setHeight(Integer.toString(height)+"px");
+		fromList.setHeight(Integer.toString(height-34)+"px");
+		toList.setHeight(Integer.toString(height-34)+"px");
 	}
 	
 	public void setFromLbl(String text){
@@ -92,14 +93,6 @@ public class ListToList extends Composite {
 
 	public HasClickHandlers getRemoveBtn() {
 		return removeBtn;
-	}
-
-	public HasClickHandlers getAddAllBtn() {
-		return addAllBtn;
-	}
-
-	public HasClickHandlers getRemoveAllBtn() {
-		return removeAllBtn;
 	}
 
 }

@@ -56,6 +56,16 @@ public class Team {
 		}
 		return users;
 	}
+	
+	public List<String> getMembersIds(){
+		List<String> ids = new ArrayList<String>();
+		if (users != null) {
+			for (User user : users) {
+				ids.add(user.getEmail());
+			}
+		}
+		return ids;
+	}
 
 	public void setUsers(List<User> users) {
 		this.users = users;
@@ -63,8 +73,10 @@ public class Team {
 
 	public List<UserDO> getUserDOs() {
 		List<UserDO> result = new ArrayList<UserDO>();
-		for (User user : users) {
-			result.add(user.getUserDO());
+		if (users != null) {
+			for (User user : users) {
+				result.add(user.getUserDO());
+			}
 		}
 		return result;
 	}

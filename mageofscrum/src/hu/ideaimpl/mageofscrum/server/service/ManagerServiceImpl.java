@@ -10,11 +10,15 @@ import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -37,16 +41,27 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	}
 
 	@Override
-	public ArrayList<RoleDO> fetchRoles() {
-		ArrayList<Role> result = new ArrayList<Role>();
-		Query query = session.createQuery("from Role");
-		result = (ArrayList<Role>) query.list();
+	public ArrayList<RoleDO> fetchUsersRoles(String userId) {
+		User user = (User) session.get(User.class, userId);
 		
-		ArrayList<RoleDO> roleDOs = new ArrayList<RoleDO>();
-		for(Role role : result){
-			roleDOs.add(role.getRoleDO());
+		ArrayList<RoleDO> result = new ArrayList<RoleDO>();
+		for(Role role : user.getRoles()){
+			result.add(role.getRoleDO());
 		}
-		return roleDOs;
+		return result;
+	}
+	
+	@Override
+	public ArrayList<RoleDO> fetchOtherRoles(String userId) {
+		ArrayList<RoleDO> result = new ArrayList<RoleDO>();
+		ArrayList<Role> partResult = new ArrayList<Role>();
+		User user = (User) session.get(User.class, userId);
+
+		Criteria criteria = session.createCriteria(Role.class);
+		criteria.add(Restrictions.not(Restrictions.in("id", user.getRoleIds())));
+		partResult = (ArrayList<Role>) criteria.list();
+
+		return result;
 	}
 
 	@Override
@@ -54,31 +69,73 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		Team team = (Team) session.get(Team.class, teamId);
 		return (ArrayList<UserDO>) team.getUserDOs();
 	}
-
+	
 	@Override
-	public void addTeam(String teamName) {
-		Team newTeam = new Team(teamName);
-		session.save(newTeam);
+	public ArrayList<UserDO> fetchNotTeamMembers(Long teamId) {
+		ArrayList<UserDO> result = new ArrayList<UserDO>();
+		Team team = (Team) session.get(Team.class, teamId);
+		List<User> partResult = null;
+		
+		if (team.getMembersIds().size() > 0) {
+			Criteria criteria = session.createCriteria(User.class);
+			criteria.add(Restrictions.not(Restrictions.in("email", team.getMembersIds())));
+			partResult = criteria.list();
+		}else{
+			Query query = session.createQuery("from User");
+			partResult = query.list();
+		}
+		if (partResult != null) {
+			for (User user : partResult) {
+				result.add(user.getUserDO());
+			}
+		}
+		return result;
 	}
 
 	@Override
-	public void addUsersToTeam(ArrayList<Long> userIds, Long teamId) {
+	public TeamDO addTeam(String teamName) {
+		Team newTeam = new Team(teamName);
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.save(newTeam);
+		tx.commit();
+		return newTeam.getTeamDO();
+	}
+	
+	@Override
+	public void deleteTeam(Long id) {
+		Team team = (Team) session.get(Team.class, id);
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.delete(team);
+		tx.commit();
+	}
+
+	@Override
+	public void addUsersToTeam(ArrayList<String> userIds, Long teamId) {
 		Team team = (Team) session.get(Team.class, teamId);
-		for(Long id : userIds){
+		for(String id : userIds){
 			User user = (User) session.get(User.class, id);
 			team.addMember(user);
 		}
-		session.persist(team);
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.save(team);
+		tx.commit();
+		
 	}
 
 	@Override
-	public void removeUsersFromTeam(ArrayList<Long> userIds, Long teamId) {
+	public void removeUsersFromTeam(ArrayList<String> userIds, Long teamId) {
 		Team team = (Team) session.get(Team.class, teamId);
-		for(Long id : userIds){
+		for(String id : userIds){
 			User user = (User) session.get(User.class, id);
 			team.removeMember(user);
 		}
-		session.persist(team);
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.save(team);
+		tx.commit();
 	}
 
 	@Override
@@ -100,15 +157,37 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	}
 
 	@Override
-	public void addUser(UserDO user) {
-		// TODO Auto-generated method stub
-		
+	public UserDO addUser(UserDO user) {
+		User newUser = User.createUserObj(user);
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.save(newUser);
+		tx.commit();
+		return newUser.getUserDO();
 	}
 
 	@Override
-	public void deleteUsers(ArrayList<Long> users) {
-		// TODO Auto-generated method stub
+	public void deleteUsers(ArrayList<String> users) {
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		for(String id : users){
+			User user = (User) session.get(User.class, id);
+			session.delete(user);
+		}
+		tx.commit();
+	}
+
+	@Override
+	public ArrayList<UserDO> fetchUsers() {
+		ArrayList<User> result = new ArrayList<User>();
+		Query query = session.createQuery("from User");
+		result = (ArrayList<User>) query.list();
 		
+		ArrayList<UserDO> userDOs = new ArrayList<UserDO>();
+		for(User user : result){
+			userDOs.add(user.getUserDO());
+		}
+		return userDOs;
 	}
 
 }

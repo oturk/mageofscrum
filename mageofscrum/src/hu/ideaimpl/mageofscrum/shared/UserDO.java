@@ -1,11 +1,11 @@
 package hu.ideaimpl.mageofscrum.shared;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class UserDO implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class UserDO implements IsSerializable {
 	
 	private String email;
+	private String password;
 	
 	public UserDO(String email) {
 		this.email = email;
@@ -20,4 +20,14 @@ public class UserDO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
 }

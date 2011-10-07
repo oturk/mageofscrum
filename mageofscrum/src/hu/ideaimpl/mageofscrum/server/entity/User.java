@@ -3,6 +3,7 @@ package hu.ideaimpl.mageofscrum.server.entity;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -35,6 +36,13 @@ public class User implements Serializable {
 	private List<Team> teams;
 
 	public User() {
+	}
+	
+	public static User createUserObj(UserDO user){
+		User newUser = new User();
+		newUser.setEmail(user.getEmail());
+		newUser.setPassword(user.getPassword());
+		return newUser;
 	}
 
 	public String getEmail() {
@@ -93,6 +101,14 @@ public class User implements Serializable {
 		UserDO ret = new UserDO();
 		ret.setEmail(email);
 		return ret;
+	}
+	
+	public List<Long> getRoleIds(){
+		List<Long> result = new ArrayList<Long>();
+		for(Role role : roles){
+			result.add(role.getId());
+		}
+		return result;
 	}
 
 }

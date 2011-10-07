@@ -15,6 +15,7 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.Window;
@@ -89,6 +90,7 @@ public class MageOfScrumApp {
 			public void onSuccess(Void result) {
 				container.clear();
 				container.add(new SecurityShell());
+				placeController.goTo(Place.NOWHERE);
 			}
 
 			@Override
