@@ -50,7 +50,7 @@ public class MosRealm extends AuthorizingRealm{
 		Session session = HibernateUtil.getSession();
 		User user = (User) session.get(User.class, token.getUsername());
 		if(user != null){
-			return new SimpleAuthenticationInfo(user.getEmail(), user.getPassword(), getName()); 
+			return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName()); 
 		}
 		return null;
 	}

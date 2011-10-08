@@ -5,15 +5,19 @@ import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
+import hu.ideaimpl.mageofscrum.server.entity.UserData;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
+import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,8 +49,10 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		User user = (User) session.get(User.class, userId);
 		
 		ArrayList<RoleDO> result = new ArrayList<RoleDO>();
-		for(Role role : user.getRoles()){
-			result.add(role.getRoleDO());
+		if (user.getRoles() != null) {
+			for (Role role : user.getRoles()) {
+				result.add(role.getRoleDO());
+			}
 		}
 		return result;
 	}
@@ -56,11 +62,17 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		ArrayList<RoleDO> result = new ArrayList<RoleDO>();
 		ArrayList<Role> partResult = new ArrayList<Role>();
 		User user = (User) session.get(User.class, userId);
-
-		Criteria criteria = session.createCriteria(Role.class);
-		criteria.add(Restrictions.not(Restrictions.in("id", user.getRoleIds())));
-		partResult = (ArrayList<Role>) criteria.list();
-
+		if (user.getRoles() != null) {
+			Criteria criteria = session.createCriteria(Role.class);
+			criteria.add(Restrictions.not(Restrictions.in("id", user.getRoleIds())));
+			partResult = (ArrayList<Role>) criteria.list();
+		}else{
+			partResult = (ArrayList<Role>) session.createQuery("from Role").list();
+		}
+		for (Role role : partResult) {
+			result.add(role.getRoleDO());
+		}
+		
 		return result;
 	}
 
@@ -158,7 +170,14 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 
 	@Override
 	public UserDO addUser(UserDO user) {
+		User existUser = (User) session.get(User.class, user.getEmail());
+		if(existUser != null){
+			return null;
+		}
 		User newUser = User.createUserObj(user);
+		Sha256Hash hashedPass = new Sha256Hash(newUser.getPassword());
+		System.out.println("newPass: "+hashedPass.toString());
+		newUser.setPassword(hashedPass.toString());
 		Transaction tx = session.beginTransaction();
 		tx.begin();
 		session.save(newUser);
@@ -169,25 +188,103 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	@Override
 	public void deleteUsers(ArrayList<String> users) {
 		Transaction tx = session.beginTransaction();
-		tx.begin();
 		for(String id : users){
 			User user = (User) session.get(User.class, id);
+			if (user.getRoles() != null) {
+				user.getRoles().clear();
+				tx.begin();
+				session.update(user);
+				tx.commit();
+			}
+			tx.begin();
 			session.delete(user);
+			tx.commit();
 		}
-		tx.commit();
 	}
 
 	@Override
 	public ArrayList<UserDO> fetchUsers() {
 		ArrayList<User> result = new ArrayList<User>();
-		Query query = session.createQuery("from User");
-		result = (ArrayList<User>) query.list();
+		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		Criteria criteria = session.createCriteria(User.class);
+		criteria.add(Restrictions.not(Restrictions.idEq(username)));
+		result = (ArrayList<User>) criteria.list();
+		
+//		Query query = session.createQuery("from User");
+//		result = (ArrayList<User>) query.list();
 		
 		ArrayList<UserDO> userDOs = new ArrayList<UserDO>();
 		for(User user : result){
 			userDOs.add(user.getUserDO());
 		}
 		return userDOs;
+	}
+
+	@Override
+	public void addRolesToUser(String userId, ArrayList<Long> roleIds) {
+		User user = (User) session.get(User.class, userId);
+		for(Long roleId : roleIds){
+			Role role = (Role) session.get(Role.class, roleId);
+			user.addRole(role);
+		}
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.update(user);
+		tx.commit();
+		
+	}
+
+	@Override
+	public void removeRolesFromUser(String userId, ArrayList<Long> roleIds) {
+		User user = (User) session.get(User.class, userId);
+		for(Long roleId : roleIds){
+			Role role = (Role) session.get(Role.class, roleId);
+			user.getRoles().remove(role);
+		}
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.update(user);
+		tx.commit();
+	}
+
+	@Override
+	public UserDataDO fetchUserData() {
+		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		User user = (User) session.get(User.class, username);
+		
+		return user.getUserDataDO();
+	}
+
+	@Override
+	public void updateUserData(UserDataDO data) {
+		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		User user = (User) session.get(User.class, username);
+		UserData userData = user.getData();
+		if(userData == null){
+			userData = new UserData();
+		}
+		userData.setEmail(data.getEmail());
+		userData.setSurname(data.getSurname());
+		userData.setForename(data.getForename());
+		user.setData(userData);
+		
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.update(user);
+		tx.commit();
+	}
+
+	@Override
+	public void changePassword(String password) {
+		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		User user = (User) session.get(User.class, username);
+		Sha256Hash hash = new Sha256Hash(password);
+		user.setPassword(hash.toString());
+		
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		session.update(user);
+		tx.commit();
 	}
 
 }

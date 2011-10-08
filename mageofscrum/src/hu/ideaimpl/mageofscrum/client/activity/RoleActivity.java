@@ -7,6 +7,7 @@ import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 import com.google.gwt.activity.shared.AbstractActivity;
@@ -23,6 +24,8 @@ public class RoleActivity extends AbstractActivity {
 	private final ClientFactory clientFactory;
 	private RolesView roleView;
 	private MultiSelectionModel<UserDO> usersSelection = new MultiSelectionModel<UserDO>();
+	private MultiSelectionModel<RoleDO> hasRoleSelection = new MultiSelectionModel<RoleDO>();
+	private MultiSelectionModel<RoleDO> otherRoleSelection = new MultiSelectionModel<RoleDO>();
 	private ArrayList<UserDO> users = new ArrayList<UserDO>();
 	private ArrayList<RoleDO> usersRoles = new ArrayList<RoleDO>();
 	private ArrayList<RoleDO> otherRoles = new ArrayList<RoleDO>();
@@ -31,6 +34,8 @@ public class RoleActivity extends AbstractActivity {
 		this.clientFactory = clientFactory;
 		roleView = clientFactory.getRoleView();
 		roleView.getUsersList().setSelectionModel(usersSelection);
+		roleView.getHasRolesList().setSelectionModel(hasRoleSelection);
+		roleView.getOthersList().setSelectionModel(otherRoleSelection);
 		bind();
 	}
 	
@@ -51,12 +56,16 @@ public class RoleActivity extends AbstractActivity {
 		});
 		roleView.getAddRoleBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				doOnAddBtnClicked();
+				if(otherRoleSelection.getSelectedSet().size() > 0 && usersSelection.getSelectedSet().size() == 1){
+					doOnAddBtnClicked();
+				}
 			}
 		});
 		roleView.getRemoveRoleBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				doOnRemoveBtnClicked();
+				if (hasRoleSelection.getSelectedSet().size() > 0 && usersSelection.getSelectedSet().size() == 1) {
+					doOnRemoveBtnClicked();
+				}
 			}
 		});
 		usersSelection.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
@@ -100,12 +109,66 @@ public class RoleActivity extends AbstractActivity {
 	}
 
 	protected void doOnAddBtnClicked() {
-		// TODO Auto-generated method stub
+		Set<RoleDO> selected = otherRoleSelection.getSelectedSet();
+		ArrayList<Long> roles = new ArrayList<Long>();
+		for(RoleDO role : selected){
+			roles.add(role.getId());
+		}
+		
+		final ArrayList<RoleDO> newRoles = new ArrayList<RoleDO>();
+		for(RoleDO role : selected){
+			newRoles.add(role);
+		}
+		
+		String userId = usersSelection.getSelectedSet().iterator().next().getEmail();
+		ManagerService.Util.getService().addRolesToUser(userId, roles, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				usersRoles.addAll(newRoles);
+				otherRoles.removeAll(newRoles);
+				roleView.getOthersList().setRowData(otherRoles);
+				roleView.getHasRolesList().setRowData(usersRoles);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
+			}
+		});
+		
 		
 	}
 
 	protected void doOnRemoveBtnClicked() {
-		// TODO Auto-generated method stub
+		String userId = usersSelection.getSelectedSet().iterator().next().getEmail();
+		
+		Set<RoleDO> selected = hasRoleSelection.getSelectedSet();
+		ArrayList<Long> roles = new ArrayList<Long>();
+		for(RoleDO role : selected){
+			roles.add(role.getId());
+		}
+		
+		final ArrayList<RoleDO> deleteRoles = new ArrayList<RoleDO>();
+		for(RoleDO role : selected){
+			deleteRoles.add(role);
+		}
+		
+		ManagerService.Util.getService().removeRolesFromUser(userId, roles, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				usersRoles.removeAll(deleteRoles);
+				otherRoles.addAll(deleteRoles);
+				roleView.getOthersList().setRowData(otherRoles);
+				roleView.getHasRolesList().setRowData(usersRoles);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
+			}
+		});
 		
 	}
 
@@ -121,6 +184,11 @@ public class RoleActivity extends AbstractActivity {
 				for(UserDO selected : usersSelection.getSelectedSet()){
 					users.remove(selected);
 					roleView.getUsersList().setRowData(users);
+					usersRoles.clear();
+					otherRoles.clear();
+					roleView.getHasRolesList().setRowData(usersRoles);
+					roleView.getOthersList().setRowData(otherRoles);
+					usersSelection.clear();
 				}
 			}
 			
@@ -136,9 +204,13 @@ public class RoleActivity extends AbstractActivity {
 			
 			@Override
 			public void onSuccess(UserDO result) {
-				users.add(result);
-				roleView.getUsersList().setRowData(users);
-				roleView.clearUserForm();
+				if (result != null) {
+					users.add(result);
+					roleView.getUsersList().setRowData(users);
+					roleView.clearUserForm();
+				} else {
+					roleView.getErrorLbl().setText("user already exist");
+				}
 			}
 			
 			@Override

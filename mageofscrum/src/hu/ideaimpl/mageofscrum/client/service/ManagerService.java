@@ -3,6 +3,7 @@ package hu.ideaimpl.mageofscrum.client.service;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
+import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
 
@@ -33,11 +34,16 @@ public interface ManagerService extends RemoteService {
 	public ArrayList<RoleDO> fetchUsersRoles(String userId);
 	public ArrayList<RoleDO> fetchOtherRoles(String userId);
 	public ArrayList<UserDO> fetchRoleMembers(Long roleId);
+	public void addRolesToUser(String userId, ArrayList<Long> roleIds);
+	public void removeRolesFromUser(String userId, ArrayList<Long> roleIds);
 	public void addUsersToRole(ArrayList<Long> userIds, Long roleId);
 	public void removeUsersFromRole(ArrayList<Long> userIds, Long roleId);
 	//User operations
 	public ArrayList<UserDO> fetchUsers();
 	public UserDO addUser(UserDO user);
 	public void deleteUsers(ArrayList<String> users);
+	public UserDataDO fetchUserData();
+	public void updateUserData(UserDataDO data);
+	public void changePassword(String password);
 	
 }

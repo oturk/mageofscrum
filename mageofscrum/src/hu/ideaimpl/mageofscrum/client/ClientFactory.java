@@ -6,6 +6,7 @@ import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 import hu.ideaimpl.mageofscrum.client.user.LoginForm2;
 import hu.ideaimpl.mageofscrum.client.view.ErrorView;
+import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
 import hu.ideaimpl.mageofscrum.client.view.TeamsView;
 import hu.ideaimpl.mageofscrum.client.view.UsersView;
@@ -61,4 +62,6 @@ public interface ClientFactory {
 	public RolesView getRoleView();
 	
 	public UsersView getUsersView();
+	
+	public ProfileView getProfileView();
 }

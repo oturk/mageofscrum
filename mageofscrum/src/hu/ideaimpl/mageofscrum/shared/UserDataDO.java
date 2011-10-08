@@ -1,19 +1,8 @@
-package hu.ideaimpl.mageofscrum.server.entity;
+package hu.ideaimpl.mageofscrum.shared;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
-public class UserData implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+public class UserDataDO implements IsSerializable {
 	private String email;
 	private String surname;
 	private String forename;
@@ -23,7 +12,7 @@ public class UserData implements Serializable {
 	private String address;
 	private String phone;
 
-	public UserData() {
+	public UserDataDO() {
 	}
 
 	public String getEmail() {
@@ -34,28 +23,28 @@ public class UserData implements Serializable {
 		this.email = email;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getSurname() {
 		return surname;
 	}
 
-	public void setSurname(String sureName) {
-		this.surname = sureName;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getForename() {
 		return forename;
 	}
 
-	public void setForename(String foreName) {
-		this.forename = foreName;
+	public void setForename(String forename) {
+		this.forename = forename;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getZone() {
@@ -88,14 +77,6 @@ public class UserData implements Serializable {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
 	}
 
 }

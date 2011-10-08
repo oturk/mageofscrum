@@ -71,8 +71,8 @@ public class HibernateUtil {
 		
 		UserData adminData = new UserData();
 		adminData.setId(100000L);
-		adminData.setForeName("Ottó");
-		adminData.setSureName("Türk");
+		adminData.setForename("Ottó");
+		adminData.setSurname("Türk");
 		adminData.setAddress("4028");
 		adminData.setCity("Debrecen");
 		adminData.setAddress("Tölgyfa utca 26/B 35");
@@ -85,7 +85,7 @@ public class HibernateUtil {
 		teams.add(team1);
 		teams.add(team2);
 		User admin = new User();
-		admin.setEmail("admin");
+		admin.setUsername("admin");
 		admin.setPassword("8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
 		roles.add(adminRole);
 		admin.setRoles(roles);
@@ -95,7 +95,7 @@ public class HibernateUtil {
 		
 		roles = new ArrayList<Role>();
 		User owner = new User();
-		owner.setEmail("owner");
+		owner.setUsername("owner");
 		owner.setPassword("4c1029697ee358715d3a14a2add817c4b01651440de808371f78165ac90dc581");
 		roles.add(projectOwnerRole);
 		roles.add(adminRole);
@@ -105,7 +105,7 @@ public class HibernateUtil {
 		
 		roles = new ArrayList<Role>();
 		User master = new User();
-		master.setEmail("master");
+		master.setUsername("master");
 		master.setPassword("fc613b4dfd6736a7bd268c8a0e74ed0d1c04a959f59dd74ef2874983fd443fc9");
 		roles.add(scrumMasterRole);
 		master.setRoles(roles);
@@ -114,7 +114,7 @@ public class HibernateUtil {
 		
 		roles = new ArrayList<Role>();
 		User user = new User();
-		user.setEmail("user");
+		user.setUsername("user");
 		user.setPassword("04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb");
 		roles.add(userRole);
 		user.setRoles(roles);

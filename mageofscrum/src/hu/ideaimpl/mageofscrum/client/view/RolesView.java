@@ -3,6 +3,7 @@ package hu.ideaimpl.mageofscrum.client.view;
 import hu.ideaimpl.mageofscrum.client.ui.ListToList;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
+import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -38,6 +39,12 @@ public class RolesView extends Composite {
 	private CellList<RoleDO> hasRoleList;
 	private CellList<RoleDO> otheRoleList;
 	private ListToList listToList;
+	private Label lblUsername = new Label("username:");
+	private Label emailLbl = new Label("email:");
+	private Label lblSurname = new Label("surname:");
+	private Label lblForename = new Label("forename:");
+	private Label lblPassword = new Label("password:");
+	private Label lblConfirmPass = new Label("confirm pass:");
 
 	public RolesView() {
 		
@@ -83,37 +90,37 @@ public class RolesView extends Composite {
 		absolutePanel.add(absolutePanel_1, 250, 0);
 		absolutePanel_1.setSize("571px", "223px");
 		
-		Label lblUsername = new Label("username:");
 		lblUsername.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		lblUsername.setStyleName("loginLbl");
 		absolutePanel_1.add(lblUsername, 0, 18);
 		lblUsername.setSize("113px", "24px");
 		
+		userName.setTabIndex(1);
 		absolutePanel_1.add(userName, 112, 13);
 		userName.setHeight("30px");
 		
+		surname.setTabIndex(3);
 		absolutePanel_1.add(surname, 112, 94);
 		surname.setSize("", "30px");
 		
-		Label lblSurname = new Label("surname:");
 		lblSurname.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		lblSurname.setStyleName("loginLbl");
 		absolutePanel_1.add(lblSurname, 0, 100);
 		lblSurname.setSize("113px", "24px");
 		
+		forename.setTabIndex(4);
 		absolutePanel_1.add(forename, 112, 136);
 		forename.setHeight("30px");
 		
-		Label lblForename = new Label("forename:");
 		lblForename.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		lblForename.setStyleName("loginLbl");
 		absolutePanel_1.add(lblForename, 0, 142);
 		lblForename.setSize("113px", "24px");
 		
+		password.setTabIndex(5);
 		absolutePanel_1.add(password, 395, 94);
 		password.setHeight("30px");
 		
-		Label lblPassword = new Label("password:");
 		lblPassword.setStyleName("loginLbl");
 		lblPassword.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		absolutePanel_1.add(lblPassword, 283, 100);
@@ -127,21 +134,21 @@ public class RolesView extends Composite {
 		absolutePanel_1.add(btnCreate, 132, 178);
 		btnCreate.setSize("100px", "30px");
 		
-		Label lblConfirmPass = new Label("confirm pass:");
 		lblConfirmPass.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		lblConfirmPass.setStyleName("loginLbl");
 		absolutePanel_1.add(lblConfirmPass, 283, 141);
 		lblConfirmPass.setSize("113px", "24px");
 		
+		confirmPassword.setTabIndex(6);
 		absolutePanel_1.add(confirmPassword, 395, 135);
 		confirmPassword.setHeight("30px");
 		
-		Label emailLbl = new Label("email:");
 		emailLbl.setStyleName("loginLbl");
 		emailLbl.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		absolutePanel_1.add(emailLbl, 0, 61);
 		emailLbl.setSize("113px", "24px");
 		
+		emailTextBox.setTabIndex(2);
 		absolutePanel_1.add(emailTextBox, 112, 55);
 		emailTextBox.setSize("", "30px");
 		
@@ -215,51 +222,70 @@ public class RolesView extends Composite {
 	
 	public UserDO getNewUser(){
 		UserDO user = new UserDO();
-		user.setEmail(emailTextBox.getValue());
+		user.setEmail(userName.getValue());
 		user.setPassword(password.getValue());
+		
+		UserDataDO userData = new UserDataDO();
+		userData.setEmail(emailTextBox.getValue());
+		userData.setSurname(surname.getValue());
+		userData.setForename(forename.getValue());
+		
+		user.setUserData(userData);
 		return user;
 	}
 	
 	public boolean validateUserForm(){
+		String errorMsg = "";
 		boolean result = true;
 		if(userName.getValue() == null || userName.getValue().isEmpty()){
-			usernameRequired.setVisible(true);
+			lblUsername.setStyleName("invalidInputField");
 			result =  false;
 		}else{
-			usernameRequired.setVisible(false);
+			lblUsername.setStyleName("inputField");
 		}
 		if(emailTextBox.getValue() == null || emailTextBox.getValue().isEmpty()){
-			emailRequired.setVisible(true);
+			emailLbl.setStyleName("invalidInputField");
 			result = false;
 		}else{
-			emailRequired.setVisible(false);
+			emailLbl.setStyleName("inputField");
 		}
 		if(surname.getValue() == null || surname.getValue().isEmpty()){
-			surnameRequired.setVisible(true);
+			lblSurname.setStyleName("invalidInputField");
 			result = false;
 		}else{
-			surnameRequired.setVisible(false);
+			lblSurname.setStyleName("inputField");
 		}
 		if(forename.getValue() == null || forename.getValue().isEmpty()){
-			forenameRequired.setVisible(true);
+			lblForename.setStyleName("invalidInputField");
 			result = false;
 		}else{
-			forenameRequired.setVisible(false);
+			lblForename.setStyleName("inputField");
 		}
 		if(password.getValue() == null || password.getValue().isEmpty()){
-			passwordRequired.setVisible(true);
+			lblPassword.setStyleName("invalidInputField");
 			result = false;
 		}else{
-			passwordRequired.setVisible(false);
+			lblPassword.setStyleName("inputField");
 		}
 		if(confirmPassword.getValue() == null || confirmPassword.getValue().isEmpty()){
-			confirmRequired.setVisible(true);
+			lblConfirmPass.setStyleName("invalidInputField");
 			result = false;
 		}else{
-			confirmRequired.setVisible(false);
+			lblConfirmPass.setStyleName("inputField");
+		}
+		if(result && !password.getValue().isEmpty() && !confirmPassword.getValue().isEmpty() && !confirmPassword.getValue().equals(password.getValue())){
+			if(result){
+				lblConfirmPass.setStyleName("invalidInputField");
+				lblPassword.setStyleName("invalidInputField");
+				errorMsg ="password confirmation failed";
+			}
+			result = false;
+		}else if(result){
+			lblConfirmPass.setStyleName("inputField");
+			lblPassword.setStyleName("inputField");
 		}
 		if(!result){
-			errorLbl.setText("please, fill the required fields *");
+			errorLbl.setText(errorMsg.isEmpty() ? "please, fill the required fields" : errorMsg);
 		}else{
 			errorLbl.setText("");
 		}

@@ -3,6 +3,7 @@ package hu.ideaimpl.mageofscrum.client.service;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
+import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
 
@@ -39,5 +40,15 @@ public interface ManagerServiceAsync {
 	void fetchUsersRoles(String userId, AsyncCallback<ArrayList<RoleDO>> callback);
 
 	void fetchOtherRoles(String userId, AsyncCallback<ArrayList<RoleDO>> callback);
+
+	void addRolesToUser(String userId, ArrayList<Long> roleIds, AsyncCallback<Void> callback);
+
+	void removeRolesFromUser(String userId, ArrayList<Long> roleIds, AsyncCallback<Void> callback);
+
+	void fetchUserData(AsyncCallback<UserDataDO> callback);
+
+	void updateUserData(UserDataDO data, AsyncCallback<Void> callback);
+
+	void changePassword(String password, AsyncCallback<Void> callback);
 	
 }

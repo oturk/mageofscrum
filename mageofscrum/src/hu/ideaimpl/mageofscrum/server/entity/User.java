@@ -1,6 +1,7 @@
 package hu.ideaimpl.mageofscrum.server.entity;
 
 import hu.ideaimpl.mageofscrum.shared.UserDO;
+import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,11 +22,9 @@ public class User implements Serializable {
 
 	@Id
 	@Column(nullable = false)
-	private String email;
+	private String userName;
 	@Column(nullable = false)
 	private String password;
-	@Column(nullable = true)
-	private String sessionId;
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_ROLES", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private List<Role> roles;
@@ -40,17 +39,28 @@ public class User implements Serializable {
 	
 	public static User createUserObj(UserDO user){
 		User newUser = new User();
-		newUser.setEmail(user.getEmail());
+		newUser.setUsername(user.getEmail());
 		newUser.setPassword(user.getPassword());
+		
+		if(user.getUserData() != null){
+			UserDataDO data = user.getUserData();
+			UserData userData = new UserData();
+			userData.setEmail(data.getEmail());
+			userData.setSurname(data.getSurname());
+			userData.setForename(data.getForename());
+			
+			newUser.setData(userData);
+		}
+		
 		return newUser;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return userName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.userName = username;
 	}
 
 	public String getPassword() {
@@ -59,14 +69,6 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getSessionId() {
-		return sessionId;
-	}
-
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
 	}
 
 	public List<Role> getRoles() {
@@ -78,6 +80,9 @@ public class User implements Serializable {
 	}
 
 	public void addRole(Role role) {
+		if(roles == null){
+			roles = new ArrayList<Role>();
+		}
 		roles.add(role);
 	}
 
@@ -99,8 +104,18 @@ public class User implements Serializable {
 	
 	public UserDO getUserDO(){
 		UserDO ret = new UserDO();
-		ret.setEmail(email);
+		ret.setEmail(userName);
 		return ret;
+	}
+	
+	public UserDataDO getUserDataDO(){
+		UserDataDO dataDO = new UserDataDO();
+		if(data != null){
+			dataDO.setEmail(data.getEmail());
+			dataDO.setSurname(data.getSurname());
+			dataDO.setForename(data.getForename());
+		}
+		return dataDO;
 	}
 	
 	public List<Long> getRoleIds(){

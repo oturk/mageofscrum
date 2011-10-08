@@ -172,6 +172,10 @@ public class MenuBar extends Composite {
 	public HasClickHandlers getLogout() {
 		return logout;
 	}
+	
+	public HasClickHandlers getProfile(){
+		return profile;
+	}
 
 	
 }

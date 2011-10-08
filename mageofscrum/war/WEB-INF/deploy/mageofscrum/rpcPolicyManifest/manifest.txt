@@ -1,4 +1,2 @@
 # Module mageofscrum
 # RPC service class, partial path of RPC policy file
-hu.ideaimpl.mageofscrum.client.user.LoginService, 8FD2605F37B6E2EDCAAA88A98606BFD4.gwt.rpc
-hu.ideaimpl.mageofscrum.client.security.SecurityService, CEF61C6C6007BB7D945060C973199C73.gwt.rpc

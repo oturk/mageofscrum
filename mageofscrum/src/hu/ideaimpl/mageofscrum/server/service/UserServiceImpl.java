@@ -35,10 +35,10 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 		ArrayList<UserDetails> result = new ArrayList<UserDetails>();
 		for(hu.ideaimpl.mageofscrum.server.entity.User user : users){
 			UserDetails newUser= new UserDetails();
-			newUser.setEmail(user.getEmail());
+			newUser.setEmail(user.getUsername());
 			UserData data = user.getData();
 			if(data != null){
-				newUser.setFullName(data.getForeName() +" "+ data.getSureName());
+				newUser.setFullName(data.getForename() +" "+ data.getSurname());
 				newUser.setAddress(data.getZone() != null ? data.getZone()+" " : ""+
 				data.getCity() != null ? data.getCity()+" " : "" +
 				data.getAddress() != null ? data.getAddress()+" " :"" );

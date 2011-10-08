@@ -61,7 +61,7 @@ public class Team {
 		List<String> ids = new ArrayList<String>();
 		if (users != null) {
 			for (User user : users) {
-				ids.add(user.getEmail());
+				ids.add(user.getUsername());
 			}
 		}
 		return ids;

@@ -3,6 +3,7 @@ package hu.ideaimpl.mageofscrum.client;
 import hu.ideaimpl.mageofscrum.client.mvp.AppActivityMapper;
 import hu.ideaimpl.mageofscrum.client.mvp.AppPlaceHistoryMapper;
 import hu.ideaimpl.mageofscrum.client.place.ErrorPlace;
+import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
 import hu.ideaimpl.mageofscrum.client.place.TeamPlace;
 import hu.ideaimpl.mageofscrum.client.place.UsersPlace;
@@ -56,6 +57,11 @@ public class MageOfScrumApp {
 		menuBar.getUsers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				placeController.goTo(new UsersPlace());
+			}
+		});
+		menuBar.getProfile().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				placeController.goTo(new ProfilePlace());
 			}
 		});
 	}
