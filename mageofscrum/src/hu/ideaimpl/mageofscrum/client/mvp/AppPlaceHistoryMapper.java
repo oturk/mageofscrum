@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.mvp;
 
 import hu.ideaimpl.mageofscrum.client.place.ErrorPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
+import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
 import hu.ideaimpl.mageofscrum.client.place.TeamPlace;
 import hu.ideaimpl.mageofscrum.client.place.UsersPlace;
@@ -14,7 +15,8 @@ import com.google.gwt.place.shared.WithTokenizers;
 	TeamPlace.Tokenizer.class,
 	RolePlace.Tokenizer.class,
 	UsersPlace.Tokenizer.class,
-	ProfilePlace.Tokenizer.class
+	ProfilePlace.Tokenizer.class,
+	ProjectPlace.Tokenizer.class
 	})
 public interface AppPlaceHistoryMapper extends PlaceHistoryMapper{
 

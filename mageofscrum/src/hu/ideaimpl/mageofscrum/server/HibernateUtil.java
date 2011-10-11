@@ -1,5 +1,6 @@
 package hu.ideaimpl.mageofscrum.server;
 
+import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -23,7 +25,8 @@ public class HibernateUtil {
 					.addAnnotatedClass(User.class)
 					.addAnnotatedClass(Role.class)
 					.addAnnotatedClass(Team.class)
-					.addAnnotatedClass(UserData.class).configure()
+					.addAnnotatedClass(UserData.class)
+					.addAnnotatedClass(Project.class).configure()
 					.buildSessionFactory();
 		} catch (Throwable ex) {
 			throw new ExceptionInInitializerError(ex);
@@ -80,6 +83,25 @@ public class HibernateUtil {
 		adminData.setNickname("superuser");
 		session.save(adminData);
 		
+		
+		Project project = new Project();
+		project.setName("First project");
+		project.setDescription("This is my first project!");
+		project.setTeam(team1);
+		session.save(project);
+		
+		Project project2 = new Project();
+		project2.setName("Second project");
+		project2.setDescription("This is my second project!");
+		project2.setTeam(team1);
+		session.save(project2);
+		
+		Project project3 = new Project();
+		project3.setName("Third project");
+		project3.setDescription("This is my third project!");
+		project3.setTeam(team2);
+		session.save(project3);
+		
 		List<Role> roles = new ArrayList<Role>();
 		List<Team> teams = new ArrayList<Team>();
 		teams.add(team1);
@@ -91,7 +113,17 @@ public class HibernateUtil {
 		admin.setRoles(roles);
 		admin.setTeams(teams);
 		admin.setData(adminData);
+		admin.addProject(project);
+		admin.addProject(project3);
 		session.save(admin);
+		
+		adminRole.addUser(admin);
+		session.update(adminRole);
+		
+		project.setUser(admin);
+		session.update(project);
+		project3.setUser(admin);
+		session.update(project3);
 		
 		roles = new ArrayList<Role>();
 		User owner = new User();
@@ -100,8 +132,14 @@ public class HibernateUtil {
 		roles.add(projectOwnerRole);
 		roles.add(adminRole);
 		owner.setRoles(roles);
-//		owner.setData(new UserData());
+		owner.addProject(project2);
 		session.save(owner);
+		
+		projectOwnerRole.addUser(owner);
+		session.update(projectOwnerRole);
+		
+		project2.setUser(owner);
+		session.update(project2);
 		
 		roles = new ArrayList<Role>();
 		User master = new User();
@@ -109,8 +147,10 @@ public class HibernateUtil {
 		master.setPassword("fc613b4dfd6736a7bd268c8a0e74ed0d1c04a959f59dd74ef2874983fd443fc9");
 		roles.add(scrumMasterRole);
 		master.setRoles(roles);
-//		master.setData(new UserData());
 		session.save(master);
+		
+		scrumMasterRole.addUser(master);
+		session.update(scrumMasterRole);
 		
 		roles = new ArrayList<Role>();
 		User user = new User();
@@ -118,13 +158,26 @@ public class HibernateUtil {
 		user.setPassword("04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb");
 		roles.add(userRole);
 		user.setRoles(roles);
-//		user.setData(new UserData());
 		session.save(user);
 		
+		userRole.addUser(user);
+		session.update(userRole);
 		
-//		data.setUser(admin);
-//		session.persist(data);
 		tx.commit();
+		
+//		Query q = session.createQuery("from Project");
+//		List<Project> projects = new ArrayList<Project>();
+//		projects = q.list();
+//		User u = (User) session.get(User.class, "admin");
+//		System.out.println("adminSize: "+u.getProjects().size());
+//		System.out.println("projects:");
+//		for(Project p : projects){
+//			System.out.println(p.getName());
+//			System.out.println(p.getUser().getUsername());
+//			System.out.println(p.getTeam().getName());
+//		}
+//		Role role = (Role) session.get(Role.class, 1L);
+//		System.out.println("rolesSize: "+role.getUsers().size() );
 	}
 	
 	public static Session getSession() throws HibernateException {

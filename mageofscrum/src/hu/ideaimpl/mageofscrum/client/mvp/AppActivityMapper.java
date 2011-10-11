@@ -3,12 +3,14 @@ package hu.ideaimpl.mageofscrum.client.mvp;
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.activity.ErrorActivity;
 import hu.ideaimpl.mageofscrum.client.activity.ProfileActivity;
+import hu.ideaimpl.mageofscrum.client.activity.ProjectActivity;
 import hu.ideaimpl.mageofscrum.client.activity.RoleActivity;
 import hu.ideaimpl.mageofscrum.client.activity.TeamActivity;
 import hu.ideaimpl.mageofscrum.client.activity.UsersActivity;
 import hu.ideaimpl.mageofscrum.client.activity.WelcomeActivity;
 import hu.ideaimpl.mageofscrum.client.place.ErrorPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
+import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
 import hu.ideaimpl.mageofscrum.client.place.TeamPlace;
 import hu.ideaimpl.mageofscrum.client.place.UsersPlace;
@@ -39,6 +41,8 @@ public class AppActivityMapper implements ActivityMapper {
 			return new UsersActivity(clientFactory);
 		}else if(place instanceof ProfilePlace){
 			return new ProfileActivity();
+		}else if(place instanceof ProjectPlace){
+			return new ProjectActivity();
 		}
 		return null;
 	}

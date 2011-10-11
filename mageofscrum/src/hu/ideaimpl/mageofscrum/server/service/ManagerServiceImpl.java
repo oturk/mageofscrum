@@ -2,10 +2,12 @@ package hu.ideaimpl.mageofscrum.server.service;
 
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
+import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
+import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
@@ -285,6 +287,74 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		tx.begin();
 		session.update(user);
 		tx.commit();
+	}
+
+	@Override
+	public ArrayList<ProjectDO> fetchProjects() {
+		ArrayList<ProjectDO> result = new ArrayList<ProjectDO>();
+		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		User user = (User) session.get(User.class, username);
+		Query query = null;
+		if(SecurityUtils.getSubject().hasRole("ADMIN")){
+			query = session.createQuery("from Project");
+		}else{
+			query = session.createQuery("from Project p where p.user = :user");
+			query.setParameter("user", user);
+		}
+		List<Project> projects = query.list();
+		
+		for(Project project : projects){
+			result.add(project.getProjectDO());
+		}
+		return result;
+	}
+
+	@Override
+	public ArrayList<UserDO> fetchOwners() {
+		ArrayList<UserDO> result = new ArrayList<UserDO>();
+		ArrayList<User> partResult = new ArrayList<User>();
+		List<Role> roles = session.createQuery("from Role r where r.name in ('ADMIN', 'OWNER')").list();
+		
+		for(Role role : roles){
+			for(User user : role.getUsers()){
+				if (!partResult.contains(user)) {
+					partResult.add(user);
+				}
+			}
+		}
+		for(User user : partResult){
+			result.add(user.getUserDO());
+		}
+		return result;
+	}
+
+	@Override
+	public ProjectDO saveProject(ProjectDO data) {
+		Project project = Project.convertToProjectObj(data);
+		List<Team> team = session.createQuery("from Team t where t.name like :name")
+				.setParameter("name", data.getTeamName()).list();
+		List<User> owner = session.createQuery("from User u where u.userName like :name")
+				.setParameter("name", data.getOwnerName()).list();
+//		project.setTeam(team.get(0));
+//		project.setUser(owner.get(0));
+		
+		Transaction tx = session.beginTransaction();
+		tx.begin();
+		
+		if (project.getId() != null) {
+			session.update(project);
+		}else{
+			project.setTeam(team.get(0));
+//			project.setUser(owner.get(0));
+			session.save(project);
+			owner.get(0).addProject(project);
+			session.update(owner);
+			
+			session.update(project);
+		}
+		tx.commit();
+		
+		return project.getProjectDO();
 	}
 
 }

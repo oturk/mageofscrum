@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Team {
@@ -25,6 +26,8 @@ public class Team {
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_TEAMS", joinColumns = { @JoinColumn(name = "TEAM_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
 	private List<User> users;
+	@OneToOne(mappedBy = "team")
+	private Project project;
 
 	public Team() {
 	}
@@ -48,6 +51,14 @@ public class Team {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
 	}
 
 	public List<User> getUsers() {

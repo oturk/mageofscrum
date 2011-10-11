@@ -1,5 +1,6 @@
 package hu.ideaimpl.mageofscrum.client.service;
 
+import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
@@ -50,5 +51,11 @@ public interface ManagerServiceAsync {
 	void updateUserData(UserDataDO data, AsyncCallback<Void> callback);
 
 	void changePassword(String password, AsyncCallback<Void> callback);
+
+	void fetchProjects(AsyncCallback<ArrayList<ProjectDO>> callback);
+
+	void fetchOwners(AsyncCallback<ArrayList<UserDO>> callback);
+
+	void saveProject(ProjectDO project, AsyncCallback<ProjectDO> callback);
 	
 }
