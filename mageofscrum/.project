@@ -3,6 +3,7 @@
 	<name>mageofscrum</name>
 	<comment></comment>
 	<projects>
+		<project>mageofscrum-jpa</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

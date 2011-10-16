@@ -11,15 +11,15 @@ import com.google.gwt.view.client.Range;
 
 @RemoteServiceRelativePath("../UserService")
 public interface UserService extends RemoteService {
-	public static class Util{
-		private static UserServiceAsync service = null;
-		public static UserServiceAsync getService(){
-			if(service == null){
-				service = GWT.create(UserService.class);
-			}
-			return service;
-		}
-	}
+//	public static class Util{
+//		private static UserServiceAsync service = null;
+//		public static UserServiceAsync getService(){
+//			if(service == null){
+//				service = GWT.create(UserService.class);
+//			}
+//			return service;
+//		}
+//	}
 	
 	public ArrayList<UserDetails> requestRows(int start);
 }

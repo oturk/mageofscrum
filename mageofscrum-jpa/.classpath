@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="D:/local-repo/gwt-2.4.0/gwt-2.4.0/gwt-user.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/local-repo/hsqldb-2.1.0/hsqldb/lib/hsqldb.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/slf4j-1.6.1/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/shiro-all-1.1.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.utility"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/local-repo/slf4j-1.6.1/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/hibernate3.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/lib/required/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/lib/required/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/lib/required/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/lib/required/javassist-3.12.0.GA.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/lib/required/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/lib/required/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/local-repo/hibernate-distribution-3.6.1.Final/lib/jpa/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

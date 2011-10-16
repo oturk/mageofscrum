@@ -25,17 +25,6 @@ public class MageOfScrum implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-//		ClientFactory clientFactory = GWT.create(ClientFactory.class);
-////		RootLayoutPanel container = RootLayoutPanel.get();
-////		SecurityServiceAsync securityService = GWT.create(SecurityService.class);
-////		HandlerManager eventBus = new HandlerManager(null);
-////		LoginController controller = new LoginController(clientFactory);
-////		controller.go(clientFactory.getContainer());
-//		
-//		AppController appController = new AppController(clientFactory);
-//		appController.go(clientFactory.getContainer());
-//		RootLayoutPanel.get().add(new MageOfScrumShell());
-//		placeAndActivity();
 		checkAuthentication();
 	}
 	

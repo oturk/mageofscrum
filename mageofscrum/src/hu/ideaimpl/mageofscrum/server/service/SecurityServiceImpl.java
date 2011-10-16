@@ -1,8 +1,6 @@
 package hu.ideaimpl.mageofscrum.server.service;
 
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
-import hu.ideaimpl.mageofscrum.server.HibernateUtil;
-import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.hibernate.Session;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -48,12 +45,12 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public boolean forgotPassword(String email) {
-		Session session = HibernateUtil.getSession();
-		User user = (User) session.get(User.class, email);
-		//TODO emailt küldeni a passwordrõl
-		if(user != null){
-			return true;
-		}
+//		Session session = HibernateUtil.getSession();
+//		User user = (User) session.get(User.class, email);
+//		//TODO emailt küldeni a passwordrõl
+//		if(user != null){
+//			return true;
+//		}
 		return false;
 	}
 

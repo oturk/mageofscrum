@@ -2,15 +2,12 @@ package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.mvp.AppActivityMapper;
 import hu.ideaimpl.mageofscrum.client.mvp.AppPlaceHistoryMapper;
-import hu.ideaimpl.mageofscrum.client.place.ErrorPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
 import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
 import hu.ideaimpl.mageofscrum.client.place.TeamPlace;
-import hu.ideaimpl.mageofscrum.client.place.UsersPlace;
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
-import hu.ideaimpl.mageofscrum.shared.Errors;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -53,11 +50,6 @@ public class MageOfScrumApp {
 		menuBar.getRoles().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				placeController.goTo(new RolePlace());
-			}
-		});
-		menuBar.getUsers().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				placeController.goTo(new UsersPlace());
 			}
 		});
 		menuBar.getProfile().addClickHandler(new ClickHandler() {
