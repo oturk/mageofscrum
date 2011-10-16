@@ -3,6 +3,7 @@ package hu.ideaimpl.mageofscrum.server.entity;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Project implements Serializable {
@@ -28,6 +30,8 @@ public class Project implements Serializable {
 	@ManyToOne
 	@JoinTable(name="TEAMS_PROJECTS",joinColumns = @JoinColumn(name="PROJECT_ID"), inverseJoinColumns = @JoinColumn(name="TEAM_ID"))
 	private Team team;
+	@OneToMany(mappedBy = "project")
+	private List<Task> tasks;
 	
 	public static Project convertToProjectObj(ProjectDO data){
 		Project result = new Project();
@@ -81,6 +85,14 @@ public class Project implements Serializable {
 		this.team = team;
 	}
 	
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
 	public ProjectDO getProjectDO(){
 		ProjectDO result = new ProjectDO();
 		result.setId(this.id);

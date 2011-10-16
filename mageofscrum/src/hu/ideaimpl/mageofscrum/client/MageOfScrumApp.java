@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.mvp.AppActivityMapper;
 import hu.ideaimpl.mageofscrum.client.mvp.AppPlaceHistoryMapper;
+import hu.ideaimpl.mageofscrum.client.place.BacklogPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
 import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
@@ -60,6 +61,11 @@ public class MageOfScrumApp {
 		menuBar.getProjects().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				placeController.goTo(new ProjectPlace());
+			}
+		});
+		menuBar.getBacklog().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				placeController.goTo(new BacklogPlace());
 			}
 		});
 	}

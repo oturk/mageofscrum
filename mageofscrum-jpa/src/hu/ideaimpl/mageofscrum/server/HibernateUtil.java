@@ -6,6 +6,8 @@ import hu.ideaimpl.mageofscrum.server.dbo.TeamDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dbo.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
+import hu.ideaimpl.mageofscrum.server.entity.Task;
+import hu.ideaimpl.mageofscrum.server.entity.TaskStatus;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
@@ -25,6 +27,8 @@ public class HibernateUtil {
 		.addAnnotatedClass(Team.class)
 		.addAnnotatedClass(UserData.class)
 		.addAnnotatedClass(Project.class)
+		.addAnnotatedClass(Task.class)
+		.addAnnotatedClass(TaskStatus.class)
 		.configure("hibernate.cfg.xml").buildEntityManagerFactory();
 	}
 

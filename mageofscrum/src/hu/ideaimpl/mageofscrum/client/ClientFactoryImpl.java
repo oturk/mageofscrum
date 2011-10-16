@@ -6,6 +6,7 @@ import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 import hu.ideaimpl.mageofscrum.client.user.LoginForm2;
+import hu.ideaimpl.mageofscrum.client.view.BacklogView;
 import hu.ideaimpl.mageofscrum.client.view.ErrorView;
 import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
@@ -36,6 +37,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private static final RolesView roleView = new RolesView();
 	private static final ProfileView profileView = new ProfileView();
 	private static final ProjectsView projectView = new ProjectsView();
+	private static final BacklogView backlogView = new BacklogView();
 	
 	@Override
 	public TeamsView getTeamsView() {
@@ -110,6 +112,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public ProjectsView getProjectsView() {
 		return projectView;
+	}
+
+	@Override
+	public BacklogView getBacklogView() {
+		return backlogView;
 	}
 
 }

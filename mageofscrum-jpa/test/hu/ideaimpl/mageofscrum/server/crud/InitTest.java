@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import hu.ideaimpl.mageofscrum.server.dbo.ProjectDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dbo.RoleDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dbo.TaskDAO;
+import hu.ideaimpl.mageofscrum.server.dbo.TaskDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dbo.TaskStatusDAO;
+import hu.ideaimpl.mageofscrum.server.dbo.TaskStatusDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dbo.TeamDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dbo.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
@@ -24,6 +28,8 @@ public class InitTest {
 	private static UserDAOImpl userDBO = new UserDAOImpl();
 	private static ProjectDAOImpl projectDBO = new ProjectDAOImpl();
 	private static RoleDAOImpl roleDBO = new RoleDAOImpl();
+	private static TaskStatusDAO statusDAO = new TaskStatusDAOImpl();
+	private static TaskDAO taskDAO = new TaskDAOImpl();
 	Logger log = LoggerFactory.getLogger(InitTest.class);
 
 	@BeforeClass
@@ -32,9 +38,17 @@ public class InitTest {
 		roleDBO.saveRole("owner", "Has almost all privileges");
 		roleDBO.saveRole("master", "Has some privileges");
 		
+		statusDAO.saveStatus("backlog");
+		statusDAO.saveStatus("sprint");
+		statusDAO.saveStatus("completed");
+		
 		teamDBO.saveTeam("A team");
 		teamDBO.saveTeam("B team");
 		teamDBO.saveTeam("C team");
+		
+		taskDAO.saveTask("first task", "This is my first task", 8, 1);
+		taskDAO.saveTask("second task", "This is my second task", 8, 1);
+		taskDAO.saveTask("third task", "This is my third task", 8, 1);
 		
 		userDBO.saveUser("oturk", "oturk");
 		userDBO.saveUser("sys", "sys");

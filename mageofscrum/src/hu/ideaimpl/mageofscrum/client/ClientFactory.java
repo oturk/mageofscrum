@@ -4,6 +4,7 @@ import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 import hu.ideaimpl.mageofscrum.client.user.LoginForm2;
+import hu.ideaimpl.mageofscrum.client.view.BacklogView;
 import hu.ideaimpl.mageofscrum.client.view.ErrorView;
 import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
@@ -59,4 +60,6 @@ public interface ClientFactory {
 	public ProfileView getProfileView();
 	
 	public ProjectsView getProjectsView();
+	
+	public BacklogView getBacklogView();
 }
