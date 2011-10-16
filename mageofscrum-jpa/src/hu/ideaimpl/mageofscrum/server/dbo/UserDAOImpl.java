@@ -4,6 +4,8 @@ import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.User;
+import hu.ideaimpl.mageofscrum.server.entity.UserData;
+import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.List;
 
@@ -18,22 +20,25 @@ public class UserDAOImpl implements UserDAO {
 	public void saveUser(String username, String password) {
 		EntityManager em = HibernateUtil.getEntityManager();
 		EntityTransaction tx = null;
-		try {
-			User user = new User();
-			user.setUsername(username);
-			Sha256Hash hash = new Sha256Hash(password);
-			user.setPassword(hash.toString());
-			tx = em.getTransaction();
-			tx.begin();
-			em.persist(user);
-			tx.commit();
-		} catch (RuntimeException ex) {
-			if (tx != null && tx.isActive()) {
-				tx.rollback();
+		User existing = findUser(username);
+		if (existing == null) {
+			try {
+				User user = new User();
+				user.setUsername(username);
+				Sha256Hash hash = new Sha256Hash(password);
+				user.setPassword(hash.toString());
+				tx = em.getTransaction();
+				tx.begin();
+				em.persist(user);
+				tx.commit();
+			} catch (RuntimeException ex) {
+				if (tx != null && tx.isActive()) {
+					tx.rollback();
+				}
+				ex.printStackTrace();
+			} finally {
+				em.close();
 			}
-			ex.printStackTrace();
-		} finally {
-			em.close();
 		}
 	}
 
@@ -42,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
 		EntityManager em = HibernateUtil.getEntityManager();
 		javax.persistence.Query query = em.createQuery("select u from User u where u.username = :username").setParameter("username", username);
 		List<User> users = query.getResultList();
-		if (users != null) {
+		if (users.size() > 0) {
 			return users.get(0);
 		}
 		return null;
@@ -55,7 +60,11 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			tx = em.getTransaction();
 			tx.begin();
-			em.persist(user);
+			User newUser = em.getReference(User.class, user.getId());
+			UserData data = newUser.getData();
+			data.setEmail(user.getData().getEmail());
+			newUser.setData(data);
+			em.persist(newUser);
 			tx.commit();
 		} catch (RuntimeException ex) {
 			if(tx != null && tx.isActive()){
@@ -146,6 +155,85 @@ public class UserDAOImpl implements UserDAO {
 			}
 			ex.printStackTrace();
 		}finally{
+			em.close();
+		}
+	}
+
+	@Override
+	public void removeRole(Long userId, Long roleId) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		EntityTransaction tx = null;
+		try{
+		tx = em.getTransaction();
+		tx.begin();
+		User user = em.getReference(User.class, userId);
+		
+		Role role = em.getReference(Role.class, roleId);
+		user.removeRole(role);
+		em.persist(role);
+		tx.commit();
+		}catch(RuntimeException ex){
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			ex.printStackTrace();
+		}finally{
+			em.close();
+		}
+		
+	}
+
+	@Override
+	public void changePassword(Long userId, String password) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		EntityTransaction tx = null;
+		try{
+		tx = em.getTransaction();
+		tx.begin();
+		User user = em.getReference(User.class, userId);
+		Sha256Hash hash = new Sha256Hash(password);
+		user.setPassword(hash.toString());
+		em.persist(user);
+		tx.commit();
+		}catch(RuntimeException ex){
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			ex.printStackTrace();
+		}finally{
+			em.close();
+		}
+	}
+
+	@Override
+	public void updateUserData(Long userId, UserDataDO data) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		EntityTransaction tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			User user = em.getReference(User.class, userId);
+			UserData uData = null;
+			if (user.getData() == null) {
+				uData = new UserData();
+				uData.setEmail(data.getEmail());
+				uData.setSurname(data.getSurname());
+				uData.setForename(data.getForename());
+			}else{
+				uData = user.getData(); 
+				uData.setEmail(data.getEmail());
+				uData.setSurname(data.getSurname());
+				uData.setForename(data.getForename());
+			}
+			user.setData(uData);
+			em.persist(uData);
+			tx.commit();
+		} catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			ex.printStackTrace();
+		} finally {
 			em.close();
 		}
 	}

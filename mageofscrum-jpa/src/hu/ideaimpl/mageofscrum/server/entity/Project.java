@@ -4,7 +4,6 @@ import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -84,8 +83,9 @@ public class Project implements Serializable {
 	
 	public ProjectDO getProjectDO(){
 		ProjectDO result = new ProjectDO();
+		result.setId(this.id);
 		result.setName(this.name);
-		result.setDescription(this.description);
+		result.setDescription(this.description != null ? this.description : "");
 		result.setOwnerName(this.user.getUsername());
 		result.setTeamName(this.team.getName());
 		return result;

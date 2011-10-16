@@ -56,6 +56,7 @@ public class MosRealm extends AuthorizingRealm{
 //		Session session = HibernateUtil.getSession();
 		UserDAO userDBO = new UserDAOImpl();
 		User user = userDBO.findUser(token.getUsername());
+		//TODO a principalok közé betenni a userId-t is így egyszerûbb az adatbázis mûveletek
 		if(user != null){
 			return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName()); 
 		}

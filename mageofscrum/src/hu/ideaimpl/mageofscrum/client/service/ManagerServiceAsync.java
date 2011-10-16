@@ -57,5 +57,7 @@ public interface ManagerServiceAsync {
 	void fetchOwners(AsyncCallback<ArrayList<UserDO>> callback);
 
 	void saveProject(ProjectDO project, AsyncCallback<ProjectDO> callback);
+
+	void deleteProject(Long id, AsyncCallback<Void> callback);
 	
 }

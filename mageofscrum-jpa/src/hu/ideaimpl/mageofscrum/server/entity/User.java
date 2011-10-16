@@ -18,6 +18,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class User implements Serializable {
@@ -26,14 +27,14 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String username;
 	@Column(nullable = false)
 	private String password;
 	@ManyToMany
 	@JoinTable(name = "USER_ROLES", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private List<Role> roles;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private UserData data;
 	@ManyToMany(mappedBy = "users")
 //	@JoinTable(name = "USER_TEAMS", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "TEAM_ID") })
@@ -165,6 +166,10 @@ public class User implements Serializable {
 	
 	public void removeTeam(Team team){
 		teams.remove(team);
+	}
+	
+	public void removeRole(Role role){
+		roles.remove(role);
 	}
 
 }

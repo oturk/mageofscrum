@@ -50,5 +50,5 @@ public interface ManagerService extends RemoteService {
 	public ArrayList<ProjectDO> fetchProjects();
 	public ArrayList<UserDO> fetchOwners();
 	public ProjectDO saveProject(ProjectDO project);
-	
+	public void deleteProject(Long id);
 }

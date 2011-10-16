@@ -198,4 +198,10 @@ public class ProjectsView extends Composite{
 		
 //		owner.setItemSelected(index, selected);
 	}
+	
+	public void clearForm(){
+		this.project = null;
+		name.setValue("");
+		description.setValue("");
+	}
 }

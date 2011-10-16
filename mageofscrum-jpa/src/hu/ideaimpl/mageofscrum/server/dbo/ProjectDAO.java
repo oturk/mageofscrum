@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ProjectDAO {
 	public void saveProject(String name, String description);
-	public void updateProject(Project project);
+	public void updateProject(Long id, Long ownerId, Long teamId, String name, String description);
 	public Project findProject(String name);
 	public void deleteProject(Long id);
 	public List<Project> listAll();

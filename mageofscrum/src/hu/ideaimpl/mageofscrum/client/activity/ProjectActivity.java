@@ -1,7 +1,5 @@
 package hu.ideaimpl.mageofscrum.client.activity;
 
-import java.util.ArrayList;
-
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
@@ -9,16 +7,15 @@ import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 
+import java.util.ArrayList;
+
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.DoubleClickEvent;
-import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SelectionModel;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 public class ProjectActivity extends AbstractActivity {
@@ -90,14 +87,56 @@ public class ProjectActivity extends AbstractActivity {
 				}
 			}
 		});
+		projectView.getDeleteBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (projectSelectionMode.getSelectedObject() != null) {
+					doOnDeleteBtnClicked();
+				}
+			}
+		});
+		projectView.getClearBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				projectView.clearForm();
+			}
+		});
 	}
 	
+	protected void doOnDeleteBtnClicked() {
+		final ProjectDO selectedProj = projectSelectionMode.getSelectedObject();
+		ManagerService.Util.getService().deleteProject(selectedProj.getId(), new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				projectView.clearForm();
+				projects.remove(selectedProj);
+				projectView.setTableData(projects);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failded");
+			}
+		});
+	}
+
 	protected void doOnSaveBtnClicked() {
 		ManagerService.Util.getService().saveProject(projectView.getFormData(), new AsyncCallback<ProjectDO>() {
 			
 			@Override
 			public void onSuccess(ProjectDO result) {
-				System.out.println("success");
+				ProjectDO existProject = null;
+				for(ProjectDO p : projects){
+					if(p.getId() == result.getId()){
+						existProject = p;
+						break;
+					}
+				}
+				if (existProject != null) {
+					projects.remove(existProject);
+				}
+				projects.add(result);
+				projectView.setTableData(projects);
+				projectSelectionMode.setSelected(result, true);
 			}
 			
 			@Override
@@ -129,6 +168,7 @@ public class ProjectActivity extends AbstractActivity {
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
+		projectView.clearForm();
 		panel.setWidget(projectView);
 	}
 

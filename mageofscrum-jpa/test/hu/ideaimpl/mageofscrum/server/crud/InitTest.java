@@ -10,6 +10,9 @@ import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
+import hu.ideaimpl.mageofscrum.shared.UserDataDO;
+
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,13 +34,22 @@ public class InitTest {
 		
 		teamDBO.saveTeam("A team");
 		teamDBO.saveTeam("B team");
-		teamDBO.saveTeam("B team");
+		teamDBO.saveTeam("C team");
 		
 		userDBO.saveUser("oturk", "oturk");
+		userDBO.saveUser("sys", "sys");
+		Team bTeam = teamDBO.findTeam("B team");
+		teamDBO.addUser(bTeam.getId(), "sys");
+		userDBO.saveUser("dzinnn", "dzinnn");
 		
 		projectDBO.saveProject("First projet", "Some important project");
 		
 		User user = userDBO.findUser("oturk");
+		UserDataDO data = new UserDataDO();
+		data.setEmail("oturk@email.hu");
+		data.setSurname("Ottó");
+		data.setForename("Türk");
+		userDBO.updateUserData(1L, data);
 		Role role = roleDBO.findRole("admin");
 		Team team = teamDBO.findTeam("A team");
 		
@@ -75,5 +87,19 @@ public class InitTest {
 		assertNotNull(project);
 		assertEquals("oturk", project.getUser().getUsername());
 		assertEquals("A team", project.getTeam().getName());
+	}
+	
+	@Test
+	public void testNotTeamMembers(){
+		List<User> users = teamDBO.listNotTeamMembers(1L);
+		for(User u : users){
+			System.out.println(u.getId()+" "+u.getUsername());
+		}
+	}
+	
+	@Test
+	public void testUserData(){
+		User user = userDBO.findUser("oturk");
+		System.out.println(user.getData().getEmail());
 	}
 }

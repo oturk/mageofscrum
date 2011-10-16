@@ -46,21 +46,29 @@ public class ProjectDAOImpl implements ProjectDAO{
 		javax.persistence.Query query = em.createQuery("select p from Project p where p.name = :name")
 				.setParameter("name", name);
 		List<Project> result = query.getResultList();
-		if(result != null){
+		if(result.size() > 0){
 			return result.get(0);
 		}
 		return null;
 	}
 
 	@Override
-	public void updateProject(Project project) {
+	public void updateProject(Long id, Long ownerId, Long teamId, String name, String description) {
 		EntityManager em = HibernateUtil.getEntityManager();
 		EntityTransaction tx = null;
 		try {
 			tx = em.getTransaction();
 			tx.begin();
+			Project project = em.getReference(Project.class, id);
+			User owner = em.getReference(User.class, ownerId);
+			Team team = em.getReference(Team.class, teamId);
+			
+			project.setName(name);
+			project.setDescription(description);
+			project.setUser(owner);
+			project.setTeam(team);
 			em.persist(project);
-			tx.begin();
+			tx.commit();
 		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();

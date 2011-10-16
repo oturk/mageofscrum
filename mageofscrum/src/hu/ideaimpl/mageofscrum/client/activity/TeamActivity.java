@@ -118,16 +118,15 @@ public class TeamActivity extends AbstractActivity {
 
 	private void doOnRemoveBtnClicked() {
 		Long selectedTeam = teamsView.getSelectedObject();
-		Set<UserDO> teamMembers = teamsView.getSelectedMembers();
-		members.removeAll(teamMembers);
-		others.addAll(teamMembers);
-		teamsView.setTeamMembers(members);
-		teamsView.setOtherUsers(others);
+		final Set<UserDO> teamMembers = teamsView.getSelectedMembers();
 		ManagerService.Util.getService().removeUsersFromTeam(convertUserIds(teamMembers), selectedTeam, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
-				System.out.println("success");
+				members.removeAll(teamMembers);
+				others.addAll(teamMembers);
+				teamsView.setTeamMembers(members);
+				teamsView.setOtherUsers(others);
 			}
 			
 			@Override

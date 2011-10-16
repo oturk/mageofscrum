@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.server.dbo;
 
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
+import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 
 import java.util.ArrayList;
@@ -97,6 +98,38 @@ public class RoleDAOImpl implements RoleDAO {
 	@Override
 	public List<Role> listInverse(List<Long> roles) {
 		return null;
+	}
+
+	@Override
+	public List<Role> listOtherRoles(Long userId) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		List<Role> roles = null;
+		User user = em.getReference(User.class, userId);
+		try {
+			if (user.getRoles().size() > 0) {
+				List<Long> rolesIds = new ArrayList<Long>();
+				for (Role u : user.getRoles()) {
+					rolesIds.add(u.getId());
+				}
+				 roles = em.createQuery("select u from Role u where u.id not in (:rolesIds)").setParameter("rolesIds", rolesIds).getResultList();
+			}else{
+				roles = em.createQuery("from Role").getResultList();
+			}
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+		}
+		
+		return roles;
+	}
+
+	@Override
+	public List<User> listOwners() {
+		Role owner = findRole("owner");
+		List<User> result = new ArrayList<User>();
+		for(User u : owner.getUsers()){
+			result.add(u);
+		}
+		return result;
 	}
 
 }
