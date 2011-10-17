@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.service;
 
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
+import hu.ideaimpl.mageofscrum.shared.TaskDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
@@ -51,4 +52,6 @@ public interface ManagerService extends RemoteService {
 	public ArrayList<UserDO> fetchOwners();
 	public ProjectDO saveProject(ProjectDO project);
 	public void deleteProject(Long id);
+	public ArrayList<ProjectDO> listTeamsProjects();
+	public ArrayList<TaskDO> fetchTasks(Long projectId);
 }

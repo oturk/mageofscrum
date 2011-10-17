@@ -1,5 +1,6 @@
-package hu.ideaimpl.mageofscrum.server.dbo;
+package hu.ideaimpl.mageofscrum.server.dao;
 
+import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
@@ -17,4 +18,5 @@ public interface UserDAO {
 	public void removeRole(Long userId, Long roleId);
 	public void addProject(String username, Long projectId);
 	public void changePassword(Long userId, String password);
+	public List<Project> listUsersProjects(Long userId);
 }

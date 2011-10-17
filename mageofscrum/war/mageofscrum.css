@@ -180,3 +180,11 @@ padding-left:5px;
 .comboField {
 height:30px;
 }
+.mosDialog {
+background-color: white;
+width: 600px;
+}
+.mosDialogGlass{
+background-color: gray;
+opacity: 0.4;
+}

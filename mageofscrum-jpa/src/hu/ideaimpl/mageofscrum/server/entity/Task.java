@@ -1,6 +1,9 @@
 package hu.ideaimpl.mageofscrum.server.entity;
 
+import hu.ideaimpl.mageofscrum.shared.TaskDO;
+
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +27,7 @@ public class Task implements Serializable {
 	private int estimateTime;
 	private int reportTime;
 	private int priority;
+	private Date created;
 	@ManyToOne
 	@JoinTable(name="PROJECT_TASKS",joinColumns = @JoinColumn(name="TASK_ID"), inverseJoinColumns = @JoinColumn(name="PROJECT_ID"))
 	private Project project;
@@ -96,6 +100,25 @@ public class Task implements Serializable {
 
 	public void setStatus(TaskStatus status) {
 		this.status = status;
+	}
+	
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public TaskDO getTaskDO(){
+		TaskDO result = new TaskDO();
+		result.setId(id);
+		result.setName(name);
+		result.setDescription(description);
+		result.setEstimateTime(estimateTime);
+		result.setPriority(priority);
+		result.setCreated(created);
+		return result;
 	}
 
 }

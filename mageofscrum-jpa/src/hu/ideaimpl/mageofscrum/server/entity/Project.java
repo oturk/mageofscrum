@@ -3,6 +3,7 @@ package hu.ideaimpl.mageofscrum.server.entity;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -91,6 +92,13 @@ public class Project implements Serializable {
 
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
+	}
+	
+	public void addTask(Task task){
+		if(tasks == null){
+			tasks = new ArrayList<Task>();
+		}
+		tasks.add(task);
 	}
 
 	public ProjectDO getProjectDO(){

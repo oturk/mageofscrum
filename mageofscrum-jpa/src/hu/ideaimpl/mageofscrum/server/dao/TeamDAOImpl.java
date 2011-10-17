@@ -1,4 +1,4 @@
-package hu.ideaimpl.mageofscrum.server.dbo;
+package hu.ideaimpl.mageofscrum.server.dao;
 
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.Team;

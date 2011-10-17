@@ -1,20 +1,22 @@
 package hu.ideaimpl.mageofscrum.server.service;
 
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
-import hu.ideaimpl.mageofscrum.server.dbo.ProjectDAO;
-import hu.ideaimpl.mageofscrum.server.dbo.ProjectDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.RoleDAO;
-import hu.ideaimpl.mageofscrum.server.dbo.RoleDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.TeamDAO;
-import hu.ideaimpl.mageofscrum.server.dbo.TeamDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.UserDAO;
-import hu.ideaimpl.mageofscrum.server.dbo.UserDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.ProjectDAO;
+import hu.ideaimpl.mageofscrum.server.dao.ProjectDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.RoleDAO;
+import hu.ideaimpl.mageofscrum.server.dao.RoleDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.TeamDAO;
+import hu.ideaimpl.mageofscrum.server.dao.TeamDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.UserDAO;
+import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
+import hu.ideaimpl.mageofscrum.server.entity.Task;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
+import hu.ideaimpl.mageofscrum.shared.TaskDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
@@ -287,6 +289,27 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	@Override
 	public void deleteProject(Long id) {
 		projectDAO.deleteProject(id);
+	}
+
+	@Override
+	public ArrayList<ProjectDO> listTeamsProjects() {
+		String username = (String) SecurityUtils.getSubject().getPrincipal();
+		User user = userDAO.findUser(username);
+		ArrayList<ProjectDO> result = new ArrayList<ProjectDO>();
+		for(Project p : userDAO.listUsersProjects(user.getId())){
+			result.add(p.getProjectDO());
+		}
+		return result;
+	}
+
+	@Override
+	public ArrayList<TaskDO> fetchTasks(Long projectId) {
+		Project proj = projectDAO.findProject(projectId);
+		ArrayList<TaskDO> result = new ArrayList<TaskDO>();
+		for(Task t : proj.getTasks()){
+			result.add(t.getTaskDO());
+		}
+		return result;
 	}
 
 }

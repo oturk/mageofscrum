@@ -1,7 +1,8 @@
-package hu.ideaimpl.mageofscrum.server.dbo;
+package hu.ideaimpl.mageofscrum.server.dao;
 
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
+import hu.ideaimpl.mageofscrum.server.entity.Task;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 
@@ -161,6 +162,38 @@ public class ProjectDAOImpl implements ProjectDAO{
 			em.close();
 		}
 		
+	}
+
+	@Override
+	public void addTask(Long projectId, Long taskId) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		EntityTransaction tx = null;
+		try{
+			tx = em.getTransaction();
+			tx.begin();
+			Task task = em.getReference(Task.class, taskId);
+			Project project = em.getReference(Project.class, projectId);
+			task.setProject(project);
+//			project.addTask(task);
+			log.info("taskAdded: "+task.getName());
+			em.persist(project);
+			tx.commit();
+		}catch(RuntimeException ex){
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			ex.printStackTrace();
+		}finally{
+			em.close();
+		}
+		
+	}
+
+	@Override
+	public Project findProject(Long id) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		
+		return em.getReference(Project.class, id);
 	}
 
 }

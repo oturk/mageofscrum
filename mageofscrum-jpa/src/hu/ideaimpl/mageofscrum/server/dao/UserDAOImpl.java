@@ -1,12 +1,14 @@
-package hu.ideaimpl.mageofscrum.server.dbo;
+package hu.ideaimpl.mageofscrum.server.dao;
 
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
+import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -236,6 +238,21 @@ public class UserDAOImpl implements UserDAO {
 		} finally {
 			em.close();
 		}
+	}
+
+	@Override
+	public List<Project> listUsersProjects(Long userId) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		List<Project> result = new ArrayList<Project>();
+		try {
+			User user = em.getReference(User.class, userId);
+			for(Team team : user.getTeams()){
+				result.addAll(team.getProjects());
+			}
+		} catch (RuntimeException ex) {
+			ex.printStackTrace();
+		}
+		return result;
 	}
 
 }

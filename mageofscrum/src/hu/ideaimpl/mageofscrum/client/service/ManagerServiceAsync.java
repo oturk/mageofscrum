@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.service;
 
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
+import hu.ideaimpl.mageofscrum.shared.TaskDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
@@ -59,5 +60,9 @@ public interface ManagerServiceAsync {
 	void saveProject(ProjectDO project, AsyncCallback<ProjectDO> callback);
 
 	void deleteProject(Long id, AsyncCallback<Void> callback);
+
+	void listTeamsProjects(AsyncCallback<ArrayList<ProjectDO>> callback);
+
+	void fetchTasks(Long projectId, AsyncCallback<ArrayList<TaskDO>> callback);
 	
 }

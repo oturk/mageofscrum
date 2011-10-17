@@ -1,8 +1,8 @@
 package hu.ideaimpl.mageofscrum.server.auth;
 
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
-import hu.ideaimpl.mageofscrum.server.dbo.UserDAO;
-import hu.ideaimpl.mageofscrum.server.dbo.UserDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.UserDAO;
+import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 

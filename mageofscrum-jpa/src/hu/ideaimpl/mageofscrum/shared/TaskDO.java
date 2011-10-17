@@ -1,13 +1,17 @@
 package hu.ideaimpl.mageofscrum.shared;
 
-public class TaskDO {
+import java.util.Date;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class TaskDO implements IsSerializable{
 	private Long id;
 	private String name;
 	private String description;
 	private int estimateTime;
 	private int reportTime;
 	private int priority;
-
+	private Date created;
 	public TaskDO() {
 	}
 
@@ -57,6 +61,14 @@ public class TaskDO {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 
 }

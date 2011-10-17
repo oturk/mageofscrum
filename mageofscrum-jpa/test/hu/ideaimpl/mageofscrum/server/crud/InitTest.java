@@ -2,16 +2,17 @@ package hu.ideaimpl.mageofscrum.server.crud;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import hu.ideaimpl.mageofscrum.server.dbo.ProjectDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.RoleDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.TaskDAO;
-import hu.ideaimpl.mageofscrum.server.dbo.TaskDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.TaskStatusDAO;
-import hu.ideaimpl.mageofscrum.server.dbo.TaskStatusDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.TeamDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dbo.UserDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.ProjectDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.RoleDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.TaskDAO;
+import hu.ideaimpl.mageofscrum.server.dao.TaskDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAO;
+import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.TeamDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
+import hu.ideaimpl.mageofscrum.server.entity.Task;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
@@ -57,6 +58,14 @@ public class InitTest {
 		userDBO.saveUser("dzinnn", "dzinnn");
 		
 		projectDBO.saveProject("First projet", "Some important project");
+		Task task1 = taskDAO.findTask("first task");
+		Task task2 = taskDAO.findTask("second task");
+		Task task3 = taskDAO.findTask("third task");
+		Project proj = projectDBO.findProject("First projet");
+		
+		projectDBO.addTask(proj.getId(), task1.getId());
+		projectDBO.addTask(proj.getId(), task2.getId());
+		projectDBO.addTask(proj.getId(), task3.getId());
 		
 		User user = userDBO.findUser("oturk");
 		UserDataDO data = new UserDataDO();
@@ -115,5 +124,11 @@ public class InitTest {
 	public void testUserData(){
 		User user = userDBO.findUser("oturk");
 		System.out.println(user.getData().getEmail());
+	}
+	
+	@Test
+	public void testProjectTasks(){
+		Project proj = projectDBO.findProject("First projet");
+		System.out.println("projSiez: "+proj.getTasks().size());
 	}
 }
