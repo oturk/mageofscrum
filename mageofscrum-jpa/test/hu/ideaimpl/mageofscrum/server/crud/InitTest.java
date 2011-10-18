@@ -47,10 +47,10 @@ public class InitTest {
 		teamDBO.saveTeam("B team");
 		teamDBO.saveTeam("C team");
 		
-		taskDAO.saveTask("first task", "This is my first task", 8, 1);
-		taskDAO.saveTask("second task", "This is my second task", 8, 1);
-		taskDAO.saveTask("third task", "This is my third task", 8, 1);
-		
+//		taskDAO.saveTask("first task", "This is my first task", 8, 1);
+//		taskDAO.saveTask("second task", "This is my second task", 8, 1);
+//		taskDAO.saveTask("third task", "This is my third task", 8, 1);
+//		
 		userDBO.saveUser("oturk", "oturk");
 		userDBO.saveUser("sys", "sys");
 		Team bTeam = teamDBO.findTeam("B team");
@@ -63,9 +63,13 @@ public class InitTest {
 		Task task3 = taskDAO.findTask("third task");
 		Project proj = projectDBO.findProject("First projet");
 		
-		projectDBO.addTask(proj.getId(), task1.getId());
-		projectDBO.addTask(proj.getId(), task2.getId());
-		projectDBO.addTask(proj.getId(), task3.getId());
+		taskDAO.saveTask(proj.getId(), "first task", "This is my first task", 8, 1);
+		taskDAO.saveTask(proj.getId(), "second task", "This is my second task", 8, 1);
+		taskDAO.saveTask(proj.getId(), "third task", "This is my third task", 8, 1);
+		
+//		projectDBO.addTask(proj.getId(), task1.getId());
+//		projectDBO.addTask(proj.getId(), task2.getId());
+//		projectDBO.addTask(proj.getId(), task3.getId());
 		
 		User user = userDBO.findUser("oturk");
 		UserDataDO data = new UserDataDO();

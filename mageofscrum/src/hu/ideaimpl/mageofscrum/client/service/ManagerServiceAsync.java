@@ -64,5 +64,9 @@ public interface ManagerServiceAsync {
 	void listTeamsProjects(AsyncCallback<ArrayList<ProjectDO>> callback);
 
 	void fetchTasks(Long projectId, AsyncCallback<ArrayList<TaskDO>> callback);
+
+	void addTask(Long projectId, TaskDO task, AsyncCallback<TaskDO> callback);
+
+	void deleteTask(Long taskId, AsyncCallback<Void> callback);
 	
 }

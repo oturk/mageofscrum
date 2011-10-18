@@ -15,7 +15,6 @@ import hu.ideaimpl.mageofscrum.client.view.TeamsView;
 import hu.ideaimpl.mageofscrum.client.view.WelcomeView;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -24,11 +23,10 @@ import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class ClientFactoryImpl implements ClientFactory {
 	private static final TeamsView teamsView = new TeamsView();
-	private static final HandlerManager eventBus = new HandlerManager(null);
 	private static final HasWidgets container = RootLayoutPanel.get();
 	private static final SecurityServiceAsync securityService = GWT.create(SecurityService.class);
-	private static final EventBus eBus = new SimpleEventBus();
-	private static final PlaceController placeController = new PlaceController(eBus);
+	private EventBus eBus = new SimpleEventBus();
+	private PlaceController placeController = new PlaceController(eBus);
 	private static final WelcomeView welcomeView = new WelcomeView();
 	private static final ErrorView errorView = new ErrorView();
 	private static final MenuBar menuBar = new MenuBar();
@@ -42,11 +40,6 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public TeamsView getTeamsView() {
 		return teamsView;
-	}
-
-	@Override
-	public HandlerManager getEventBus() {
-		return eventBus;
 	}
 
 	@Override

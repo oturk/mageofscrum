@@ -57,9 +57,6 @@ public class HibernateUtil {
 		teamDAO.saveTeam("B team");
 		teamDAO.saveTeam("C team");
 		
-		taskDAO.saveTask("first task", "This is my first task", 8, 1);
-		taskDAO.saveTask("second task", "This is my second task", 8, 1);
-		taskDAO.saveTask("third task", "This is my third task", 8, 1);
 		
 		userDAO.saveUser("oturk", "oturk");
 		userDAO.saveUser("sys", "sys");
@@ -68,14 +65,19 @@ public class HibernateUtil {
 		userDAO.saveUser("dzinnn", "dzinnn");
 		
 		projectDAO.saveProject("First projet", "Some important project");
+		
 		Task task1 = taskDAO.findTask("first task");
 		Task task2 = taskDAO.findTask("second task");
 		Task task3 = taskDAO.findTask("third task");
 		Project proj = projectDAO.findProject("First projet");
 		
-		projectDAO.addTask(proj.getId(), task1.getId());
-		projectDAO.addTask(proj.getId(), task2.getId());
-		projectDAO.addTask(proj.getId(), task3.getId());
+		taskDAO.saveTask(proj.getId(), "first task", "This is my first task", 8, 1);
+		taskDAO.saveTask(proj.getId(), "second task", "This is my second task", 8, 1);
+		taskDAO.saveTask(proj.getId(), "third task", "This is my third task", 8, 1);
+//		
+//		projectDAO.addTask(proj.getId(), task1.getId());
+//		projectDAO.addTask(proj.getId(), task2.getId());
+//		projectDAO.addTask(proj.getId(), task3.getId());
 		
 		User user = userDAO.findUser("oturk");
 		UserDataDO data = new UserDataDO();
@@ -84,10 +86,12 @@ public class HibernateUtil {
 		data.setForename("Türk");
 		userDAO.updateUserData(1L, data);
 		Role role = roleDAO.findRole("admin");
+		Role owner = roleDAO.findRole("owner");
 		Team team = teamDAO.findTeam("A team");
 		
 		Project project = projectDAO.findProject("First projet");
 		userDAO.addRole(user.getId(), role.getId());
+		userDAO.addRole(user.getId(), owner.getId());
 		projectDAO.addOwner("oturk", project.getId());
 		projectDAO.addTeam(team.getId(), project.getId());
 		teamDAO.addUser(team.getId(), "oturk");

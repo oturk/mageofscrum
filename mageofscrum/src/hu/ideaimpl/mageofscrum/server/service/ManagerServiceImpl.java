@@ -5,6 +5,8 @@ import hu.ideaimpl.mageofscrum.server.dao.ProjectDAO;
 import hu.ideaimpl.mageofscrum.server.dao.ProjectDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.RoleDAO;
 import hu.ideaimpl.mageofscrum.server.dao.RoleDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.TaskDAO;
+import hu.ideaimpl.mageofscrum.server.dao.TaskDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TeamDAO;
 import hu.ideaimpl.mageofscrum.server.dao.TeamDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.UserDAO;
@@ -39,6 +41,7 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	private static final UserDAO userDAO = new UserDAOImpl();
 	private static final RoleDAO roleDAO = new RoleDAOImpl(); 
 	private static final ProjectDAO projectDAO = new ProjectDAOImpl();
+	private static final TaskDAO taskDAO = new TaskDAOImpl();
 	private final Logger log = LoggerFactory.getLogger(ManagerServiceImpl.class); 
 
 	@Override
@@ -310,6 +313,24 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 			result.add(t.getTaskDO());
 		}
 		return result;
+	}
+
+	@Override
+	public TaskDO addTask(Long projectId, TaskDO task) {
+		log.info("addTask: "+task.getId());
+		if(task.getId() != null){
+			taskDAO.updateTask(task.getId(), task.getName(), task.getEstimateTime(), task.getPriority(), task.getDescription());
+		}else{
+			taskDAO.saveTask(projectId, task.getName(), task.getDescription(), task.getEstimateTime(), task.getPriority());
+		}
+		Task taskk = taskDAO.findTask(task.getName());
+		log.info("newTask: "+taskk.getName());
+		return taskDAO.findTask(task.getName()).getTaskDO();
+	}
+
+	@Override
+	public void deleteTask(Long taskId) {
+		taskDAO.deleteTask(taskId);
 	}
 
 }

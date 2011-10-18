@@ -32,7 +32,6 @@ public class Task implements Serializable {
 	@JoinTable(name="PROJECT_TASKS",joinColumns = @JoinColumn(name="TASK_ID"), inverseJoinColumns = @JoinColumn(name="PROJECT_ID"))
 	private Project project;
 	@OneToOne
-	@PrimaryKeyJoinColumn
 	private TaskStatus status;
 
 	public Task() {

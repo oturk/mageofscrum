@@ -10,6 +10,7 @@ import hu.ideaimpl.mageofscrum.client.activity.TeamActivity;
 import hu.ideaimpl.mageofscrum.client.activity.WelcomeActivity;
 import hu.ideaimpl.mageofscrum.client.place.BacklogPlace;
 import hu.ideaimpl.mageofscrum.client.place.ErrorPlace;
+import hu.ideaimpl.mageofscrum.client.place.LogoutPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
 import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
@@ -19,6 +20,7 @@ import hu.ideaimpl.mageofscrum.client.place.WelcomePlace;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.user.client.Window;
 
 public class AppActivityMapper implements ActivityMapper {
 	private final ClientFactory clientFactory;
@@ -29,19 +31,26 @@ public class AppActivityMapper implements ActivityMapper {
 
 	@Override
 	public Activity getActivity(Place place) {
+		System.out.println("activityMapper");
 		if(place instanceof WelcomePlace){
 			return new WelcomeActivity(clientFactory);
-		}else if(place instanceof ErrorPlace){
+		}
+		if(place instanceof ErrorPlace){
 			return new ErrorActivity(((ErrorPlace) place).getError(), clientFactory);
-		}else if(place instanceof TeamPlace){
+		}
+		if(place instanceof TeamPlace){
 			return new TeamActivity(clientFactory);
-		}else if(place instanceof RolePlace){
+		}
+		if(place instanceof RolePlace){
 			return new RoleActivity(clientFactory);
-		}else if(place instanceof ProfilePlace){
+		}
+		if(place instanceof ProfilePlace){
 			return new ProfileActivity();
-		}else if(place instanceof ProjectPlace){
+		}
+		if(place instanceof ProjectPlace){
 			return new ProjectActivity();
-		}else if(place instanceof BacklogPlace){
+		}
+		if(place instanceof BacklogPlace){
 			return new BacklogActivity();
 		}
 		return null;

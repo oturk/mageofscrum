@@ -32,8 +32,6 @@ public interface ClientFactory {
 
 	public TeamsView getTeamsView();
 
-	public HandlerManager getEventBus();
-
 	public HasWidgets getContainer();
 
 	public SecurityServiceAsync getSecurityService();

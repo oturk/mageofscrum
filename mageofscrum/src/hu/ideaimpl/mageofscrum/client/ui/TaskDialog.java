@@ -31,6 +31,7 @@ public class TaskDialog extends DialogBox {
 	private Label titleLbl = new Label("Create new task");
 	private Button btnSave = new Button("save");
 	private Label errorlbl = new Label("");
+	private TaskDO formTask = null;
 
 	public TaskDialog() {
 		setGlassEnabled(true);
@@ -134,26 +135,47 @@ public class TaskDialog extends DialogBox {
 	}
 	
 	public void clearForm(){
+		formTask = null;
 		name.setValue("");
+		nameLbl.setStyleName("inputField");
 		estTime.setValue(null);
+		estTimeLbl.setStyleName("inputField");
 		priority.setValue(null);
+		priorityLbl.setStyleName("inputField");
 		description.setHTML("");
 	}
 	
-	public TaskDO getFormData(){
-		TaskDO result = new TaskDO();
-		result.setName(name.getValue());
-		result.setDescription(description.getHTML());
-		if(estTime.getValue() != null){
-			result.setEstimateTime(estTime.getValue());
+	public void setFormData(TaskDO task){
+		this.formTask = task;
+		name.setValue(task.getName());
+		description.setHTML(task.getDescription());
+		estTime.setValue(task.getEstimateTime());
+		priority.setValue(task.getPriority());
+	}
+	
+	public TaskDO getFormData() {
+		if (formTask == null) {
+			formTask = new TaskDO();
 		}
-		if(priority.getValue() != null){
-			result.setPriority(priority.getValue());
+
+		formTask.setName(name.getValue());
+		formTask.setDescription(description.getHTML());
+		if (estTime.getValue() != null) {
+			formTask.setEstimateTime(estTime.getValue());
 		}
-		return result;
+		if (priority.getValue() != null) {
+			formTask.setPriority(priority.getValue());
+		}
+		return formTask;
 	}
 	
 	public HasClickHandlers getSaveBtn(){
 		return btnSave;
+	}
+	
+	@Override
+	public void hide() {
+		clearForm();
+		super.hide();
 	}
 }

@@ -54,4 +54,6 @@ public interface ManagerService extends RemoteService {
 	public void deleteProject(Long id);
 	public ArrayList<ProjectDO> listTeamsProjects();
 	public ArrayList<TaskDO> fetchTasks(Long projectId);
+	public TaskDO addTask(Long projectId, TaskDO task);
+	public void deleteTask(Long taskId);
 }

@@ -15,7 +15,6 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.Window;
@@ -25,16 +24,15 @@ import com.google.web.bindery.event.shared.EventBus;
 
 
 public class MageOfScrumApp {
+	
 	private PlaceHistoryHandler historyHandler;
 	private PlaceController placeController;
 	private MageOfScrumShell mageOfScrumShell;
 	private MenuBar menuBar = ClientFactory.Util.getClientFactory().getMenuBar();
-	private HasWidgets container;
 	
 	public MageOfScrumApp(MageOfScrumShell mageOfScrumShell) {
 		this.mageOfScrumShell = mageOfScrumShell;
-//		SimplePanel appWidget = new SimplePanel();
-//		Place defaultPlace = new WelcomePlace(); 
+		bind();
 	}
 	
 	private void bind(){
@@ -71,7 +69,6 @@ public class MageOfScrumApp {
 	}
 	
 	public void run(HasWidgets container){
-		this.container = container;
 		ClientFactory clientFactory = GWT.create(ClientFactory.class);
 		EventBus eventBus = clientFactory.getEBus();
 		placeController = clientFactory.getPlaceController();
@@ -86,7 +83,7 @@ public class MageOfScrumApp {
 		historyHandler = new PlaceHistoryHandler(historyMapper);
 		historyHandler.register(placeController, eventBus, new TeamPlace());
 
-		bind();
+//		bind();
 		
 		container.clear();
 		container.add(mageOfScrumShell);
@@ -98,9 +95,8 @@ public class MageOfScrumApp {
 
 			@Override
 			public void onSuccess(Void result) {
-				container.clear();
-				container.add(new SecurityShell());
-				placeController.goTo(Place.NOWHERE);
+//				Window.Location.reload();
+				Window.Location.replace("../mageofscrum.html?gwt.codesvr=127.0.0.1:9997");
 			}
 
 			@Override
