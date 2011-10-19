@@ -33,6 +33,9 @@ public class Task implements Serializable {
 	private Project project;
 	@OneToOne
 	private TaskStatus status;
+	@ManyToOne
+	@JoinTable(name="SPRINT_TASKS",joinColumns = @JoinColumn(name="TASK_ID"), inverseJoinColumns = @JoinColumn(name="SPRINT_ID"))
+	private Sprint sprint;
 
 	public Task() {
 	}
@@ -107,6 +110,14 @@ public class Task implements Serializable {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public Sprint getSprint() {
+		return sprint;
+	}
+
+	public void setSprint(Sprint sprint) {
+		this.sprint = sprint;
 	}
 
 	public TaskDO getTaskDO(){

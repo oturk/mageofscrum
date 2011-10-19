@@ -33,6 +33,8 @@ public class Project implements Serializable {
 	private Team team;
 	@OneToMany(mappedBy = "project")
 	private List<Task> tasks;
+	@OneToMany(mappedBy = "project")
+	private List<Sprint> sprints;
 	
 	public static Project convertToProjectObj(ProjectDO data){
 		Project result = new Project();
@@ -94,6 +96,14 @@ public class Project implements Serializable {
 		this.tasks = tasks;
 	}
 	
+	public List<Sprint> getSprints() {
+		return sprints;
+	}
+
+	public void setSprints(List<Sprint> sprints) {
+		this.sprints = sprints;
+	}
+
 	public void addTask(Task task){
 		if(tasks == null){
 			tasks = new ArrayList<Task>();

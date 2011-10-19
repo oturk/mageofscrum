@@ -96,7 +96,7 @@ public class MageOfScrumApp {
 			@Override
 			public void onSuccess(Void result) {
 //				Window.Location.reload();
-				Window.Location.replace("../mageofscrum.html?gwt.codesvr=127.0.0.1:9997");
+				Window.Location.replace("/mageofscrum/mageofscrum.html");
 			}
 
 			@Override

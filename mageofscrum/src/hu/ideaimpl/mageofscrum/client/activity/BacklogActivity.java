@@ -71,6 +71,28 @@ public class BacklogActivity extends AbstractActivity {
 				dialog.show();
 			}
 		});
+		view.getStartSprintBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (projectSelectionModel.getSelectedObject() != null) {
+					doOnStartBtnClicked();
+				}
+			}
+		});
+		view.getStopSprintBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (projectSelectionModel.getSelectedObject() != null) {
+					doOnStopBtnClicked();
+				}
+			}
+		});
+		view.getMoveToSprintBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if(projectSelectionModel.getSelectedObject() != null && taskSelectionModel.getSelectedObject() != null){
+					doOnMoveBtnClicked();
+				}
+				
+			}
+		});
 		dialog.getSaveBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if(projectSelectionModel.getSelectedObject() != null && dialog.validateForm()){
@@ -93,6 +115,75 @@ public class BacklogActivity extends AbstractActivity {
 				dialog.show();
 			}
 		}, DoubleClickEvent.getType());
+	}
+
+	protected void doOnMoveBtnClicked() {
+		Long projectId = projectSelectionModel.getSelectedObject().getId();
+		final TaskDO task = taskSelectionModel.getSelectedObject();
+		ManagerService.Util.getService().moveTaskToSprint(projectId, task.getId(), new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				tasks.remove(task);
+				view.getBacklogTable().setRowData(tasks);
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
+			}
+		});
+	}
+
+	protected void doOnStopBtnClicked() {
+		Long id = projectSelectionModel.getSelectedObject().getId();
+		ManagerService.Util.getService().stopSprint(id, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				view.getErrorLbl().setText("");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
+			}
+		});
+	}
+
+	protected void doOnStartBtnClicked() {
+		final Long id =projectSelectionModel.getSelectedObject().getId();
+		ManagerService.Util.getService().hasActiveSprint(id, new AsyncCallback<Boolean>() {
+			
+			@Override
+			public void onSuccess(Boolean result) {
+				if(!result){
+					startingSprint(id);
+				}else{
+					view.getErrorLbl().setText("The selected project already got an active sprint!");
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
+			}
+		});
+	}
+
+	protected void startingSprint(Long id) {
+		ManagerService.Util.getService().startSprint(id, new AsyncCallback<Void>() {
+			
+			@Override
+			public void onSuccess(Void result) {
+				view.getErrorLbl().setText("");
+			}
+			
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
+			}
+		});
 	}
 
 	protected void doOnDeleteBtnClicked() {

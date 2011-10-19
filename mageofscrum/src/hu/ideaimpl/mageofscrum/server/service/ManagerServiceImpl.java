@@ -5,6 +5,8 @@ import hu.ideaimpl.mageofscrum.server.dao.ProjectDAO;
 import hu.ideaimpl.mageofscrum.server.dao.ProjectDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.RoleDAO;
 import hu.ideaimpl.mageofscrum.server.dao.RoleDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.SprintDAO;
+import hu.ideaimpl.mageofscrum.server.dao.SprintDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TaskDAO;
 import hu.ideaimpl.mageofscrum.server.dao.TaskDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TeamDAO;
@@ -19,6 +21,7 @@ import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
+import hu.ideaimpl.mageofscrum.shared.TaskStatuses;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
@@ -42,6 +45,7 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	private static final RoleDAO roleDAO = new RoleDAOImpl(); 
 	private static final ProjectDAO projectDAO = new ProjectDAOImpl();
 	private static final TaskDAO taskDAO = new TaskDAOImpl();
+	private static final SprintDAO sprintDAO = new SprintDAOImpl();
 	private final Logger log = LoggerFactory.getLogger(ManagerServiceImpl.class); 
 
 	@Override
@@ -310,7 +314,10 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		Project proj = projectDAO.findProject(projectId);
 		ArrayList<TaskDO> result = new ArrayList<TaskDO>();
 		for(Task t : proj.getTasks()){
-			result.add(t.getTaskDO());
+			System.out.println(t.getStatus().getStatus()+" "+TaskStatuses.BACKLOG.name());
+			if(t.getStatus().getStatus().equals(TaskStatuses.BACKLOG.name())){
+				result.add(t.getTaskDO());
+			}
 		}
 		return result;
 	}
@@ -331,6 +338,26 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	@Override
 	public void deleteTask(Long taskId) {
 		taskDAO.deleteTask(taskId);
+	}
+
+	@Override
+	public boolean hasActiveSprint(Long projectId) {
+		return sprintDAO.hasActiveSprint(projectId);
+	}
+
+	@Override
+	public void startSprint(Long projectId) {
+		sprintDAO.startSprint(projectId);
+	}
+
+	@Override
+	public void stopSprint(Long projectId) {
+		sprintDAO.stopSprint(projectId);
+	}
+
+	@Override
+	public void moveTaskToSprint(Long projectId, Long taskId) {
+		sprintDAO.addTask(projectId, taskId);
 	}
 
 }

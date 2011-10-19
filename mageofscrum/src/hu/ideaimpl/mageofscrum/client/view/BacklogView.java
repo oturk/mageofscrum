@@ -19,6 +19,7 @@ import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -27,7 +28,11 @@ public class BacklogView extends Composite {
 	private CellTable<TaskDO> backlog;
 	private Button btnCreate = new Button("create");
 	private Button btnDelete = new Button("delete");
+	private Button btnMoveToSprint = new Button("move to sprint");
+	private Button btnStartSprint = new Button("start sprint");
+	private Button btnStopSprint = new Button("stop sprint");
 	private CellList<ProjectDO> projectsList;
+	private Label errorLbl = new Label("");
 
 	public BacklogView() {
 		
@@ -36,8 +41,14 @@ public class BacklogView extends Composite {
 		
 		AbsolutePanel absolutePanel = new AbsolutePanel();
 		verticalPanel.add(absolutePanel);
-		absolutePanel.setHeight("30px");
+		absolutePanel.setHeight("52px");
 		btnCreate.setStyleName("menuButton");
+		btnStartSprint.setStyleName("menuButton");
+		absolutePanel.add(btnStartSprint,176,0);
+		btnStopSprint.setStyleName("menuButton");
+		absolutePanel.add(btnStopSprint,258,0);
+		btnMoveToSprint.setStyleName("menuButton");
+		absolutePanel.add(btnMoveToSprint,341,0);
 		
 		btnCreate.setText("create task");
 		absolutePanel.add(btnCreate, 88, 0);
@@ -45,6 +56,10 @@ public class BacklogView extends Composite {
 		
 		btnDelete.setText("delete task");
 		absolutePanel.add(btnDelete, 0, 0);
+		
+		errorLbl.setStyleName("errorLbl");
+		absolutePanel.add(errorLbl, 0, 32);
+		errorLbl.setSize("440px", "20px");
 		
 		AbsolutePanel absolutePanel_1 = new AbsolutePanel();
 		verticalPanel.add(absolutePanel_1);
@@ -113,12 +128,28 @@ public class BacklogView extends Composite {
 		return projectsList;
 	}
 	
+	public HasText getErrorLbl(){
+		return errorLbl;
+	}
+	
 	public HasClickHandlers getCreateBtn(){
 		return btnCreate;
 	}
 	
 	public HasClickHandlers getDeleteBtn(){
 		return btnDelete;
+	}
+	
+	public HasClickHandlers getStartSprintBtn(){
+		return btnStartSprint;
+	}
+	
+	public HasClickHandlers getStopSprintBtn(){
+		return btnStopSprint;
+	}
+	
+	public HasClickHandlers getMoveToSprintBtn(){
+		return btnMoveToSprint;
 	}
 	
 	public CellTable<TaskDO> getBacklogTable(){

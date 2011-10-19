@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import hu.ideaimpl.mageofscrum.server.dao.ProjectDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.RoleDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.SprintDAO;
+import hu.ideaimpl.mageofscrum.server.dao.SprintDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TaskDAO;
 import hu.ideaimpl.mageofscrum.server.dao.TaskDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAO;
@@ -11,11 +13,9 @@ import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TeamDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
-import hu.ideaimpl.mageofscrum.server.entity.Role;
-import hu.ideaimpl.mageofscrum.server.entity.Task;
+import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
-import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.List;
 
@@ -31,60 +31,62 @@ public class InitTest {
 	private static RoleDAOImpl roleDBO = new RoleDAOImpl();
 	private static TaskStatusDAO statusDAO = new TaskStatusDAOImpl();
 	private static TaskDAO taskDAO = new TaskDAOImpl();
+	private static SprintDAO sprintDAO = new SprintDAOImpl();
 	Logger log = LoggerFactory.getLogger(InitTest.class);
 
 	@BeforeClass
 	public static void beforeClass(){
-		roleDBO.saveRole("admin", "Has all privileges");
-		roleDBO.saveRole("owner", "Has almost all privileges");
-		roleDBO.saveRole("master", "Has some privileges");
-		
-		statusDAO.saveStatus("backlog");
-		statusDAO.saveStatus("sprint");
-		statusDAO.saveStatus("completed");
-		
-		teamDBO.saveTeam("A team");
-		teamDBO.saveTeam("B team");
-		teamDBO.saveTeam("C team");
-		
-//		taskDAO.saveTask("first task", "This is my first task", 8, 1);
-//		taskDAO.saveTask("second task", "This is my second task", 8, 1);
-//		taskDAO.saveTask("third task", "This is my third task", 8, 1);
+//		roleDBO.saveRole("admin", "Has all privileges");
+//		roleDBO.saveRole("owner", "Has almost all privileges");
+//		roleDBO.saveRole("master", "Has some privileges");
 //		
-		userDBO.saveUser("oturk", "oturk");
-		userDBO.saveUser("sys", "sys");
-		Team bTeam = teamDBO.findTeam("B team");
-		teamDBO.addUser(bTeam.getId(), "sys");
-		userDBO.saveUser("dzinnn", "dzinnn");
-		
-		projectDBO.saveProject("First projet", "Some important project");
-		Task task1 = taskDAO.findTask("first task");
-		Task task2 = taskDAO.findTask("second task");
-		Task task3 = taskDAO.findTask("third task");
-		Project proj = projectDBO.findProject("First projet");
-		
-		taskDAO.saveTask(proj.getId(), "first task", "This is my first task", 8, 1);
-		taskDAO.saveTask(proj.getId(), "second task", "This is my second task", 8, 1);
-		taskDAO.saveTask(proj.getId(), "third task", "This is my third task", 8, 1);
-		
-//		projectDBO.addTask(proj.getId(), task1.getId());
-//		projectDBO.addTask(proj.getId(), task2.getId());
-//		projectDBO.addTask(proj.getId(), task3.getId());
-		
-		User user = userDBO.findUser("oturk");
-		UserDataDO data = new UserDataDO();
-		data.setEmail("oturk@email.hu");
-		data.setSurname("Ottó");
-		data.setForename("Türk");
-		userDBO.updateUserData(1L, data);
-		Role role = roleDBO.findRole("admin");
-		Team team = teamDBO.findTeam("A team");
-		
-		Project project = projectDBO.findProject("First projet");
-		userDBO.addRole(user.getId(), role.getId());
-		projectDBO.addOwner("oturk", project.getId());
-		projectDBO.addTeam(team.getId(), project.getId());
-		teamDBO.addUser(team.getId(), "oturk");
+//		statusDAO.saveStatus("backlog");
+//		statusDAO.saveStatus("sprint");
+//		statusDAO.saveStatus("completed");
+//		
+//		teamDBO.saveTeam("A team");
+//		teamDBO.saveTeam("B team");
+//		teamDBO.saveTeam("C team");
+//		
+////		taskDAO.saveTask("first task", "This is my first task", 8, 1);
+////		taskDAO.saveTask("second task", "This is my second task", 8, 1);
+////		taskDAO.saveTask("third task", "This is my third task", 8, 1);
+////		
+//		userDBO.saveUser("oturk", "oturk");
+//		userDBO.saveUser("sys", "sys");
+//		Team bTeam = teamDBO.findTeam("B team");
+//		teamDBO.addUser(bTeam.getId(), "sys");
+//		userDBO.saveUser("dzinnn", "dzinnn");
+//		
+//		projectDBO.saveProject("First projet", "Some important project");
+//		Task task1 = taskDAO.findTask("first task");
+//		Task task2 = taskDAO.findTask("second task");
+//		Task task3 = taskDAO.findTask("third task");
+//		Project proj = projectDBO.findProject("First projet");
+//		
+//		taskDAO.saveTask(proj.getId(), "first task", "This is my first task", 8, 1);
+//		taskDAO.saveTask(proj.getId(), "second task", "This is my second task", 8, 1);
+//		taskDAO.saveTask(proj.getId(), "third task", "This is my third task", 8, 1);
+//		
+////		projectDBO.addTask(proj.getId(), task1.getId());
+////		projectDBO.addTask(proj.getId(), task2.getId());
+////		projectDBO.addTask(proj.getId(), task3.getId());
+//		
+//		User user = userDBO.findUser("oturk");
+//		UserDataDO data = new UserDataDO();
+//		data.setEmail("oturk@email.hu");
+//		data.setSurname("Ottó");
+//		data.setForename("Türk");
+//		userDBO.updateUserData(1L, data);
+//		Role role = roleDBO.findRole("admin");
+//		Team team = teamDBO.findTeam("A team");
+//		
+//		Project project = projectDBO.findProject("First projet");
+//		sprintDAO.startSprint(project.getId());
+//		userDBO.addRole(user.getId(), role.getId());
+//		projectDBO.addOwner("oturk", project.getId());
+//		projectDBO.addTeam(team.getId(), project.getId());
+//		teamDBO.addUser(team.getId(), "oturk");
 	}
 	
 	@Test
@@ -134,5 +136,14 @@ public class InitTest {
 	public void testProjectTasks(){
 		Project proj = projectDBO.findProject("First projet");
 		System.out.println("projSiez: "+proj.getTasks().size());
+	}
+	
+	@Test
+	public void testActualSprint(){
+		Project proj = projectDBO.findProject("First projet");
+		System.out.println("sprints: "+proj.getSprints().size());
+		Sprint sprint = sprintDAO.findActualSprint(proj.getId());
+		System.out.println("startDate: "+sprint.getStartDate());
+		System.out.println("sprintTasks: "+sprint.getTasks().size());
 	}
 }

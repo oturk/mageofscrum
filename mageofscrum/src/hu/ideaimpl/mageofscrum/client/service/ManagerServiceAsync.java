@@ -68,5 +68,13 @@ public interface ManagerServiceAsync {
 	void addTask(Long projectId, TaskDO task, AsyncCallback<TaskDO> callback);
 
 	void deleteTask(Long taskId, AsyncCallback<Void> callback);
+
+	void hasActiveSprint(Long projectId, AsyncCallback<Boolean> callback);
+
+	void startSprint(Long projectId, AsyncCallback<Void> callback);
+
+	void stopSprint(Long projectId, AsyncCallback<Void> callback);
+
+	void moveTaskToSprint(Long projectId, Long taskId, AsyncCallback<Void> callback);
 	
 }

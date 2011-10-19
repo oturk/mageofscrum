@@ -56,4 +56,9 @@ public interface ManagerService extends RemoteService {
 	public ArrayList<TaskDO> fetchTasks(Long projectId);
 	public TaskDO addTask(Long projectId, TaskDO task);
 	public void deleteTask(Long taskId);
+	//Sprint operations
+	public boolean hasActiveSprint(Long projectId);
+	public void startSprint(Long projectId);
+	public void stopSprint(Long projectId);
+	public void moveTaskToSprint(Long projectId, Long taskId);
 }

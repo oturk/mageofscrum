@@ -2,6 +2,8 @@ package hu.ideaimpl.mageofscrum.server;
 
 import hu.ideaimpl.mageofscrum.server.dao.ProjectDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.RoleDAOImpl;
+import hu.ideaimpl.mageofscrum.server.dao.SprintDAO;
+import hu.ideaimpl.mageofscrum.server.dao.SprintDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TaskDAO;
 import hu.ideaimpl.mageofscrum.server.dao.TaskDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAO;
@@ -10,11 +12,13 @@ import hu.ideaimpl.mageofscrum.server.dao.TeamDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
+import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.server.entity.Task;
 import hu.ideaimpl.mageofscrum.server.entity.TaskStatus;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
+import hu.ideaimpl.mageofscrum.shared.TaskStatuses;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import javax.persistence.EntityManager;
@@ -34,6 +38,7 @@ public class HibernateUtil {
 		.addAnnotatedClass(Project.class)
 		.addAnnotatedClass(Task.class)
 		.addAnnotatedClass(TaskStatus.class)
+		.addAnnotatedClass(Sprint.class)
 		.configure("hibernate.cfg.xml").buildEntityManagerFactory();
 	}
 
@@ -44,14 +49,17 @@ public class HibernateUtil {
 		RoleDAOImpl roleDAO = new RoleDAOImpl();
 		TaskStatusDAO statusDAO = new TaskStatusDAOImpl();
 		TaskDAO taskDAO = new TaskDAOImpl();
+		SprintDAO sprintDAO = new SprintDAOImpl();
 		
 		roleDAO.saveRole("admin", "Has all privileges");
 		roleDAO.saveRole("owner", "Has almost all privileges");
 		roleDAO.saveRole("master", "Has some privileges");
 		
-		statusDAO.saveStatus("backlog");
-		statusDAO.saveStatus("sprint");
-		statusDAO.saveStatus("completed");
+		statusDAO.saveStatus(TaskStatuses.BACKLOG.name());
+		statusDAO.saveStatus(TaskStatuses.PLANNED.name());
+		statusDAO.saveStatus(TaskStatuses.STARTED.name());
+		statusDAO.saveStatus(TaskStatuses.COMPLETED.name());
+		statusDAO.saveStatus(TaskStatuses.MOVEDBACK.name());
 		
 		teamDAO.saveTeam("A team");
 		teamDAO.saveTeam("B team");
@@ -90,6 +98,10 @@ public class HibernateUtil {
 		Team team = teamDAO.findTeam("A team");
 		
 		Project project = projectDAO.findProject("First projet");
+		Task task = taskDAO.findTask("first task");
+		sprintDAO.startSprint(project.getId());
+		sprintDAO.addTask(project.getId(), task.getId());
+		
 		userDAO.addRole(user.getId(), role.getId());
 		userDAO.addRole(user.getId(), owner.getId());
 		projectDAO.addOwner("oturk", project.getId());
