@@ -16,6 +16,7 @@ import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
+import hu.ideaimpl.mageofscrum.shared.Operations;
 
 import java.util.List;
 
@@ -145,5 +146,15 @@ public class InitTest {
 		Sprint sprint = sprintDAO.findActualSprint(proj.getId());
 		System.out.println("startDate: "+sprint.getStartDate());
 		System.out.println("sprintTasks: "+sprint.getTasks().size());
+	}
+	
+	@Test
+	public void testHistory(){
+		sprintDAO.logHistory(1L, Operations.ADD, 8);
+		sprintDAO.logHistory(1L, Operations.ADD, 6);
+		sprintDAO.logHistory(1L, Operations.ADD, 4);
+		sprintDAO.logHistory(1L, Operations.ADD, 8);
+		Sprint sprint = sprintDAO.findActualSprint(1L);
+		System.out.println("historySize: "+sprint.getHistory().size());
 	}
 }

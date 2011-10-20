@@ -1,10 +1,12 @@
 package hu.ideaimpl.mageofscrum.server.dao;
 
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
+import hu.ideaimpl.mageofscrum.server.entity.History;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.server.entity.Task;
 import hu.ideaimpl.mageofscrum.server.entity.TaskStatus;
+import hu.ideaimpl.mageofscrum.shared.Operations;
 import hu.ideaimpl.mageofscrum.shared.TaskStatuses;
 
 import java.util.Date;
@@ -118,6 +120,37 @@ public class SprintDAOImpl implements SprintDAO {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void logHistory(Long projectId, Operations operation, int time) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		EntityTransaction tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			Project project = em.getReference(Project.class, projectId);
+			List<Sprint> sprints = em.createQuery("from Sprint s where s.project = :project and s.endDate is null")
+					.setParameter("project", project).getResultList();
+			Sprint sprint = sprints.get(0);
+
+			History history = new History();
+			history.setModDate(new Date());
+			history.setOperation(operation.name());
+			history.setSprint(sprint);
+			history.setTime(time);
+				
+			sprint.addHistory(history);
+			em.persist(history);
+			tx.commit();
+		}catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			ex.printStackTrace();
+		} finally {
+			em.close();
+		}
 	}
 
 }

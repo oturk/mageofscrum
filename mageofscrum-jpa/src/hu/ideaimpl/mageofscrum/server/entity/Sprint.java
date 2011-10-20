@@ -28,6 +28,8 @@ public class Sprint implements Serializable {
 	private Project project;
 	@OneToMany(mappedBy = "sprint")
 	private List<Task> tasks;
+	@OneToMany(mappedBy = "sprint")
+	private List<History> history;
 
 	public Sprint() {
 	}
@@ -77,6 +79,21 @@ public class Sprint implements Serializable {
 			tasks = new ArrayList<Task>();
 		}
 		tasks.add(task);
+	}
+
+	public List<History> getHistory() {
+		return history;
+	}
+
+	public void setHistory(List<History> history) {
+		this.history = history;
+	}
+	
+	public void addHistory(History history){
+		if(this.history == null){
+			this.history = new ArrayList<History>();
+		}
+		this.history.add(history);
 	}
 
 }

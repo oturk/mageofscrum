@@ -10,6 +10,7 @@ import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAO;
 import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TeamDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
+import hu.ideaimpl.mageofscrum.server.entity.History;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
 import hu.ideaimpl.mageofscrum.server.entity.Sprint;
@@ -39,6 +40,7 @@ public class HibernateUtil {
 		.addAnnotatedClass(Task.class)
 		.addAnnotatedClass(TaskStatus.class)
 		.addAnnotatedClass(Sprint.class)
+		.addAnnotatedClass(History.class)
 		.configure("hibernate.cfg.xml").buildEntityManagerFactory();
 	}
 
