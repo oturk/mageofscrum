@@ -76,5 +76,7 @@ public interface ManagerServiceAsync {
 	void stopSprint(Long projectId, AsyncCallback<Void> callback);
 
 	void moveTaskToSprint(Long projectId, Long taskId, AsyncCallback<Void> callback);
+
+	void fetchSprintTask(Long projectId, AsyncCallback<ArrayList<TaskDO>> callback);
 	
 }

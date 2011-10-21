@@ -6,21 +6,21 @@ import hu.ideaimpl.mageofscrum.client.activity.ErrorActivity;
 import hu.ideaimpl.mageofscrum.client.activity.ProfileActivity;
 import hu.ideaimpl.mageofscrum.client.activity.ProjectActivity;
 import hu.ideaimpl.mageofscrum.client.activity.RoleActivity;
+import hu.ideaimpl.mageofscrum.client.activity.SprintActivity;
 import hu.ideaimpl.mageofscrum.client.activity.TeamActivity;
 import hu.ideaimpl.mageofscrum.client.activity.WelcomeActivity;
 import hu.ideaimpl.mageofscrum.client.place.BacklogPlace;
 import hu.ideaimpl.mageofscrum.client.place.ErrorPlace;
-import hu.ideaimpl.mageofscrum.client.place.LogoutPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
 import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
+import hu.ideaimpl.mageofscrum.client.place.SprintPlace;
 import hu.ideaimpl.mageofscrum.client.place.TeamPlace;
 import hu.ideaimpl.mageofscrum.client.place.WelcomePlace;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.client.Window;
 
 public class AppActivityMapper implements ActivityMapper {
 	private final ClientFactory clientFactory;
@@ -52,6 +52,9 @@ public class AppActivityMapper implements ActivityMapper {
 		}
 		if(place instanceof BacklogPlace){
 			return new BacklogActivity();
+		}
+		if(place instanceof SprintPlace){
+			return new SprintActivity();
 		}
 		return null;
 	}

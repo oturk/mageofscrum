@@ -2,12 +2,9 @@ package hu.ideaimpl.mageofscrum.client.ui;
 
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 
-import com.google.gwt.core.ext.typeinfo.ParseException;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.dom.client.KeyPressEvent;
-import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -32,13 +29,15 @@ public class TaskDialog extends DialogBox {
 	private Button btnSave = new Button("save");
 	private Label errorlbl = new Label("");
 	private TaskDO formTask = null;
+	private Button btnCancel = new Button("cancel");
+	private AbsolutePanel absolutePanel;
 
 	public TaskDialog() {
 		setGlassEnabled(true);
 		setGlassStyleName("mosDialogGlass");
 		
-		AbsolutePanel absolutePanel = new AbsolutePanel();
-		absolutePanel.setSize("500px", "573px");
+		absolutePanel = new AbsolutePanel();
+//		absolutePanel.setSize("500px", "573px");
 		absolutePanel.setStylePrimaryName("mosDialog");
 		
 		nameLbl.setStyleName("loginLbl");
@@ -69,10 +68,10 @@ public class TaskDialog extends DialogBox {
 		absolutePanel.add(descLbl, 10, 177);
 		descLbl.setSize("269px", "24px");
 		
-		absolutePanel.add(toolbar,10,206);
-		toolbar.setWidth("480px");
-		absolutePanel.add(description, 10, 288);
-		description.setSize("480px", "236px");
+//		absolutePanel.add(toolbar,10,206);
+//		toolbar.setWidth("480px");
+//		absolutePanel.add(description, 10, 288);
+//		description.setSize("480px", "236px");
 		
 		titleLbl.setStyleName("loginHeader");
 		absolutePanel.add(titleLbl, 0, 0);
@@ -81,9 +80,8 @@ public class TaskDialog extends DialogBox {
 		btnSave.setStyleName("menuButton");
 		absolutePanel.add(btnSave, 10, 534);
 		
-		Button btnCancel = new Button("cancel");
 		btnCancel.setStyleName("menuButton");
-		absolutePanel.add(btnCancel, 62, 534);
+//		absolutePanel.add(btnCancel, 62, 534);
 		
 		btnCancel.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
@@ -177,5 +175,38 @@ public class TaskDialog extends DialogBox {
 	public void hide() {
 		clearForm();
 		super.hide();
+	}
+	
+	public static TaskDialog getTaskDialog(){
+		TaskDialog dialog = new TaskDialog();
+		
+		dialog.absolutePanel.add(dialog.toolbar,10,206);
+		dialog.toolbar.setWidth("480px");
+		dialog.absolutePanel.add(dialog.description, 10, 288);
+		dialog.description.setSize("480px", "236px");
+		dialog.absolutePanel.add(dialog.btnCancel, 62, 534);
+		dialog.absolutePanel.setSize("500px", "573px");
+		
+		return dialog;
+	}
+	
+	public static TaskDialog getDetailsDialog(){
+		TaskDialog dialog = new TaskDialog();
+		dialog.titleLbl.setText("Task details");
+		dialog.btnSave.setVisible(false);
+		dialog.btnCancel.setText("close");
+		dialog.description.setEnabled(false);
+		dialog.name.setEnabled(false);
+		dialog.name.setStylePrimaryName("inputFieldDisabled");
+		dialog.estTime.setEnabled(false);
+		dialog.priority.setEnabled(false);
+		dialog.toolbar.setVisible(false);
+		
+		dialog.absolutePanel.add(dialog.description, 10, 210);
+		dialog.description.setSize("480px", "236px");
+		dialog.absolutePanel.add(dialog.btnCancel, 62, 460);
+		dialog.absolutePanel.setSize("500px", "500px");
+		
+		return dialog;
 	}
 }

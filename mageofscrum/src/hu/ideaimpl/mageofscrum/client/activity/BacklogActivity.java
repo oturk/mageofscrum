@@ -22,7 +22,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 
 public class BacklogActivity extends AbstractActivity {
 	private BacklogView view = ClientFactory.Util.getClientFactory().getBacklogView();
-	private TaskDialog dialog = new TaskDialog();
+	private TaskDialog dialog = TaskDialog.getTaskDialog();
 	private ArrayList<ProjectDO> projects = new ArrayList<ProjectDO>();
 	private ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
 	private SingleSelectionModel<ProjectDO> projectSelectionModel = new SingleSelectionModel<ProjectDO>();
@@ -31,7 +31,6 @@ public class BacklogActivity extends AbstractActivity {
 	private boolean running = false;
 	
 	public BacklogActivity() {
-		System.out.println("activityConstructor");
 		initProjectList();
 		view.getProjectsList().setSelectionModel(projectSelectionModel);
 		view.getBacklogTable().setSelectionModel(taskSelectionModel);

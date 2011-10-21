@@ -75,19 +75,16 @@ public class SprintDAOImpl implements SprintDAO {
 			tx = em.getTransaction();
 			tx.begin();
 			Project project = em.getReference(Project.class, projectId);
-			Task task = em.getReference(Task.class, taskId);
-			
 			Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null")
 					.setParameter("project", project).getResultList().get(0);
-
 			TaskStatus status = (TaskStatus) em.createQuery("from TaskStatus s where s.status = :status")
 					.setParameter("status", TaskStatuses.PLANNED.name()).getResultList().get(0);
+			Task task = em.getReference(Task.class, taskId);
 			task.setStatus(status);
 			task.setSprint(sprint);
 			em.persist(task);
-//			sprint.addTask(task);
-//			em.persist(sprint);
 			tx.commit();
+			logHistory(projectId,Operations.ADD, task.getEstimateTime());
 		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
@@ -151,6 +148,11 @@ public class SprintDAOImpl implements SprintDAO {
 		} finally {
 			em.close();
 		}
+	}
+
+	@Override
+	public void removeTask(Long projectId, Long taskId) {
+		
 	}
 
 }

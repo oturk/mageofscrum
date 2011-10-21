@@ -188,3 +188,8 @@ width: 600px;
 background-color: gray;
 opacity: 0.4;
 }
+.inputFieldDisabled{
+	font-weight: bold;
+	background-color:white;
+	border: none;
+}

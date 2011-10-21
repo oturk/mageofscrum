@@ -6,6 +6,7 @@ import hu.ideaimpl.mageofscrum.client.place.BacklogPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
 import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
+import hu.ideaimpl.mageofscrum.client.place.SprintPlace;
 import hu.ideaimpl.mageofscrum.client.place.TeamPlace;
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
@@ -64,6 +65,11 @@ public class MageOfScrumApp {
 		menuBar.getBacklog().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				placeController.goTo(new BacklogPlace());
+			}
+		});
+		menuBar.getSprint().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				placeController.goTo(new SprintPlace());
 			}
 		});
 	}

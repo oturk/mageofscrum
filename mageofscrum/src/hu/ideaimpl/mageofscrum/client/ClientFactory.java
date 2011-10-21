@@ -9,11 +9,11 @@ import hu.ideaimpl.mageofscrum.client.view.ErrorView;
 import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
+import hu.ideaimpl.mageofscrum.client.view.SprintView;
 import hu.ideaimpl.mageofscrum.client.view.TeamsView;
 import hu.ideaimpl.mageofscrum.client.view.WelcomeView;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.web.bindery.event.shared.EventBus;
@@ -60,4 +60,6 @@ public interface ClientFactory {
 	public ProjectsView getProjectsView();
 	
 	public BacklogView getBacklogView();
+	
+	public SprintView getSprintView();
 }

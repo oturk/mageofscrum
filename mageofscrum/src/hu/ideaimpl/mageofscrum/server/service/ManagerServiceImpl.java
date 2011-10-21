@@ -360,4 +360,16 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		sprintDAO.addTask(projectId, taskId);
 	}
 
+	@Override
+	public ArrayList<TaskDO> fetchSprintTask(Long projectId) {
+		Project proj = projectDAO.findProject(projectId);
+		ArrayList<TaskDO> result = new ArrayList<TaskDO>();
+		for(Task t : proj.getTasks()){
+			if(!t.getStatus().getStatus().equals(TaskStatuses.BACKLOG.name()) && !t.getStatus().getStatus().equals(TaskStatuses.MOVEDBACK.name())){
+				result.add(t.getTaskDO());
+			}
+		}
+		return result;
+	}
+
 }
