@@ -2,7 +2,8 @@ package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
-import hu.ideaimpl.mageofscrum.client.user.LoginForm2;
+import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm2;
+import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -51,7 +52,7 @@ public class SecurityShell extends Composite {
 			@Override
 			public void onSuccess(Boolean result) {
 				if (result) {
-					ClientFactory.Util.getClientFactory().getMageOfScrumApp().run(RootLayoutPanel.get());
+					updateRoles();
 				} else {
 					loginForm.getLblError().setText("Wrong email or password!");
 				}
@@ -64,5 +65,21 @@ public class SecurityShell extends Composite {
 		});
 	}
 	
+	protected void updateRoles() {
+		SecurityService.Util.getService().getRole(new AsyncCallback<Roles>() {
+
+			@Override
+			public void onSuccess(Roles result) {
+				MageOfScrum.role = result;
+				ClientFactory.Util.getClientFactory().getMageOfScrumApp().run(RootLayoutPanel.get());
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				MageOfScrum.role = Roles.USER;
+				ClientFactory.Util.getClientFactory().getMageOfScrumApp().run(RootLayoutPanel.get());
+			}
+		});
+	}
 
 }

@@ -11,16 +11,19 @@ import org.apache.shiro.subject.Subject;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-@WebServlet(urlPatterns="/SecurityService")
-public class SecurityServiceImpl extends RemoteServiceServlet implements
-		SecurityService {
-	private static final long serialVersionUID = 1L; 
+@WebServlet(urlPatterns = "/SecurityService")
+public class SecurityServiceImpl extends RemoteServiceServlet implements SecurityService {
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public boolean loginUser(String email, String password, boolean rememberMe) {
-		UsernamePasswordToken token = new UsernamePasswordToken(email, password,rememberMe);
-		SecurityUtils.getSubject().login(token);
-		return SecurityUtils.getSubject().isAuthenticated();
+		try {
+			UsernamePasswordToken token = new UsernamePasswordToken(email, password, rememberMe);
+			SecurityUtils.getSubject().login(token);
+			return SecurityUtils.getSubject().isAuthenticated();
+		} catch (Exception ex) {
+			return false;
+		}
 	}
 
 	@Override
@@ -45,29 +48,29 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements
 
 	@Override
 	public boolean forgotPassword(String email) {
-//		Session session = HibernateUtil.getSession();
-//		User user = (User) session.get(User.class, email);
-//		//TODO emailt küldeni a passwordrõl
-//		if(user != null){
-//			return true;
-//		}
+		// Session session = HibernateUtil.getSession();
+		// User user = (User) session.get(User.class, email);
+		// //TODO emailt küldeni a passwordrõl
+		// if(user != null){
+		// return true;
+		// }
 		return false;
 	}
 
 	@Override
 	public Roles getRole() {
 		Subject currentUser = SecurityUtils.getSubject();
-		
-		if(currentUser.hasRole("ADMIN")){
+
+		if (currentUser.hasRole(Roles.ADMIN.name())) {
 			return Roles.ADMIN;
-		}else if(currentUser.hasRole(Roles.OWNER.toString())){
+		} else if (currentUser.hasRole(Roles.OWNER.name())) {
 			return Roles.OWNER;
-		}else if(currentUser.hasRole(Roles.MASTER.toString())){
+		} else if (currentUser.hasRole(Roles.MASTER.name())) {
 			return Roles.MASTER;
-		}else if(currentUser.hasRole(Roles.USER.toString())){
+		} else if (currentUser.hasRole(Roles.USER.name())) {
 			return Roles.USER;
 		}
-		
+
 		return Roles.UNKNOWN;
 	}
 

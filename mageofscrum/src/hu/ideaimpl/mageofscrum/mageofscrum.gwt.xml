@@ -4,12 +4,16 @@
 	<inherits name="com.google.gwt.user.User" />
 	<inherits name="com.google.gwt.activity.Activity"/>
   	<inherits name="com.google.gwt.place.Place"/>
+<!--   	<inherits name='org.zenika.widget.DatePickerModule'/> -->
+  	<inherits name="com.google.gwt.user.theme.chrome.Chrome"/>
+  	<inherits name='com.google.gwt.visualization.Visualization'/>
 	<source path="client" />
 	<source path="shared" />
 	<entry-point class="hu.ideaimpl.mageofscrum.client.MageOfScrum" />
 
-	<set-property name="user.agent" value="safari" />
-
+<!-- 	<set-property name="user.agent" value="safari" /> -->
+	<set-property name="user.agent" value="gecko1_8" />
+		
 	<replace-with class="hu.ideaimpl.mageofscrum.client.ClientFactoryImpl">
 		<when-type-is class="hu.ideaimpl.mageofscrum.client.ClientFactory" />
 	</replace-with>

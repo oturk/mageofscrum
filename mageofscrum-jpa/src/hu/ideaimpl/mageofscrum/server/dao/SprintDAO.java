@@ -3,6 +3,8 @@ package hu.ideaimpl.mageofscrum.server.dao;
 import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.shared.Operations;
 
+import java.util.Date;
+
 public interface SprintDAO {
 	public void startSprint(Long projectId);
 	public void stopSprint(Long projectId);
@@ -11,6 +13,7 @@ public interface SprintDAO {
 	
 	public Sprint findActualSprint(Long projectId);
 	public boolean hasActiveSprint(Long projectId);
+	public void reportTime(Long projectId, Long taskId, int time, Date date);
 	
-	public void logHistory(Long projectId, Operations operation, int time);
+	public void logHistory(Long projectId, Operations operation, int time, Date date);
 }

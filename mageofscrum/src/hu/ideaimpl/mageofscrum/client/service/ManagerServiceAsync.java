@@ -8,6 +8,7 @@ import hu.ideaimpl.mageofscrum.shared.UserDO;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -78,5 +79,9 @@ public interface ManagerServiceAsync {
 	void moveTaskToSprint(Long projectId, Long taskId, AsyncCallback<Void> callback);
 
 	void fetchSprintTask(Long projectId, AsyncCallback<ArrayList<TaskDO>> callback);
+
+	void reportToTask(Long projectId, Long taskId, int time, Date date, String desc, AsyncCallback<TaskDO> callback);
+
+	void removeTaskFromSprint(Long projectId, Long taskId, AsyncCallback<Void> callback);
 	
 }

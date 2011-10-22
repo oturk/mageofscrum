@@ -16,9 +16,6 @@ public interface Resources extends ClientBundle {
 		}
 	}
 	
-	@Source("styles.css")
-	public Styles styles();
-	
 	@Source("projects-icon.png")
 	public ImageResource projectsIcon();
 

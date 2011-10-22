@@ -5,15 +5,15 @@ import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
-import hu.ideaimpl.mageofscrum.client.user.LoginForm2;
+import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm2;
 import hu.ideaimpl.mageofscrum.client.view.BacklogView;
+import hu.ideaimpl.mageofscrum.client.view.DiagnoseView;
 import hu.ideaimpl.mageofscrum.client.view.ErrorView;
 import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
 import hu.ideaimpl.mageofscrum.client.view.SprintView;
 import hu.ideaimpl.mageofscrum.client.view.TeamsView;
-import hu.ideaimpl.mageofscrum.client.view.WelcomeView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.PlaceController;
@@ -28,7 +28,6 @@ public class ClientFactoryImpl implements ClientFactory {
 	private static final SecurityServiceAsync securityService = GWT.create(SecurityService.class);
 	private EventBus eBus = new SimpleEventBus();
 	private PlaceController placeController = new PlaceController(eBus);
-	private static final WelcomeView welcomeView = new WelcomeView();
 	private static final ErrorView errorView = new ErrorView();
 	private static final MenuBar menuBar = new MenuBar();
 	private static final Header header = new Header(Resources.Util.getResources().mageofscrumLogo());
@@ -38,6 +37,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private static final ProjectsView projectView = new ProjectsView();
 	private static final BacklogView backlogView = new BacklogView();
 	private static final SprintView sprintView = new SprintView();
+	private static final DiagnoseView diagnoseView = new DiagnoseView();
 	
 	@Override
 	public TeamsView getTeamsView() {
@@ -65,17 +65,13 @@ public class ClientFactoryImpl implements ClientFactory {
 	}
 
 	@Override
-	public WelcomeView getWelcomeView() {
-		return welcomeView;
-	}
-
-	@Override
 	public ErrorView getErrorView() {
 		return errorView;
 	}
 
 	@Override
 	public MenuBar getMenuBar() {
+		menuBar.updateMenuBar();
 		return menuBar;
 	}
 
@@ -117,6 +113,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public SprintView getSprintView() {
 		return sprintView;
+	}
+
+	@Override
+	public DiagnoseView getDiagnoseView() {
+		return diagnoseView;
 	}
 
 }

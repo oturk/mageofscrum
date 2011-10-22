@@ -3,15 +3,15 @@ package hu.ideaimpl.mageofscrum.client;
 import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
-import hu.ideaimpl.mageofscrum.client.user.LoginForm2;
+import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm2;
 import hu.ideaimpl.mageofscrum.client.view.BacklogView;
+import hu.ideaimpl.mageofscrum.client.view.DiagnoseView;
 import hu.ideaimpl.mageofscrum.client.view.ErrorView;
 import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
 import hu.ideaimpl.mageofscrum.client.view.SprintView;
 import hu.ideaimpl.mageofscrum.client.view.TeamsView;
-import hu.ideaimpl.mageofscrum.client.view.WelcomeView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.PlaceController;
@@ -41,8 +41,6 @@ public interface ClientFactory {
 
 	public EventBus getEBus();
 
-	public WelcomeView getWelcomeView();
-
 	public ErrorView getErrorView();
 
 	public MenuBar getMenuBar();
@@ -62,4 +60,6 @@ public interface ClientFactory {
 	public BacklogView getBacklogView();
 	
 	public SprintView getSprintView();
+	
+	public DiagnoseView getDiagnoseView();
 }

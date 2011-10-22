@@ -27,6 +27,7 @@ import hu.ideaimpl.mageofscrum.shared.UserDO;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
@@ -315,7 +316,7 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		ArrayList<TaskDO> result = new ArrayList<TaskDO>();
 		for(Task t : proj.getTasks()){
 			System.out.println(t.getStatus().getStatus()+" "+TaskStatuses.BACKLOG.name());
-			if(t.getStatus().getStatus().equals(TaskStatuses.BACKLOG.name())){
+			if(t.getStatus().getStatus().equals(TaskStatuses.BACKLOG.name()) || t.getStatus().getStatus().equals(TaskStatuses.MOVEDBACK.name())){
 				result.add(t.getTaskDO());
 			}
 		}
@@ -370,6 +371,17 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public TaskDO reportToTask(Long projectId, Long taskId, int time, Date date, String desc) {
+		sprintDAO.reportTime(projectId, taskId, time, date);
+		return taskDAO.findTask(taskId).getTaskDO();
+	}
+
+	@Override
+	public void removeTaskFromSprint(Long projectId, Long taskId) {
+		sprintDAO.removeTask(projectId, taskId);
 	}
 
 }

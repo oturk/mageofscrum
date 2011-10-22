@@ -19,6 +19,7 @@ import hu.ideaimpl.mageofscrum.server.entity.TaskStatus;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
+import hu.ideaimpl.mageofscrum.shared.Roles;
 import hu.ideaimpl.mageofscrum.shared.TaskStatuses;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
@@ -53,9 +54,10 @@ public class HibernateUtil {
 		TaskDAO taskDAO = new TaskDAOImpl();
 		SprintDAO sprintDAO = new SprintDAOImpl();
 		
-		roleDAO.saveRole("admin", "Has all privileges");
-		roleDAO.saveRole("owner", "Has almost all privileges");
-		roleDAO.saveRole("master", "Has some privileges");
+		roleDAO.saveRole(Roles.ADMIN.name(), "Admin role");
+		roleDAO.saveRole(Roles.OWNER.name(), "Owner role");
+		roleDAO.saveRole(Roles.MASTER.name(), "Master role");
+		roleDAO.saveRole(Roles.USER.name(), "User role");
 		
 		statusDAO.saveStatus(TaskStatuses.BACKLOG.name());
 		statusDAO.saveStatus(TaskStatuses.PLANNED.name());
@@ -95,8 +97,8 @@ public class HibernateUtil {
 		data.setSurname("Ottó");
 		data.setForename("Türk");
 		userDAO.updateUserData(1L, data);
-		Role role = roleDAO.findRole("admin");
-		Role owner = roleDAO.findRole("owner");
+		Role role = roleDAO.findRole(Roles.ADMIN.name());
+		Role owner = roleDAO.findRole(Roles.OWNER.name());
 		Team team = teamDAO.findTeam("A team");
 		
 		Project project = projectDAO.findProject("First projet");

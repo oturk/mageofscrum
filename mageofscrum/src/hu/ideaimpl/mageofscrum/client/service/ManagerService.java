@@ -8,6 +8,7 @@ import hu.ideaimpl.mageofscrum.shared.UserDO;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -62,4 +63,6 @@ public interface ManagerService extends RemoteService {
 	public void stopSprint(Long projectId);
 	public void moveTaskToSprint(Long projectId, Long taskId);
 	public ArrayList<TaskDO> fetchSprintTask(Long projectId);
+	public TaskDO reportToTask(Long projectId, Long taskId, int time, Date date, String desc);
+	public void removeTaskFromSprint(Long projectId, Long taskId);
 }

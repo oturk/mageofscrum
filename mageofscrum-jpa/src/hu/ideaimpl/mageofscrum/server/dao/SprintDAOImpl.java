@@ -28,7 +28,7 @@ public class SprintDAOImpl implements SprintDAO {
 			Sprint sprint = new Sprint();
 			sprint.setStartDate(new Date());
 			sprint.setProject(project);
-			
+
 			em.persist(sprint);
 			tx.commit();
 		} catch (RuntimeException ex) {
@@ -50,8 +50,7 @@ public class SprintDAOImpl implements SprintDAO {
 			tx = em.getTransaction();
 			tx.begin();
 			Project project = em.getReference(Project.class, projectId);
-			Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null")
-					.setParameter("project", project).getResultList().get(0);
+			Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null").setParameter("project", project).getResultList().get(0);
 
 			sprint.setEndDate(new Date());
 			em.persist(sprint);
@@ -75,16 +74,14 @@ public class SprintDAOImpl implements SprintDAO {
 			tx = em.getTransaction();
 			tx.begin();
 			Project project = em.getReference(Project.class, projectId);
-			Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null")
-					.setParameter("project", project).getResultList().get(0);
-			TaskStatus status = (TaskStatus) em.createQuery("from TaskStatus s where s.status = :status")
-					.setParameter("status", TaskStatuses.PLANNED.name()).getResultList().get(0);
+			Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null").setParameter("project", project).getResultList().get(0);
+			TaskStatus status = (TaskStatus) em.createQuery("from TaskStatus s where s.status = :status").setParameter("status", TaskStatuses.PLANNED.name()).getResultList().get(0);
 			Task task = em.getReference(Task.class, taskId);
 			task.setStatus(status);
 			task.setSprint(sprint);
 			em.persist(task);
 			tx.commit();
-			logHistory(projectId,Operations.ADD, task.getEstimateTime());
+			logHistory(projectId, Operations.ADD, task.getEstimateTime(), new Date());
 		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
@@ -99,8 +96,7 @@ public class SprintDAOImpl implements SprintDAO {
 	public Sprint findActualSprint(Long projectId) {
 		EntityManager em = HibernateUtil.getEntityManager();
 		Project project = em.getReference(Project.class, projectId);
-		Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null")
-				.setParameter("project", project).getResultList().get(0);
+		Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null").setParameter("project", project).getResultList().get(0);
 		return sprint;
 	}
 
@@ -108,39 +104,37 @@ public class SprintDAOImpl implements SprintDAO {
 	public boolean hasActiveSprint(Long projectId) {
 		EntityManager em = HibernateUtil.getEntityManager();
 		Project project = em.getReference(Project.class, projectId);
-		if(project.getSprints() == null || project.getSprints().size() == 0){
+		if (project.getSprints() == null || project.getSprints().size() == 0) {
 			return false;
 		}
-		List<Sprint> sprint = em.createQuery("from Sprint s where s.project = :project and s.endDate is null")
-				.setParameter("project", project).getResultList();
-		if(sprint == null || sprint.size() == 0){
+		List<Sprint> sprint = em.createQuery("from Sprint s where s.project = :project and s.endDate is null").setParameter("project", project).getResultList();
+		if (sprint == null || sprint.size() == 0) {
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public void logHistory(Long projectId, Operations operation, int time) {
+	public void logHistory(Long projectId, Operations operation, int time, Date date) {
 		EntityManager em = HibernateUtil.getEntityManager();
 		EntityTransaction tx = null;
 		try {
 			tx = em.getTransaction();
 			tx.begin();
 			Project project = em.getReference(Project.class, projectId);
-			List<Sprint> sprints = em.createQuery("from Sprint s where s.project = :project and s.endDate is null")
-					.setParameter("project", project).getResultList();
+			List<Sprint> sprints = em.createQuery("from Sprint s where s.project = :project and s.endDate is null").setParameter("project", project).getResultList();
 			Sprint sprint = sprints.get(0);
 
 			History history = new History();
-			history.setModDate(new Date());
+			history.setModDate(date);
 			history.setOperation(operation.name());
 			history.setSprint(sprint);
 			history.setTime(time);
-				
+
 			sprint.addHistory(history);
 			em.persist(history);
 			tx.commit();
-		}catch (RuntimeException ex) {
+		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
 			}
@@ -152,7 +146,51 @@ public class SprintDAOImpl implements SprintDAO {
 
 	@Override
 	public void removeTask(Long projectId, Long taskId) {
-		
+		EntityManager em = HibernateUtil.getEntityManager();
+		EntityTransaction tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+//			Project project = em.getReference(Project.class, projectId);
+//			Sprint sprint = (Sprint) em.createQuery("from Sprint s where s.project = :project and s.endDate is null").setParameter("project", project).getResultList().get(0);
+			TaskStatus status = (TaskStatus) em.createQuery("from TaskStatus s where s.status = :status").setParameter("status", TaskStatuses.MOVEDBACK.name()).getResultList().get(0);
+			
+			Task task = em.getReference(Task.class, taskId);
+			task.setStatus(status);
+			task.setSprint(null);
+			em.persist(task);
+			tx.commit();
+			logHistory(projectId, Operations.REMOVE, task.getEstimateTime(), new Date());
+		} catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			ex.printStackTrace();
+		} finally {
+			em.close();
+		}
+	}
+
+	@Override
+	public void reportTime(Long projectId, Long taskId, int time, Date date) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		EntityTransaction tx = null;
+		try {
+			tx = em.getTransaction();
+			tx.begin();
+			Task task = em.getReference(Task.class, taskId);
+			task.setReportTime(time);
+			em.persist(task);
+			tx.commit();
+			logHistory(projectId, Operations.REPORT, time, date);
+		} catch (RuntimeException ex) {
+			if (tx != null && tx.isActive()) {
+				tx.rollback();
+			}
+			ex.printStackTrace();
+		} finally {
+			em.close();
+		}
 	}
 
 }

@@ -199,7 +199,9 @@ public class TaskDialog extends DialogBox {
 		dialog.name.setEnabled(false);
 		dialog.name.setStylePrimaryName("inputFieldDisabled");
 		dialog.estTime.setEnabled(false);
+		dialog.estTime.setStylePrimaryName("inputFieldDisabled");
 		dialog.priority.setEnabled(false);
+		dialog.priority.setStylePrimaryName("inputFieldDisabled");
 		dialog.toolbar.setVisible(false);
 		
 		dialog.absolutePanel.add(dialog.description, 10, 210);

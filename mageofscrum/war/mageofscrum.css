@@ -189,6 +189,7 @@ background-color: gray;
 opacity: 0.4;
 }
 .inputFieldDisabled{
+	color: black;
 	font-weight: bold;
 	background-color:white;
 	border: none;

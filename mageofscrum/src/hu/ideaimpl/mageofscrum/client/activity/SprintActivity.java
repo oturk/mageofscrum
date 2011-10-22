@@ -1,17 +1,21 @@
 package hu.ideaimpl.mageofscrum.client.activity;
 
-import java.util.ArrayList;
-
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
+import hu.ideaimpl.mageofscrum.client.ui.ReportData;
+import hu.ideaimpl.mageofscrum.client.ui.ReportDialog;
 import hu.ideaimpl.mageofscrum.client.ui.TaskDialog;
 import hu.ideaimpl.mageofscrum.client.view.SprintView;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 
+import java.util.ArrayList;
+
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -25,6 +29,7 @@ public class SprintActivity extends AbstractActivity {
 	private ArrayList<ProjectDO> projects = new ArrayList<ProjectDO>();
 	private ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
 	private static TaskDialog dialog = TaskDialog.getDetailsDialog();
+	private static ReportDialog reportDialog = new ReportDialog();
 
 	public SprintActivity() {
 		initProjectList();
@@ -42,16 +47,88 @@ public class SprintActivity extends AbstractActivity {
 		});
 		view.getReportBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				if(projectSelectionModel.getSelectedObject() != null && taskSelectionModel.getSelectedObject() != null){
+				if (projectSelectionModel.getSelectedObject() != null && taskSelectionModel.getSelectedObject() != null) {
 					doOnReportBtnClicked();
 				}
 			}
 		});
 		view.getTaskDetailsBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				if(projectSelectionModel.getSelectedObject() != null && taskSelectionModel.getSelectedObject() != null){
+				if (projectSelectionModel.getSelectedObject() != null && taskSelectionModel.getSelectedObject() != null) {
 					doOnDetailsBtnClicked();
 				}
+			}
+		});
+		view.getRemoveBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (taskSelectionModel.getSelectedObject() != null) {
+					doOnRemoveBtnClicked();
+				}
+			}
+		});
+		reportDialog.getReportBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (reportDialog.validate()) {
+					doOnReportDialogBtnClicked();
+					reportDialog.hide();
+				}
+			}
+		});
+		view.getSprintTable().addDomHandler(new DoubleClickHandler() {
+
+			@Override
+			public void onDoubleClick(DoubleClickEvent event) {
+				dialog.setFormData(taskSelectionModel.getSelectedObject());
+				dialog.center();
+				dialog.show();
+			}
+		}, DoubleClickEvent.getType());
+	}
+
+	protected void doOnRemoveBtnClicked() {
+		Long projectId = projectSelectionModel.getSelectedObject().getId();
+		final TaskDO task = taskSelectionModel.getSelectedObject();
+
+		ManagerService.Util.getService().removeTaskFromSprint(projectId, task.getId(), new AsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				tasks.remove(task);
+				view.getSprintTable().setRowData(tasks);
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
+			}
+		});
+	}
+
+	protected void doOnReportDialogBtnClicked() {
+		Long taskId = taskSelectionModel.getSelectedObject().getId();
+		Long projectId = projectSelectionModel.getSelectedObject().getId();
+		ReportData data = reportDialog.getFormData();
+		ManagerService.Util.getService().reportToTask(projectId, taskId, data.getTime(), data.getDate(), data.getDesc(), new AsyncCallback<TaskDO>() {
+
+			@Override
+			public void onSuccess(TaskDO result) {
+				TaskDO tmp = null;
+				for (TaskDO t : tasks) {
+					if (t.getId() == result.getId()) {
+						tmp = t;
+						break;
+					}
+				}
+				if (tmp != null) {
+					tasks.remove(tmp);
+					tasks.add(result);
+					view.getSprintTable().setRowData(tasks);
+				}
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
 			}
 		});
 	}
@@ -63,19 +140,21 @@ public class SprintActivity extends AbstractActivity {
 	}
 
 	private void doOnReportBtnClicked() {
-		
+		reportDialog.clearForm();
+		reportDialog.center();
+		reportDialog.show();
 	}
 
 	private void doOnSelectionChanged() {
 		Long projId = projectSelectionModel.getSelectedObject().getId();
 		ManagerService.Util.getService().fetchSprintTask(projId, new AsyncCallback<ArrayList<TaskDO>>() {
-			
+
 			@Override
 			public void onSuccess(ArrayList<TaskDO> result) {
 				tasks = result;
 				view.getSprintTable().setRowData(tasks);
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				System.out.println("failed");
@@ -90,7 +169,12 @@ public class SprintActivity extends AbstractActivity {
 			public void onSuccess(ArrayList<ProjectDO> result) {
 				projects = result;
 				view.getProjectsList().setRowData(projects);
-				projectSelectionModel.setSelected(result.get(0), true);
+				if (result.size() > 0) {
+					projectSelectionModel.setSelected(result.get(0), true);
+				}else{
+					tasks = new ArrayList<TaskDO>();
+					view.getSprintTable().setRowData(tasks);
+				}
 			}
 
 			@Override

@@ -21,6 +21,7 @@ import com.google.gwt.view.client.SelectionChangeEvent.HasSelectionChangedHandle
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
+import hu.ideaimpl.mageofscrum.client.ui.inputfields.InputField;
 
 public class TeamsView extends Composite {
 
@@ -31,19 +32,15 @@ public class TeamsView extends Composite {
 	private CellList<UserDO> otherUsersList;
 	private CellList<UserDO> teamMembersList;
 	private ListToList listToList;
-	private TextBox textBox;
 	private Button btnCreate = new Button("create");
 	private Button btnDelete = new Button("delete");
-	private Label lblTeam = new Label("team:");
+	private InputField teamName = new InputField();
 
 	public TeamsView() {
 		
 		AbsolutePanel absolutePanel = new AbsolutePanel();
 		initWidget(absolutePanel);
 		absolutePanel.setSize("850px", "500px");
-		
-		textBox = new TextBox();
-		absolutePanel.add(textBox, 53, 6);
 		teamList = new CellList<TeamDO>(new AbstractCell<TeamDO>() {
 			@Override
 			public void render(Context context, TeamDO value, SafeHtmlBuilder sb) {
@@ -75,7 +72,7 @@ public class TeamsView extends Composite {
 		listToList = new ListToList(teamMembersList, otherUsersList);
 		listToList.setFromLbl("team members");
 		listToList.setToLbl("other users");
-		absolutePanel.add(listToList, 250, 0);
+		absolutePanel.add(listToList, 279, 0);
 		
 		Label lblNewLabel = new Label("teams");
 		lblNewLabel.setStyleName("simpleLbl");
@@ -88,8 +85,8 @@ public class TeamsView extends Composite {
 		absolutePanel.add(btnDelete, 114, 38);
 		btnDelete.setWidth("90px");
 		
-		absolutePanel.add(lblTeam, 10, 12);
-		lblTeam.setSize("48px", "20px");
+		teamName.setText("team:");
+		absolutePanel.add(teamName, 0, 0);
 	}
 	
 	public CellList<TeamDO> getTeamList(){
@@ -145,12 +142,11 @@ public class TeamsView extends Composite {
 	}
 	
 	public HasValue<String> getTeamName(){
-		return textBox;
+		return teamName;
 	}
 	
 	public void clearListToList(){
 		otherUsersList.setRowData(new ArrayList<UserDO>());
 		teamMembersList.setRowData(new ArrayList<UserDO>());
 	}
-	
 }

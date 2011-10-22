@@ -16,35 +16,35 @@ import org.slf4j.LoggerFactory;
 
 public class TaskDAOImpl implements TaskDAO {
 	Logger log = LoggerFactory.getLogger(TaskDAOImpl.class);
-	
+
 	@Override
 	public void saveTask(Long projectId, String name, String desc, int estTime, int priority) {
 		EntityManager em = HibernateUtil.getEntityManager();
 		EntityTransaction tx = null;
 		try {
-		tx = em.getTransaction();
-		tx.begin();
-		Project project = em.getReference(Project.class, projectId);
-		
-		Task task = new Task();
-		task.setName(name);
-		task.setDescription(desc);
-		task.setEstimateTime(estTime);
-		task.setPriority(priority);
-		task.setCreated(new Date());
-		task.setProject(project);
-		TaskStatus status = em.getReference(TaskStatus.class, 1L);
-		log.info("taskStatus: "+status.getStatus());
-		task.setStatus(status);
-		
-		em.persist(task);
-		tx.commit();
-		}catch(RuntimeException ex){
+			tx = em.getTransaction();
+			tx.begin();
+			Project project = em.getReference(Project.class, projectId);
+
+			Task task = new Task();
+			task.setName(name);
+			task.setDescription(desc);
+			task.setEstimateTime(estTime);
+			task.setPriority(priority);
+			task.setCreated(new Date());
+			task.setProject(project);
+			TaskStatus status = em.getReference(TaskStatus.class, 1L);
+			log.info("taskStatus: " + status.getStatus());
+			task.setStatus(status);
+
+			em.persist(task);
+			tx.commit();
+		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
 			}
 			ex.printStackTrace();
-		}finally{
+		} finally {
 			em.close();
 		}
 	}
@@ -52,9 +52,8 @@ public class TaskDAOImpl implements TaskDAO {
 	@Override
 	public Task findTask(String name) {
 		EntityManager em = HibernateUtil.getEntityManager();
-		List<Task> result = em.createQuery("from Task t where t.name = :name")
-				.setParameter("name", name).getResultList();
-		if(result.size() >0){
+		List<Task> result = em.createQuery("from Task t where t.name = :name").setParameter("name", name).getResultList();
+		if (result.size() > 0) {
 			return result.get(0);
 		}
 		return null;
@@ -65,32 +64,32 @@ public class TaskDAOImpl implements TaskDAO {
 		EntityManager em = HibernateUtil.getEntityManager();
 		EntityTransaction tx = null;
 		try {
-		tx = em.getTransaction();
-		tx.begin();
-		Task task = em.getReference(Task.class, id);
-		task.setName(name);
-		task.setDescription(description);
-		task.setEstimateTime(estTime);
-		task.setPriority(priority);
-		task.setCreated(new Date());
-		
-		em.persist(task);
-		tx.commit();
-		}catch(RuntimeException ex){
+			tx = em.getTransaction();
+			tx.begin();
+			Task task = em.getReference(Task.class, id);
+			task.setName(name);
+			task.setDescription(description);
+			task.setEstimateTime(estTime);
+			task.setPriority(priority);
+			task.setCreated(new Date());
+
+			em.persist(task);
+			tx.commit();
+		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
 			}
 			ex.printStackTrace();
-		}finally{
+		} finally {
 			em.close();
 		}
-		
+
 	}
 
 	@Override
 	public void changeStatus(String status) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -103,14 +102,20 @@ public class TaskDAOImpl implements TaskDAO {
 			Task task = em.getReference(Task.class, id);
 			em.remove(task);
 			tx.commit();
-		}catch(RuntimeException ex){
+		} catch (RuntimeException ex) {
 			if (tx != null && tx.isActive()) {
 				tx.rollback();
 			}
 			ex.printStackTrace();
-		}finally{
+		} finally {
 			em.close();
 		}
+	}
+
+	@Override
+	public Task findTask(Long id) {
+		EntityManager em = HibernateUtil.getEntityManager();
+		return em.getReference(Task.class, id);
 	}
 
 }
