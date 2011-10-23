@@ -1,6 +1,8 @@
 package hu.ideaimpl.mageofscrum.client.ui;
 
+import hu.ideaimpl.mageofscrum.client.ui.forms.HasForm;
 import hu.ideaimpl.mageofscrum.client.ui.inputfields.DateInputField;
+import hu.ideaimpl.mageofscrum.client.ui.inputfields.HasValidator;
 import hu.ideaimpl.mageofscrum.client.ui.inputfields.NumberInputField;
 
 import java.util.Date;

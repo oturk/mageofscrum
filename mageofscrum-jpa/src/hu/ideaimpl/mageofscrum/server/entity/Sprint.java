@@ -1,6 +1,9 @@
 package hu.ideaimpl.mageofscrum.server.entity;
 
+import hu.ideaimpl.mageofscrum.shared.SprintDO;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -94,6 +97,20 @@ public class Sprint implements Serializable {
 			this.history = new ArrayList<History>();
 		}
 		this.history.add(history);
+	}
+	
+	public SprintDO getSprintDO(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SprintDO sprintDO = new SprintDO();
+		sprintDO.setId(this.id);
+		String interval = sdf.format(this.startDate);
+		if(this.endDate != null){
+			interval += ", "+sdf.format(this.endDate);
+		}else{
+			interval += ", running";
+		}
+		sprintDO.setInterval(interval);
+		return sprintDO;
 	}
 
 }

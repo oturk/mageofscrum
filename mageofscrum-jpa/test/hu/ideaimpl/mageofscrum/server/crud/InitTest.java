@@ -17,9 +17,11 @@ import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.Operations;
+import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -93,16 +95,16 @@ public class InitTest {
 	
 	@Test
 	public void testInitRoles(){
-		assertNotNull(roleDBO.findRole("admin"));
-		assertNotNull(roleDBO.findRole("owner"));
-		assertNotNull(roleDBO.findRole("master"));
+		assertNotNull(roleDBO.findRole(Roles.ADMIN.name()));
+		assertNotNull(roleDBO.findRole(Roles.OWNER.name()));
+		assertNotNull(roleDBO.findRole(Roles.MASTER.name()));
 	}
 	
 	@Test
 	public void testAdminUser(){
 		User user = userDBO.findUser("oturk");
 		assertNotNull(user);
-		assertEquals("admin", user.getRoles().get(0).getName());
+		assertEquals(Roles.ADMIN.name(), user.getRoles().get(0).getName());
 	}
 	
 	@Test
@@ -157,5 +159,8 @@ public class InitTest {
 		sprintDAO.logHistory(1L, Operations.ADD, 8, new Date());
 		Sprint sprint = sprintDAO.findActualSprint(1L);
 		System.out.println("historySize: "+sprint.getHistory().size());
+		
+		Map<String, Integer> history = sprintDAO.getHistory(sprint.getProject().getId());
+		System.out.println("history: "+history);
 	}
 }

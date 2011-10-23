@@ -1,6 +1,5 @@
 package hu.ideaimpl.mageofscrum.client.ui.inputfields;
 
-import hu.ideaimpl.mageofscrum.client.ui.HasValidator;
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;

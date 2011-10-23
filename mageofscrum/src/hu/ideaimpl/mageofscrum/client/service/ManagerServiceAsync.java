@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.service;
 
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
+import hu.ideaimpl.mageofscrum.shared.SprintDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
@@ -9,6 +10,7 @@ import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
@@ -83,5 +85,9 @@ public interface ManagerServiceAsync {
 	void reportToTask(Long projectId, Long taskId, int time, Date date, String desc, AsyncCallback<TaskDO> callback);
 
 	void removeTaskFromSprint(Long projectId, Long taskId, AsyncCallback<Void> callback);
+
+	void fetchSprints(Long projectId, AsyncCallback<ArrayList<SprintDO>> callback);
+
+	void getSprintHistory(Long sprintId, AsyncCallback<Map<String, Integer>> callback);
 	
 }

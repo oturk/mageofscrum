@@ -15,11 +15,13 @@ import hu.ideaimpl.mageofscrum.server.dao.UserDAO;
 import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
+import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.server.entity.Task;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
+import hu.ideaimpl.mageofscrum.shared.SprintDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 import hu.ideaimpl.mageofscrum.shared.TaskStatuses;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
@@ -29,6 +31,7 @@ import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -36,6 +39,7 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @WebServlet(urlPatterns="/ManagerService")
@@ -384,4 +388,21 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		sprintDAO.removeTask(projectId, taskId);
 	}
 
+	@Override
+	public ArrayList<SprintDO> fetchSprints(Long projectId) {
+		List<Sprint> result = sprintDAO.fetchSprints(projectId);
+		ArrayList<SprintDO> sprints = new ArrayList<SprintDO>();
+		if(result != null){
+			for(Sprint s : result){
+				sprints.add(s.getSprintDO());
+			}
+		}
+		return sprints;
+	}
+
+	@Override
+	public Map<String, Integer> getSprintHistory(Long sprintId) {
+		return sprintDAO.getHistory(sprintId);
+	}
+	
 }

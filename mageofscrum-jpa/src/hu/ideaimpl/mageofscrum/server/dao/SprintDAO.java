@@ -4,6 +4,8 @@ import hu.ideaimpl.mageofscrum.server.entity.Sprint;
 import hu.ideaimpl.mageofscrum.shared.Operations;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public interface SprintDAO {
 	public void startSprint(Long projectId);
@@ -16,4 +18,6 @@ public interface SprintDAO {
 	public void reportTime(Long projectId, Long taskId, int time, Date date);
 	
 	public void logHistory(Long projectId, Operations operation, int time, Date date);
+	public Map<String, Integer> getHistory(Long projectId);
+	public List<Sprint> fetchSprints(Long sprintId);
 }

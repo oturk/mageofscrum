@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.service;
 
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
+import hu.ideaimpl.mageofscrum.shared.SprintDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
@@ -9,6 +10,7 @@ import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
@@ -65,4 +67,6 @@ public interface ManagerService extends RemoteService {
 	public ArrayList<TaskDO> fetchSprintTask(Long projectId);
 	public TaskDO reportToTask(Long projectId, Long taskId, int time, Date date, String desc);
 	public void removeTaskFromSprint(Long projectId, Long taskId);
+	public ArrayList<SprintDO> fetchSprints(Long projectId);
+	public Map<String, Integer> getSprintHistory(Long sprintId);
 }

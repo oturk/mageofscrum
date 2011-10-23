@@ -11,8 +11,8 @@
 	<source path="shared" />
 	<entry-point class="hu.ideaimpl.mageofscrum.client.MageOfScrum" />
 
-<!-- 	<set-property name="user.agent" value="safari" /> -->
-	<set-property name="user.agent" value="gecko1_8" />
+	<set-property name="user.agent" value="safari,gecko1_8" />
+<!-- 	<set-property name="user.agent" value="gecko1_8" /> -->
 		
 	<replace-with class="hu.ideaimpl.mageofscrum.client.ClientFactoryImpl">
 		<when-type-is class="hu.ideaimpl.mageofscrum.client.ClientFactory" />

@@ -1,5 +1,6 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 
@@ -11,7 +12,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
@@ -24,68 +24,63 @@ public class SprintView extends Composite {
 	private Button btnReport = new Button("report");
 	private Button btnRemove = new Button("remove");
 	private Button btnTaskDetails = new Button("task details");
-//	private Button btnMoveToSprint = new Button("move to sprint");
-//	private Button btnStopSprint = new Button("stop sprint");
 	private CellList<ProjectDO> projectsList;
 	private Label errorLbl = new Label("");
 
 	public SprintView() {
-		
+
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
-		
-		AbsolutePanel absolutePanel = new AbsolutePanel();
-		verticalPanel.add(absolutePanel);
-		absolutePanel.setHeight("52px");
-		btnReport.setStyleName("menuButton");
-		btnTaskDetails.setStyleName("menuButton");
-		absolutePanel.add(btnTaskDetails,176,0);
-//		btnStopSprint.setStyleName("menuButton");
-//		absolutePanel.add(btnStopSprint,258,0);
-//		btnMoveToSprint.setStyleName("menuButton");
-//		absolutePanel.add(btnMoveToSprint,341,0);
-		
+
+		HorizontalPanel buttonBar = new HorizontalPanel();
+		buttonBar.setSpacing(1);
+		buttonBar.add(btnTaskDetails);
+		buttonBar.add(btnReport);
+		buttonBar.add(btnRemove);
+		buttonBar.add(errorLbl);
+		verticalPanel.add(buttonBar);
+
+		btnReport.setStyleName("commandBtn");
+		btnTaskDetails.setStyleName("commandBtn");
+
 		btnReport.setText("report");
-		absolutePanel.add(btnReport, 88, 0);
-		btnRemove.setStyleName("menuButton");
-		
+		btnRemove.setStyleName("commandBtn");
+
 		btnRemove.setText("remove task");
-		absolutePanel.add(btnRemove, 0, 0);
-		
+
 		errorLbl.setStyleName("errorLbl");
-		absolutePanel.add(errorLbl, 0, 32);
 		errorLbl.setSize("440px", "20px");
-		
-		AbsolutePanel absolutePanel_1 = new AbsolutePanel();
-		verticalPanel.add(absolutePanel_1);
-		absolutePanel_1.setHeight("30px");
-		
-		Label lblProjects = new Label("projects");
-		lblProjects.setStyleName("loginHeader");
-		absolutePanel_1.add(lblProjects, 0, 0);
-		lblProjects.setSize("256px", "30px");
-		
-		Label lblNewLabel = new Label("tasks");
-		lblNewLabel.setStyleName("loginHeader");
-		absolutePanel_1.add(lblNewLabel, 263, 0);
-		lblNewLabel.setSize("100%", "30px");
-		
+
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel.setSpacing(5);
 		verticalPanel.add(horizontalPanel);
-		
-		projectsList = new CellList<ProjectDO>(new AbstractCell<ProjectDO>(){
+
+		projectsList = new CellList<ProjectDO>(new AbstractCell<ProjectDO>() {
 			@Override
 			public void render(Context context, ProjectDO value, SafeHtmlBuilder sb) {
-				sb.appendEscaped(value.getName());
+//				sb.appendEscaped(value.getName());
+				sb.appendHtmlConstant("<div height = '30px'>");
+				sb.appendHtmlConstant(value.getName());
+				sb.appendHtmlConstant("</div>");
 			}
 		});
-		horizontalPanel.add(projectsList);
-		projectsList.setSize("260px", "24px");
-		
+		projectsList.setSize("260px", "175px");
+		projectsList.setStyleName("mosCellList");
+
+		TitledPanel projectsPanel = new TitledPanel();
+		horizontalPanel.add(projectsPanel);
+		projectsPanel.setText("projects");
+		projectsPanel.addContent(projectsList);
+		projectsPanel.setSize("260px", "400px");
+
 		sprint = new CellTable<TaskDO>();
-		horizontalPanel.add(sprint);
+		TitledPanel sprintPanel = new TitledPanel();
+		horizontalPanel.add(sprintPanel);
+		sprintPanel.setText("tasks");
+		sprintPanel.addContent(sprint);
+		sprintPanel.setSize("540px", "400px");
 		sprint.setWidth("537px");
-		
+
 		TextColumn<TaskDO> nameColumn = new TextColumn<TaskDO>() {
 			@Override
 			public String getValue(TaskDO object) {
@@ -93,7 +88,7 @@ public class SprintView extends Composite {
 			}
 		};
 		sprint.addColumn(nameColumn, "name");
-		
+
 		TextColumn<TaskDO> estTimeColumn = new TextColumn<TaskDO>() {
 			@Override
 			public String getValue(TaskDO object) {
@@ -101,7 +96,7 @@ public class SprintView extends Composite {
 			}
 		};
 		sprint.addColumn(estTimeColumn, "estimate time");
-		
+
 		TextColumn<TaskDO> priorityColumn = new TextColumn<TaskDO>() {
 			@Override
 			public String getValue(TaskDO object) {
@@ -118,36 +113,28 @@ public class SprintView extends Composite {
 		};
 		sprint.addColumn(createdColumn, "created");
 	}
-	
-	public CellList<ProjectDO> getProjectsList(){
+
+	public CellList<ProjectDO> getProjectsList() {
 		return projectsList;
 	}
-	
-	public HasText getErrorLbl(){
+
+	public HasText getErrorLbl() {
 		return errorLbl;
 	}
-	
-	public HasClickHandlers getReportBtn(){
+
+	public HasClickHandlers getReportBtn() {
 		return btnReport;
 	}
-	
-	public HasClickHandlers getRemoveBtn(){
+
+	public HasClickHandlers getRemoveBtn() {
 		return btnRemove;
 	}
-	
-	public HasClickHandlers getTaskDetailsBtn(){
+
+	public HasClickHandlers getTaskDetailsBtn() {
 		return btnTaskDetails;
 	}
-	
-//	public HasClickHandlers getStopSprintBtn(){
-//		return btnStopSprint;
-//	}
-//	
-//	public HasClickHandlers getMoveToSprintBtn(){
-//		return btnMoveToSprint;
-//	}
-	
-	public CellTable<TaskDO> getSprintTable(){
+
+	public CellTable<TaskDO> getSprintTable() {
 		return sprint;
 	}
 }

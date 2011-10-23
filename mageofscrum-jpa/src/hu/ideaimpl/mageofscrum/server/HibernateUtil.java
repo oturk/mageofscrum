@@ -19,9 +19,12 @@ import hu.ideaimpl.mageofscrum.server.entity.TaskStatus;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
+import hu.ideaimpl.mageofscrum.shared.Operations;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 import hu.ideaimpl.mageofscrum.shared.TaskStatuses;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
+
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -111,6 +114,100 @@ public class HibernateUtil {
 		projectDAO.addOwner("oturk", project.getId());
 		projectDAO.addTeam(team.getId(), project.getId());
 		teamDAO.addUser(team.getId(), "oturk");
+		
+		long day = 86400000;
+		
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 8, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 12, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 4, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 16, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 20, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 8, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 4, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 6, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 10, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 24, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 24, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 10, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 12, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 6, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 8, new Date());
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 8, new Date());
+		
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 2));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 2));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 2));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 2));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 3));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 3));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 3));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 3));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 6, new Date(System.currentTimeMillis() + day * 3));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 3));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 4));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 4));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 4));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 4));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 6, new Date(System.currentTimeMillis() + day * 4));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 4));
+		
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 5));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 5));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 5));
+//		
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 6));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 6));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 6));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 6));
+//		
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 4, new Date(System.currentTimeMillis() + day * 7));
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 6, new Date(System.currentTimeMillis() + day * 7));
+		sprintDAO.logHistory(project.getId(), Operations.ADD, 8, new Date(System.currentTimeMillis() + day * 7));
+//		
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 8));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 8));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 6, new Date(System.currentTimeMillis() + day * 8));
+//		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 8));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 9));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 9));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 6, new Date(System.currentTimeMillis() + day * 9));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 9));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 10));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 10));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 6, new Date(System.currentTimeMillis() + day * 10));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 10));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 11));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 11));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 6, new Date(System.currentTimeMillis() + day * 11));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 11));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 12));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 12));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 12));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 12));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 13));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 13));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 6, new Date(System.currentTimeMillis() + day * 13));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 13));
+		
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 14));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 14));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 14));
+		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 14));
+		
 	
 	}
 
