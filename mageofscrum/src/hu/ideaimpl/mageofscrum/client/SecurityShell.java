@@ -2,7 +2,7 @@ package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
-import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm2;
+import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 public class SecurityShell extends Composite {
 
-	private LoginForm2 loginForm = ClientFactory.Util.getClientFactory().getLoginForm();
+	private LoginForm loginForm = ClientFactory.Util.getClientFactory().getLoginForm();
 
 	public SecurityShell() {
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
@@ -41,7 +41,9 @@ public class SecurityShell extends Composite {
 	private void bind(){
 		loginForm.getBtnLogin().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				loginUser(loginForm.getTextBoxEmail().getValue(), loginForm.getTextBoxPassword().getValue(), loginForm.getChckbxRememberMe().getValue());
+				if (loginForm.validate()) {
+					loginUser(loginForm.getUsername(), loginForm.getPassword(), loginForm.getChckbxRememberMe());
+				}
 			}
 		});
 	}
@@ -54,7 +56,7 @@ public class SecurityShell extends Composite {
 				if (result) {
 					updateRoles();
 				} else {
-					loginForm.getLblError().setText("Wrong email or password!");
+					loginForm.getLblError().setText("Wrong username or password!");
 				}
 			}
 

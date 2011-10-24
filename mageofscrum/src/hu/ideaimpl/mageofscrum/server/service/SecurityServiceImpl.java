@@ -38,7 +38,10 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements Securit
 
 	@Override
 	public boolean isAuthenticated() {
-		return SecurityUtils.getSubject().isAuthenticated();
+		System.out.println("isRemembered: "+SecurityUtils.getSubject().isRemembered());
+		System.out.println("isAuthenticated: "+SecurityUtils.getSubject().isAuthenticated());
+		Subject subject = SecurityUtils.getSubject();
+		return subject.isAuthenticated() || subject.isRemembered();
 	}
 
 	@Override

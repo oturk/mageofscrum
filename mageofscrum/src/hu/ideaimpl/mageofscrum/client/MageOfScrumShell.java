@@ -17,7 +17,7 @@ public class MageOfScrumShell extends Composite{
 		SplitLayoutPanel splitLayoutPanel = new SplitLayoutPanel();
 		initWidget(splitLayoutPanel);
 		
-		Header header = new Header(Resources.Util.getResources().mageofscrumLogo());
+		Header header = new Header(Resources.instance.mageofscrumLogo());
 		splitLayoutPanel.addNorth(header, 100);
 		
 		splitLayoutPanel.addWest(ClientFactory.Util.getClientFactory().getMenuBar(), 150);

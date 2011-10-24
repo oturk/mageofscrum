@@ -1,5 +1,9 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
+import hu.ideaimpl.mageofscrum.client.resources.TableResource;
+import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
@@ -13,9 +17,9 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -26,7 +30,7 @@ public class ProjectsView extends Composite{
 	private Button btnCreate = new Button("save");
 	private Button btnDelete = new Button("delete");
 	private Button btnClearForm = new Button("clear form");
-	private CellTable<ProjectDO> cellTable = new CellTable<ProjectDO>();
+	private CellTable<ProjectDO> projectsTable = new CellTable<ProjectDO>(3, TableResource.instance);
 	private ListBox owner = new ListBox();
 	private ListBox team = new ListBox();
 	private TextArea description = new TextArea();
@@ -39,65 +43,74 @@ public class ProjectsView extends Composite{
 	private Label lblError = new Label("");
 
 	public ProjectsView() {
+		MosStyle style = Resources.instance.mosStyle();
+		style.ensureInjected();
 		
-		VerticalPanel contentPanel = new VerticalPanel();
-		initWidget(contentPanel);
+		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setSpacing(5);
+		initWidget(verticalPanel);
+		
+		HorizontalPanel buttonBar = new HorizontalPanel();
+		verticalPanel.add(buttonBar);
+		buttonBar.setSpacing(1);
+		buttonBar.add(btnCreate);
+		buttonBar.add(btnDelete);
+		buttonBar.add(btnClearForm);
+		buttonBar.add(lblError);
+		btnCreate.setStyleName(style.commandBtn());
+		btnDelete.setStyleName(style.commandBtn());
+		btnClearForm.setStyleName(style.commandBtn());
+		lblError.setStyleName(style.errorLbl());
+		lblError.setSize("548px", "24px");
 		
 		AbsolutePanel projectForm = new AbsolutePanel();
-		contentPanel.add(projectForm);
-		projectForm.setSize("702px", "290px");
+		verticalPanel.add(projectForm);
+		projectForm.setSize("702px", "247px");
 		
 		lblName.setStyleName("loginLbl");
 		lblName.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		projectForm.add(lblName, 10, 56);
+		projectForm.add(lblName, 10, 10);
 		lblName.setSize("151px", "24px");
 		
-		projectForm.add(name, 10, 86);
+		projectForm.add(name, 10, 40);
 		name.setSize("147px", "30px");
 		
 		lblOwner.setStyleName("loginLbl");
 		lblOwner.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		projectForm.add(lblOwner, 10, 128);
+		projectForm.add(lblOwner, 10, 82);
 		lblOwner.setSize("151px", "24px");
 		
 		lblDescription.setStyleName("loginLbl");
-		projectForm.add(lblDescription, 181, 56);
+		projectForm.add(lblDescription, 181, 10);
 		lblDescription.setSize("377px", "24px");
 		
-		projectForm.add(description, 179, 86);
+		projectForm.add(description, 179, 40);
 		description.setSize("373px", "142px");
 		
 		owner.setStyleName("comboField");
-		projectForm.add(owner, 10, 158);
+		projectForm.add(owner, 10, 112);
 		owner.setSize("151px", "36px");
 		
 		lblTeam.setStyleName("loginLbl");
 		lblTeam.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_LEFT);
-		projectForm.add(lblTeam, 10, 200);
+		projectForm.add(lblTeam, 10, 154);
 		lblTeam.setSize("151px", "24px");
 		
 		team.setStyleName("comboField");
-		projectForm.add(team, 10, 230);
+		projectForm.add(team, 10, 184);
 		team.setSize("151px", "36px");
 		
-		btnCreate.setStyleName("menuButton");
-		projectForm.add(btnCreate, 181, 240);
+//		SimplePanel simplePanel = new SimplePanel();
+//		verticalPanel.add(simplePanel);
 		
-		btnDelete.setStyleName("menuButton");
-		projectForm.add(btnDelete, 233, 240);
+		projectsTable.setSize("560px", "100px");
+		TitledPanel projectsPanel = new TitledPanel();
+		verticalPanel.add(projectsPanel);
+		projectsPanel.setText("projects");
+		projectsPanel.addContent(projectsTable);
+		projectsPanel.setSize("560px", "200px");
 		
-		btnClearForm.setStyleName("menuButton");
-		projectForm.add(btnClearForm, 285, 240);
-		
-		lblError.setStyleName("errorLbl");
-		projectForm.add(lblError, 10, 10);
-		lblError.setSize("548px", "24px");
-		
-		SimplePanel projectTable = new SimplePanel();
-		contentPanel.add(projectTable);
-		
-		projectTable.setWidget(cellTable);
-		cellTable.setSize("100%", "100%");
+//		simplePanel.setWidget(projectsTable);
 		
 		TextColumn<ProjectDO> nameColumn = new TextColumn<ProjectDO>() {
 			@Override
@@ -105,7 +118,7 @@ public class ProjectsView extends Composite{
 				return object.getName();
 			}
 		};
-		cellTable.addColumn(nameColumn, "Name");
+		projectsTable.addColumn(nameColumn, "Name");
 		
 		TextColumn<ProjectDO> ownerColumn = new TextColumn<ProjectDO>() {
 			@Override
@@ -113,7 +126,7 @@ public class ProjectsView extends Composite{
 				return object.getOwnerName();
 			}
 		};
-		cellTable.addColumn(ownerColumn, "Owner");
+		projectsTable.addColumn(ownerColumn, "Owner");
 		
 		TextColumn<ProjectDO> teamColumn = new TextColumn<ProjectDO>() {
 			@Override
@@ -121,7 +134,7 @@ public class ProjectsView extends Composite{
 				return object.getTeamName();
 			}
 		};
-		cellTable.addColumn(teamColumn, "Team");
+		projectsTable.addColumn(teamColumn, "Team");
 	}
 	
 	public HasClickHandlers getSaveBtn(){
@@ -136,12 +149,16 @@ public class ProjectsView extends Composite{
 		return btnClearForm;
 	}
 	
+	public CellTable<ProjectDO> getProjectsTable(){
+		return projectsTable;
+	}
+	
 	public void setSelectionModel(SelectionModel<ProjectDO> selectionModel){
-		cellTable.setSelectionModel(selectionModel);
+		projectsTable.setSelectionModel(selectionModel);
 	}
 	
 	public void setTableData(List<ProjectDO> data){
-		cellTable.setRowData(data);
+		projectsTable.setRowData(data);
 	}
 	
 	public void setOwnerCombo(List<UserDO> users){

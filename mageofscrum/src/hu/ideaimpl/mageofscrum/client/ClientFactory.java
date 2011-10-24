@@ -3,10 +3,9 @@ package hu.ideaimpl.mageofscrum.client;
 import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
-import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm2;
+import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm;
 import hu.ideaimpl.mageofscrum.client.view.BacklogView;
 import hu.ideaimpl.mageofscrum.client.view.DiagnoseView;
-import hu.ideaimpl.mageofscrum.client.view.ErrorView;
 import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
@@ -41,15 +40,13 @@ public interface ClientFactory {
 
 	public EventBus getEBus();
 
-	public ErrorView getErrorView();
-
 	public MenuBar getMenuBar();
 	
 	public MageOfScrumApp getMageOfScrumApp();
 	
 	public Header getHeader();
 	
-	public LoginForm2 getLoginForm();
+	public LoginForm getLoginForm();
 	
 	public RolesView getRoleView();
 	

@@ -1,16 +1,20 @@
 package hu.ideaimpl.mageofscrum.client.ui.inputfields;
 
 
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PasswordTextBox;
 
-public class PasswordInputField extends Composite implements HasValidator, HasText {
+public class PasswordInputField extends Composite implements HasValidator, HasText, HasValue<String> {
 
 	private Label lblTitle = new Label("title:");
-	private PasswordInputField textBox = new PasswordInputField();
+	private PasswordTextBox textBox = new PasswordTextBox();
 	private boolean required = false;
 
 	public PasswordInputField() {
@@ -28,14 +32,6 @@ public class PasswordInputField extends Composite implements HasValidator, HasTe
 		textBox.setSize("151px", "30px");
 	}
 
-	public String getValue() {
-		return textBox.getValue();
-	}
-
-	public void setValue(String value) {
-		textBox.setValue(value);
-	}
-
 	public void setRequired(boolean value) {
 		required = value;
 	}
@@ -50,6 +46,24 @@ public class PasswordInputField extends Composite implements HasValidator, HasTe
 			return true;
 		}
 	}
+
+	@Override
+	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
+		return null;
+	}
+
+	@Override
+	public String getValue() {
+		return textBox.getValue();
+	}
+
+	@Override
+	public void setValue(String value) {
+		textBox.setValue(value);
+	}
+
+	@Override
+	public void setValue(String value, boolean fireEvents) {}
 
 	@Override
 	public String getText() {

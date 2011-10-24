@@ -2,8 +2,8 @@ package hu.ideaimpl.mageofscrum.server.dao;
 
 import hu.ideaimpl.mageofscrum.server.HibernateUtil;
 import hu.ideaimpl.mageofscrum.server.entity.Role;
-import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
+import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 public class RoleDAOImpl implements RoleDAO {
 	
@@ -124,7 +121,7 @@ public class RoleDAOImpl implements RoleDAO {
 
 	@Override
 	public List<User> listOwners() {
-		Role owner = findRole("owner");
+		Role owner = findRole(Roles.OWNER.name());
 		List<User> result = new ArrayList<User>();
 		for(User u : owner.getUsers()){
 			result.add(u);

@@ -1,0 +1,28 @@
+.cellListWidget {
+	color: #222222;
+	text-align: center;
+}
+.cellListEvenItem,
+.cellListEvenItem:hover,
+.cellListOddItem,
+.cellListOddItem:hover{
+	height: 30px;
+	cursor: pointer;
+	border-bottom: 1px solid #E5E5E5;
+}
+.cellListEvenItem:hover,
+.cellListOddItem:hover{
+	background-color: #FFFFCC;
+}
+.cellListOddItem {
+}
+.cellListKeyboardSelectedItem {
+	background-color: #FFFFCC;
+}
+@sprite .cellListSelectedItem {
+	gwt-image: 'cellListSelectedBackground';
+	background-color: #FFFFCC;
+	color: #222222;
+	text-align: center;
+	height: 30px;
+}

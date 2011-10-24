@@ -1,5 +1,9 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import hu.ideaimpl.mageofscrum.client.resources.ListResource;
+import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
+import hu.ideaimpl.mageofscrum.client.resources.TableResource;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
@@ -20,7 +24,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class SprintView extends Composite {
-	private CellTable<TaskDO> sprint;
+	private CellTable<TaskDO> sprintTable;
 	private Button btnReport = new Button("report");
 	private Button btnRemove = new Button("remove");
 	private Button btnTaskDetails = new Button("task details");
@@ -28,7 +32,9 @@ public class SprintView extends Composite {
 	private Label errorLbl = new Label("");
 
 	public SprintView() {
-
+		MosStyle style = Resources.instance.mosStyle();
+		style.ensureInjected();
+		
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
 
@@ -40,15 +46,15 @@ public class SprintView extends Composite {
 		buttonBar.add(errorLbl);
 		verticalPanel.add(buttonBar);
 
-		btnReport.setStyleName("commandBtn");
-		btnTaskDetails.setStyleName("commandBtn");
+		btnReport.setStyleName(style.commandBtn());
+		btnTaskDetails.setStyleName(style.commandBtn());
 
 		btnReport.setText("report");
-		btnRemove.setStyleName("commandBtn");
+		btnRemove.setStyleName(style.commandBtn());
 
 		btnRemove.setText("remove task");
 
-		errorLbl.setStyleName("errorLbl");
+		errorLbl.setStyleName(style.errorLbl());
 		errorLbl.setSize("440px", "20px");
 
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
@@ -58,14 +64,10 @@ public class SprintView extends Composite {
 		projectsList = new CellList<ProjectDO>(new AbstractCell<ProjectDO>() {
 			@Override
 			public void render(Context context, ProjectDO value, SafeHtmlBuilder sb) {
-//				sb.appendEscaped(value.getName());
-				sb.appendHtmlConstant("<div height = '30px'>");
 				sb.appendHtmlConstant(value.getName());
-				sb.appendHtmlConstant("</div>");
 			}
-		});
+		}, ListResource.instance);
 		projectsList.setSize("260px", "175px");
-		projectsList.setStyleName("mosCellList");
 
 		TitledPanel projectsPanel = new TitledPanel();
 		horizontalPanel.add(projectsPanel);
@@ -73,13 +75,13 @@ public class SprintView extends Composite {
 		projectsPanel.addContent(projectsList);
 		projectsPanel.setSize("260px", "400px");
 
-		sprint = new CellTable<TaskDO>();
+		sprintTable = new CellTable<TaskDO>(20, TableResource.instance);
 		TitledPanel sprintPanel = new TitledPanel();
 		horizontalPanel.add(sprintPanel);
 		sprintPanel.setText("tasks");
-		sprintPanel.addContent(sprint);
+		sprintPanel.addContent(sprintTable);
 		sprintPanel.setSize("540px", "400px");
-		sprint.setWidth("537px");
+		sprintTable.setWidth("537px");
 
 		TextColumn<TaskDO> nameColumn = new TextColumn<TaskDO>() {
 			@Override
@@ -87,7 +89,7 @@ public class SprintView extends Composite {
 				return object.getName();
 			}
 		};
-		sprint.addColumn(nameColumn, "name");
+		sprintTable.addColumn(nameColumn, "name");
 
 		TextColumn<TaskDO> estTimeColumn = new TextColumn<TaskDO>() {
 			@Override
@@ -95,7 +97,7 @@ public class SprintView extends Composite {
 				return Integer.toString(object.getEstimateTime());
 			}
 		};
-		sprint.addColumn(estTimeColumn, "estimate time");
+		sprintTable.addColumn(estTimeColumn, "estimate time");
 
 		TextColumn<TaskDO> priorityColumn = new TextColumn<TaskDO>() {
 			@Override
@@ -103,7 +105,7 @@ public class SprintView extends Composite {
 				return Integer.toString(object.getPriority());
 			}
 		};
-		sprint.addColumn(priorityColumn, "priority");
+		sprintTable.addColumn(priorityColumn, "priority");
 		final DateTimeFormat dateFormat = DateTimeFormat.getFormat(PredefinedFormat.YEAR_MONTH_NUM_DAY);
 		TextColumn<TaskDO> createdColumn = new TextColumn<TaskDO>() {
 			@Override
@@ -111,7 +113,7 @@ public class SprintView extends Composite {
 				return dateFormat.format(object.getCreated());
 			}
 		};
-		sprint.addColumn(createdColumn, "created");
+		sprintTable.addColumn(createdColumn, "created");
 	}
 
 	public CellList<ProjectDO> getProjectsList() {
@@ -135,6 +137,6 @@ public class SprintView extends Composite {
 	}
 
 	public CellTable<TaskDO> getSprintTable() {
-		return sprint;
+		return sprintTable;
 	}
 }

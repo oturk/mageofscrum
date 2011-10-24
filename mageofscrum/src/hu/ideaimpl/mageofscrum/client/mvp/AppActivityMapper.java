@@ -4,7 +4,6 @@ import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.MageOfScrum;
 import hu.ideaimpl.mageofscrum.client.activity.BacklogActivity;
 import hu.ideaimpl.mageofscrum.client.activity.DiagnoseActivity;
-import hu.ideaimpl.mageofscrum.client.activity.ErrorActivity;
 import hu.ideaimpl.mageofscrum.client.activity.ProfileActivity;
 import hu.ideaimpl.mageofscrum.client.activity.ProjectActivity;
 import hu.ideaimpl.mageofscrum.client.activity.RoleActivity;
@@ -12,7 +11,6 @@ import hu.ideaimpl.mageofscrum.client.activity.SprintActivity;
 import hu.ideaimpl.mageofscrum.client.activity.TeamActivity;
 import hu.ideaimpl.mageofscrum.client.place.BacklogPlace;
 import hu.ideaimpl.mageofscrum.client.place.DiagnosePlace;
-import hu.ideaimpl.mageofscrum.client.place.ErrorPlace;
 import hu.ideaimpl.mageofscrum.client.place.ProfilePlace;
 import hu.ideaimpl.mageofscrum.client.place.ProjectPlace;
 import hu.ideaimpl.mageofscrum.client.place.RolePlace;
@@ -33,9 +31,6 @@ public class AppActivityMapper implements ActivityMapper {
 
 	@Override
 	public Activity getActivity(Place place) {
-		if(place instanceof ErrorPlace){
-			return new ErrorActivity(((ErrorPlace) place).getError(), clientFactory);
-		}
 		if(place instanceof TeamPlace){
 			if (hasAdminsRoles()) {
 				return new TeamActivity(clientFactory);

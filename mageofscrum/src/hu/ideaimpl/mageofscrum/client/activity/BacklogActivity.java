@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
-import hu.ideaimpl.mageofscrum.client.ui.TaskDialog;
+import hu.ideaimpl.mageofscrum.client.ui.forms.TaskDialog;
 import hu.ideaimpl.mageofscrum.client.view.BacklogView;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;

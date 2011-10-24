@@ -1,0 +1,16 @@
+.titledPanelTitle {
+background-color: #E5E5E5;
+color: #222222;
+font-weight: bold;
+text-transform:uppercase;
+font-size: 14px;
+padding-top: 5px;
+padding-left: 10px;
+border-radius: 10px 10px 0px 0px;
+/* border: 1px solid  #39d0dd; */
+border-bottom: 2px solid #FFFFFF;
+}
+.titledPanel {
+/* border: 1px solid  #39d0dd; */
+/* border-radius: 10px 10px 0px 0px; */
+}
