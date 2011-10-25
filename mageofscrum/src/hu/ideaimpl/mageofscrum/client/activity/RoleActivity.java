@@ -77,7 +77,7 @@ public class RoleActivity extends AbstractActivity {
 
 	protected void doOnSelectionChanged() {
 		if (usersSelection.getSelectedSet().size() == 1) {
-			String userId = usersSelection.getSelectedSet().iterator().next().getEmail();
+			String userId = usersSelection.getSelectedSet().iterator().next().getUsername();
 			ManagerService.Util.getService().fetchUsersRoles(userId, new AsyncCallback<ArrayList<RoleDO>>() {
 
 				@Override
@@ -120,7 +120,7 @@ public class RoleActivity extends AbstractActivity {
 			newRoles.add(role);
 		}
 
-		String userId = usersSelection.getSelectedSet().iterator().next().getEmail();
+		String userId = usersSelection.getSelectedSet().iterator().next().getUsername();
 		ManagerService.Util.getService().addRolesToUser(userId, roles, new AsyncCallback<Void>() {
 
 			@Override
@@ -140,7 +140,7 @@ public class RoleActivity extends AbstractActivity {
 	}
 
 	protected void doOnRemoveBtnClicked() {
-		String userId = usersSelection.getSelectedSet().iterator().next().getEmail();
+		String userId = usersSelection.getSelectedSet().iterator().next().getUsername();
 
 		Set<RoleDO> selected = hasRoleSelection.getSelectedSet();
 		ArrayList<Long> roles = new ArrayList<Long>();
@@ -174,7 +174,7 @@ public class RoleActivity extends AbstractActivity {
 	private void doOnDeleteBtnClicked() {
 		ArrayList<String> delete = new ArrayList<String>();
 		for (UserDO user : usersSelection.getSelectedSet()) {
-			delete.add(user.getEmail());
+			delete.add(user.getUsername());
 		}
 		ManagerService.Util.getService().deleteUsers(delete, new AsyncCallback<Void>() {
 

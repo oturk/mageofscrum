@@ -55,7 +55,7 @@ public class TeamsView extends Composite {
 		otherUsersList = new CellList<UserDO>(new AbstractCell<UserDO>() {
 			@Override
 			public void render(Context context, UserDO value, SafeHtmlBuilder sb) {
-				sb.appendEscaped(value.getEmail());
+				sb.appendEscaped(value.getUsername());
 			}
 		});
 		otherUsersList.setSelectionModel(othersSelectionModel);
@@ -63,7 +63,7 @@ public class TeamsView extends Composite {
 		teamMembersList = new CellList<UserDO>(new AbstractCell<UserDO>() {
 			@Override
 			public void render(Context context, UserDO value, SafeHtmlBuilder sb) {
-				sb.appendEscaped(value.getEmail());
+				sb.appendEscaped(value.getUsername());
 			}
 		});
 		teamMembersList.setHeight("400px");

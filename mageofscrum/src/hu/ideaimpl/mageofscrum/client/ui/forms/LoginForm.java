@@ -7,16 +7,16 @@ import hu.ideaimpl.mageofscrum.client.ui.inputfields.HasValidator;
 import hu.ideaimpl.mageofscrum.client.ui.inputfields.InputField;
 import hu.ideaimpl.mageofscrum.client.ui.inputfields.PasswordInputField;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class LoginForm extends Composite implements HasValidator{
+public class LoginForm extends Composite implements HasValidator {
 
 	private InputField username = new InputField();
 	private PasswordInputField password = new PasswordInputField();
@@ -27,14 +27,16 @@ public class LoginForm extends Composite implements HasValidator{
 	public LoginForm() {
 		MosStyle style = Resources.instance.mosStyle();
 		style.ensureInjected();
+
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
-		
+
 		VerticalPanel contentPanel = new VerticalPanel();
 		contentPanel.setSpacing(2);
-		contentPanel.setSize("300px", "220px");
+		contentPanel.setSize("280px", "220px");
 		username.setText("username:");
 		username.setRequired(true);
+		username.setFocus(true);
 		contentPanel.add(username);
 		password.setText("password:");
 		password.setRequired(true);
@@ -43,13 +45,14 @@ public class LoginForm extends Composite implements HasValidator{
 		btnLogin.setStyleName(style.commandBtn());
 		contentPanel.add(btnLogin);
 		btnLogin.setSize("120px", "30px");
-		
+		btnLogin.getElement().getStyle().setMarginLeft(100, Style.Unit.PX);
+
 		TitledPanel loginPanel = new TitledPanel();
+		loginPanel.getElement().getStyle().setMarginLeft(10, Style.Unit.PX);
 		verticalPanel.add(loginPanel);
 		loginPanel.setText("login");
-		loginPanel.setSize("300px", "250px");
+		loginPanel.setSize("280px", "250px");
 		loginPanel.addContent(contentPanel);
-
 
 		lblError.setStyleName("errorLbl");
 		verticalPanel.add(lblError);
@@ -80,13 +83,13 @@ public class LoginForm extends Composite implements HasValidator{
 	public boolean validate() {
 		boolean result = true;
 		String msg = "";
-		if(!username.validate()){
+		if (!username.validate()) {
 			result = false;
 		}
-		if(!password.validate()){
+		if (!password.validate()) {
 			result = false;
 		}
-		if(!result){
+		if (!result) {
 			msg = "Fill required fields!";
 		}
 		lblError.setText(msg);

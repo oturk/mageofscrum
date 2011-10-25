@@ -172,12 +172,12 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 
 	@Override
 	public UserDO addUser(UserDO user) {
-		User existUser = userDAO.findUser(user.getEmail());
+		User existUser = userDAO.findUser(user.getUsername());
 		if(existUser != null){
 			return null;
 		}
-		userDAO.saveUser(user.getEmail(), user.getPassword());
-		return userDAO.findUser(user.getEmail()).getUserDO();
+		userDAO.saveUser(user.getUsername(), user.getPassword());
+		return userDAO.findUser(user.getUsername()).getUserDO();
 	}
 
 	@Override

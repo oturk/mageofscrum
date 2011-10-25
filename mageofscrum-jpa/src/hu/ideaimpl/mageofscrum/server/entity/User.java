@@ -47,7 +47,7 @@ public class User implements Serializable {
 	
 	public static User createUserObj(UserDO user){
 		User newUser = new User();
-		newUser.setUsername(user.getEmail());
+		newUser.setUsername(user.getUsername());
 		newUser.setPassword(user.getPassword());
 		
 		if(user.getUserData() != null){
@@ -120,7 +120,7 @@ public class User implements Serializable {
 	
 	public UserDO getUserDO(){
 		UserDO ret = new UserDO();
-		ret.setEmail(username);
+		ret.setUsername(username);
 		return ret;
 	}
 	

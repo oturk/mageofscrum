@@ -161,7 +161,7 @@ public class TeamActivity extends AbstractActivity {
 	private ArrayList<String> convertUserIds(Set<UserDO> users){
 		ArrayList<String> result = new ArrayList<String>();
 		for(UserDO user : users){
-			result.add(user.getEmail());
+			result.add(user.getUsername());
 		}
 		return result;
 	}

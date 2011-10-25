@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.activity;
 
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
+import hu.ideaimpl.mageofscrum.client.ui.forms.ProjectDialog;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
@@ -99,6 +100,13 @@ public class ProjectActivity extends AbstractActivity {
 				projectView.clearForm();
 			}
 		});
+		projectView.getCreateBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				ProjectDialog pDialog = new ProjectDialog();
+				pDialog.center();
+				pDialog.show();
+			}
+		});
 	}
 	
 	protected void doOnDeleteBtnClicked() {
@@ -152,7 +160,7 @@ public class ProjectActivity extends AbstractActivity {
 		int ownerIndex = 0;
 		int teamIndex = 0;
 		for(UserDO user : owners){
-			if(user.getEmail().equals(selectedObject.getOwnerName())){
+			if(user.getUsername().equals(selectedObject.getOwnerName())){
 				break;
 			}
 			ownerIndex++;

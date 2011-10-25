@@ -4,10 +4,12 @@ import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.resources.TableResource;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
+import hu.ideaimpl.mageofscrum.client.ui.inputfields.ComboBoxInputField;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -30,8 +32,10 @@ public class ProjectsView extends Composite{
 	private Button btnCreate = new Button("save");
 	private Button btnDelete = new Button("delete");
 	private Button btnClearForm = new Button("clear form");
+	private Button btnNewButton = new Button("create");
 	private CellTable<ProjectDO> projectsTable = new CellTable<ProjectDO>(3, TableResource.instance);
-	private ListBox owner = new ListBox();
+//	private ListBox owner = new ListBox();
+	private ComboBoxInputField<UserDO> owner = new ComboBoxInputField<UserDO>();
 	private ListBox team = new ListBox();
 	private TextArea description = new TextArea();
 	private TextBox name = new TextBox();
@@ -56,6 +60,10 @@ public class ProjectsView extends Composite{
 		buttonBar.add(btnCreate);
 		buttonBar.add(btnDelete);
 		buttonBar.add(btnClearForm);
+		
+		btnNewButton.setText("create");
+		btnNewButton.setStyleName(Resources.instance.mosStyle().commandBtn());
+		buttonBar.add(btnNewButton);
 		buttonBar.add(lblError);
 		btnCreate.setStyleName(style.commandBtn());
 		btnDelete.setStyleName(style.commandBtn());
@@ -149,6 +157,10 @@ public class ProjectsView extends Composite{
 		return btnClearForm;
 	}
 	
+	public HasClickHandlers getCreateBtn(){
+		return btnNewButton;
+	}
+	
 	public CellTable<ProjectDO> getProjectsTable(){
 		return projectsTable;
 	}
@@ -162,9 +174,11 @@ public class ProjectsView extends Composite{
 	}
 	
 	public void setOwnerCombo(List<UserDO> users){
+		List<String> labels = new ArrayList<String>();
 		for(UserDO user : users){
-			owner.addItem(user.getEmail());
+			labels.add(user.getUsername());
 		}
+		owner.addItems(labels, users);
 	}
 	
 	public void setTeamCombo(List<TeamDO> teams){
@@ -200,7 +214,7 @@ public class ProjectsView extends Composite{
 		}
 		project.setName(name.getValue());
 		project.setDescription(description.getValue());
-		project.setOwnerName(owner.getValue(owner.getSelectedIndex()));
+//		project.setOwnerName(owner.getValue(owner.getSelectedIndex()));
 		project.setTeamName(team.getValue(team.getSelectedIndex()));
 
 		return project;
@@ -210,7 +224,7 @@ public class ProjectsView extends Composite{
 		this.project = data;
 		name.setValue(data.getName());
 		description.setValue(data.getDescription());
-		owner.setItemSelected(ownerIndex, true);
+//		owner.setItemSelected(ownerIndex, true);
 		team.setItemSelected(teamIndex, true);
 		
 //		owner.setItemSelected(index, selected);

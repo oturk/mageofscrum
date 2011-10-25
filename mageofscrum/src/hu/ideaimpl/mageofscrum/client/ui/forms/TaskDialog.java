@@ -1,6 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.ui.forms;
 
 import hu.ideaimpl.mageofscrum.client.ui.RichTextToolbar;
+import hu.ideaimpl.mageofscrum.client.ui.inputfields.HasValidator;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -15,7 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class TaskDialog extends DialogBox {
+public class TaskDialog extends DialogBox implements HasValidator{
 
 	private Label nameLbl = new Label("name:");
 	private TextBox name = new TextBox();
@@ -211,5 +212,11 @@ public class TaskDialog extends DialogBox {
 		dialog.absolutePanel.setSize("500px", "500px");
 		
 		return dialog;
+	}
+
+	@Override
+	public boolean validate() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

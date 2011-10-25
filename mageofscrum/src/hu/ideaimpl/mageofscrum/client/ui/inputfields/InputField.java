@@ -1,17 +1,19 @@
 package hu.ideaimpl.mageofscrum.client.ui.inputfields;
 
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 
-public class InputField extends Composite implements HasValidator, HasText, HasValue<String> {
+public class InputField extends Composite implements HasValidator, HasText, HasValue<String>, Focusable{
 
 	private Label lblTitle = new Label("title:");
 	private TextBox textBox = new TextBox();
@@ -76,6 +78,30 @@ public class InputField extends Composite implements HasValidator, HasText, HasV
 	public void setValue(String value, boolean fireEvents) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getTabIndex() {
+		return textBox.getTabIndex();
+	}
+
+	@Override
+	public void setAccessKey(char key) {
+		textBox.setAccessKey(key);
+	}
+
+	@Override
+	public void setFocus(final boolean focused) {
+		Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+			public void execute() {
+				textBox.setFocus(focused);
+			}
+		});
+	}
+
+	@Override
+	public void setTabIndex(int index) {
+		textBox.setTabIndex(index);
 	}
 
 }

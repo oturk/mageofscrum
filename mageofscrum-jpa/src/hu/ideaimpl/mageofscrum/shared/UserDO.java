@@ -4,23 +4,23 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 public class UserDO implements IsSerializable {
 
-	private String email;
+	private String username;
 	private String password;
 	private UserDataDO userData;
 
 	public UserDO(String email) {
-		this.email = email;
+		this.username = email;
 	}
 
 	public UserDO() {
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String email) {
+		this.username = email;
 	}
 
 	public String getPassword() {

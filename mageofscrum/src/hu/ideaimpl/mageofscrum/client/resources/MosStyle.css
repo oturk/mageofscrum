@@ -18,3 +18,33 @@ border: 1px solid #2F5BB7;
 	color: firebrick;
 	margin-left: 5px;
 }
+
+@sprite .closeImgStyle{
+	margin-top: 3px;
+	margin-right: auto;
+	margin-left: auto;
+	gwt-image: 'closeImg';
+	cursor: pointer;
+}
+@sprite .closeImgStyleHover{
+	margin-top: 3px;
+	margin-right: auto;
+	margin-left: auto;
+	gwt-image: 'closeImgHover';
+	cursor: pointer;
+}
+.dialogHeader,
+.dialogHeaderText{
+	background: #4D90FE;
+}
+.dialogHeaderText{
+	margin-top: 5px;
+	margin-left: 5px;
+	color: #FFFFFF;
+	text-transform:uppercase;
+}
+.dialogPanel{
+	background-color: #FFFFFF;
+	border-radius: 10px;
+	padding: 10px;
+}

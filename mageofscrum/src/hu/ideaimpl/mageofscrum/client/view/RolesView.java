@@ -55,7 +55,7 @@ public class RolesView extends Composite {
 		usersList = new CellList<UserDO>(new AbstractCell<UserDO>(){
 			@Override
 			public void render(Context context, UserDO value, SafeHtmlBuilder sb) {
-				sb.appendEscaped(value.getEmail());
+				sb.appendEscaped(value.getUsername());
 			}
 		});
 		usersList.setStyleName("mosCellList");
@@ -222,7 +222,7 @@ public class RolesView extends Composite {
 	
 	public UserDO getNewUser(){
 		UserDO user = new UserDO();
-		user.setEmail(userName.getValue());
+		user.setUsername(userName.getValue());
 		user.setPassword(password.getValue());
 		
 		UserDataDO userData = new UserDataDO();

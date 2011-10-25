@@ -12,4 +12,10 @@ public interface Resources extends ClientBundle {
 	
 	@Source("mageofscrum-logo.png")
 	public ImageResource mageofscrumLogo();
+	
+	@Source("close_24.png")
+	public ImageResource closeImg();
+	
+	@Source("close_24_gray.png")
+	public ImageResource closeImgHover();
 }
