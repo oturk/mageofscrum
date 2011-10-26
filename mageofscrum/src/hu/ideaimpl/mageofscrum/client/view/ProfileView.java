@@ -1,102 +1,79 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
+import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
+import hu.ideaimpl.mageofscrum.client.ui.fields.InputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.PasswordInputField;
 import hu.ideaimpl.mageofscrum.shared.UserDataDO;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class ProfileView extends Composite {
 
-	private Label lblEmail = new Label("email:");
-	private TextBox email = new TextBox();
-	private TextBox surname = new TextBox();
-	private Label lblSurname = new Label("surname:");
-	private TextBox forename = new TextBox();
-	private Label lblForename = new Label("forename:");
-	private PasswordTextBox password = new PasswordTextBox();
-	private Label lblPassword = new Label("password:");
-	private PasswordTextBox confirmPass = new PasswordTextBox();
-	private Label lblConfirmPass = new Label("confirm pass:");
+	private InputField email = new InputField();
+	private InputField surname = new InputField();
+	private InputField forename = new InputField();
+	private PasswordInputField password = new PasswordInputField();
+	private PasswordInputField confirmPass = new PasswordInputField();
 	private Button btnSave = new Button("save");
 	private Button btnChangePassword = new Button("change password");
-	private Label lblFormTitle = new Label("change personal data");
-	private final Label lblChangePassword = new Label("change password");
 	private Label lblSaveError = new Label("");
 	private Label lblPasswordError = new Label("");
 
 	public ProfileView() {
+		VerticalPanel vPanel = new VerticalPanel();
+		initWidget(vPanel);
 		
-		AbsolutePanel absolutePanel = new AbsolutePanel();
-		initWidget(absolutePanel);
-		absolutePanel.setHeight("505px");
-		
-		lblEmail.setStyleName("inputField");
-		lblEmail.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(lblEmail, 0, 98);
-		lblEmail.setSize("113px", "24px");
-		
-		absolutePanel.add(email, 115, 92);
-		email.setSize("151px", "30px");
-		
-		absolutePanel.add(surname, 115, 140);
-		surname.setSize("151px", "30px");
-		
-		lblSurname.setStyleName("inputField");
-		lblSurname.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(lblSurname, 0, 146);
-		lblSurname.setSize("113px", "24px");
-		
-		absolutePanel.add(forename, 115, 188);
-		forename.setSize("151px", "30px");
-		
-		lblForename.setStyleName("inputField");
-		lblForename.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(lblForename, 0, 194);
-		lblForename.setSize("113px", "24px");
-		
-		absolutePanel.add(password, 115, 330);
-		password.setSize("151px", "30px");
-		
-		lblPassword.setStyleName("inputField");
-		lblPassword.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(lblPassword, 0, 336);
-		lblPassword.setSize("113px", "24px");
-		
-		absolutePanel.add(confirmPass, 115, 378);
-		confirmPass.setSize("151px", "30px");
-		
-		lblConfirmPass.setStyleName("inputField");
-		lblConfirmPass.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(lblConfirmPass, 0, 384);
-		lblConfirmPass.setSize("113px", "24px");
-		
-		btnSave.setStyleName("menuButton");
-		absolutePanel.add(btnSave, 167, 230);
-		
-		btnChangePassword.setStyleName("menuButton");
-		absolutePanel.add(btnChangePassword, 125, 420);
-		
-		lblFormTitle.setStyleName("formTitle");
-		absolutePanel.add(lblFormTitle, 0, 20);
-		lblFormTitle.setSize("263px", "30px");
-		lblChangePassword.setStyleName("formTitle");
-		
-		absolutePanel.add(lblChangePassword, 0, 258);
-		lblChangePassword.setSize("263px", "30px");
-		
-		lblSaveError.setStyleName("errorLbl");
-		absolutePanel.add(lblSaveError, 0, 56);
+		VerticalPanel userPanel = new VerticalPanel();
+		userPanel.setSpacing(1);
+		lblSaveError.setStyleName(Resources.instance.mosStyle().errorLbl());
+		userPanel.add(lblSaveError);
 		lblSaveError.setSize("263px", "30px");
 		
-		lblPasswordError.setStyleName("errorLbl");
-		absolutePanel.add(lblPasswordError, 0, 294);
+		email.setText("email:");
+		email.setRequired(true);
+		surname.setRequired(true);
+		surname.setText("surname:");
+		forename.setRequired(true);
+		forename.setText("forename:");
+		password.setRequired(true);
+		password.setText("password:");
+		confirmPass.setRequired(true);
+		confirmPass.setText("confirm password:");
+		userPanel.add(email);
+		userPanel.add(surname);
+		userPanel.add(forename);
+		btnSave.setStyleName(Resources.instance.mosStyle().commandBtn());
+		userPanel.add(btnSave);
+		
+		TitledPanel userTitledPanel = new TitledPanel();
+		vPanel.add(userTitledPanel);
+		userTitledPanel.setText("personal data");
+		userTitledPanel.addContent(userPanel);
+		userTitledPanel.setSize("280px", "220px");
+		
+		VerticalPanel passwordPanel = new VerticalPanel();
+		passwordPanel.setSpacing(1);
+		
+		lblPasswordError.setStyleName(Resources.instance.mosStyle().errorLbl());
+		passwordPanel.add(lblPasswordError);
 		lblPasswordError.setSize("265px", "30px");
+		
+		passwordPanel.add(password);
+		
+		passwordPanel.add(confirmPass);
+		btnChangePassword.setStyleName(Resources.instance.mosStyle().commandBtn());
+		passwordPanel.add(btnChangePassword);
+		
+		TitledPanel passTitledPanel = new TitledPanel();
+		vPanel.add(passTitledPanel);
+		passTitledPanel.setText("change password");
+		passTitledPanel.addContent(passwordPanel);
+		passTitledPanel.setSize("280px", "200px");
 	}
 	
 	public void setUserData(UserDataDO data){
@@ -129,22 +106,14 @@ public class ProfileView extends Composite {
 	public boolean validateForm(){
 		boolean result = true;
 		String errorMsg = "";
-		if(email.getValue().isEmpty()){
-			lblEmail.setStyleName("invalidInputField");
+		if(!email.validate()){
 			result = false;
-		}else{
-			lblEmail.setStyleName("inputField");
 		}
-		if(surname.getValue().isEmpty()){
-			lblSurname.setStyleName("invalidInputField");
+		if(!surname.validate()){
 			result = false;
-		}else{
-			lblSurname.setStyleName("inputField");
 		}
-		if(forename.getValue().isEmpty()){
-			lblForename.setStyleName("invalidInputField");
-		}else{
-			lblForename.setStyleName("inputField");
+		if(!forename.validate()){
+			result = false;
 		}
 		if(!result){
 			errorMsg = "please, fill required fields";
@@ -156,28 +125,22 @@ public class ProfileView extends Composite {
 	public boolean validatePassword(){
 		boolean result = true;
 		String errorMsg = "";
-		if(password.getValue().isEmpty()){
-			lblPassword.setStyleName("invalidInputField");
+		if(!password.validate()){
 			result = false;
-		}else{
-			lblPassword.setStyleName("inputField");
 		}
-		if(confirmPass.getValue().isEmpty()){
-			lblConfirmPass.setStyleName("invalidInputField");
+		if(!confirmPass.validate()){
 			result = false;
-		}else{
-			lblConfirmPass.setStyleName("inputField");
 		}
 		if(!password.getValue().isEmpty() && !confirmPass.getValue().isEmpty() && !password.getValue().equals(confirmPass.getValue())){
 			if(result){
-				lblPassword.setStyleName("invalidInputField");
-				lblConfirmPass.setStyleName("invalidInputField");
+				password.setValidState(false);
+				confirmPass.setValidState(false);
 				errorMsg ="password confirmation failed";
 			}
 			result = false;
 		}else if(result){
-			lblPassword.setStyleName("inputField");
-			lblConfirmPass.setStyleName("inputField");
+			password.setValidState(true);
+			password.setValidState(true);
 		}
 		if(!result && errorMsg.isEmpty()){
 			errorMsg = "please, fill required fields";

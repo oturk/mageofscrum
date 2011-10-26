@@ -1,46 +1,37 @@
-package hu.ideaimpl.mageofscrum.client.ui.inputfields;
+package hu.ideaimpl.mageofscrum.client.ui.fields;
 
+
+import java.util.List;
 
 import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
-import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Focusable;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.HasValue;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.ListBox;
 
-public class InputField extends Composite implements HasValidator, HasText, HasValue<String>, Focusable{
+public class ComboBoxInputField<T> extends Composite implements Focusable, HasValidator, HasText, HasItems<T>{
 
 	private Label lblTitle = new Label("title:");
-	private TextBox textBox = new TextBox();
+	private ListBox listBox = new ListBox();
 	private boolean required = false;
-
-	public InputField() {
+	private List<T> items;
+	
+	public ComboBoxInputField() {
 
 		AbsolutePanel absolutePanel = new AbsolutePanel();
 		initWidget(absolutePanel);
-		absolutePanel.setSize("272px", "37px");
+		absolutePanel.setSize("273px", "37px");
 
 		lblTitle.setStyleName("loginLbl");
 		lblTitle.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		absolutePanel.add(lblTitle, 0, 6);
 		lblTitle.setSize("113px", "24px");
 
-		absolutePanel.add(textBox, 116, 0);
-		textBox.setSize("151px", "30px");
-	}
-
-	@Override
-	public String getValue() {
-		return textBox.getValue();
-	}
-
-	public void setValue(String value) {
-		textBox.setValue(value);
+		absolutePanel.add(listBox, 116, 0);
+		listBox.setSize("156px", "35px");
 	}
 
 	public void setRequired(boolean value) {
@@ -49,7 +40,7 @@ public class InputField extends Composite implements HasValidator, HasText, HasV
 
 	@Override
 	public boolean validate() {
-		if (required && textBox.getValue().isEmpty()) {
+		if (required && getValue() != null) {
 			lblTitle.setStyleName("invalidInputField");
 			return false;
 		} else {
@@ -69,39 +60,54 @@ public class InputField extends Composite implements HasValidator, HasText, HasV
 	}
 
 	@Override
-	public HandlerRegistration addValueChangeHandler(ValueChangeHandler<String> handler) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setValue(String value, boolean fireEvents) {
-		// TODO Auto-generated method stub
+	public void addItems(List<String> labels, List<T> values) {
+		this.items = values;
+		for(String label : labels){
+			listBox.addItem(label);
+		}
 		
 	}
 
 	@Override
+	public T getValue() {
+		if(items != null){
+			return items.get(listBox.getSelectedIndex());
+		}
+		return null;
+	}
+	
+	public void clear(){
+		listBox.clear();
+	}
+
+	@Override
 	public int getTabIndex() {
-		return textBox.getTabIndex();
+		return listBox.getTabIndex();
 	}
 
 	@Override
 	public void setAccessKey(char key) {
-		textBox.setAccessKey(key);
+		listBox.setAccessKey(key);
 	}
 
 	@Override
 	public void setFocus(final boolean focused) {
 		Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 			public void execute() {
-				textBox.setFocus(focused);
+				listBox.setFocus(focused);
 			}
 		});
 	}
 
 	@Override
 	public void setTabIndex(int index) {
-		textBox.setTabIndex(index);
+		listBox.setTabIndex(index);
+	}
+
+	@Override
+	public void setValidState(boolean isValid) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -16,18 +16,25 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 public class TeamActivity extends AbstractActivity {
-	private final ClientFactory clientFactory;
-	private TeamsView teamsView;
+	private TeamsView view;
+	private SingleSelectionModel<TeamDO> teamSelectionModel = new SingleSelectionModel<TeamDO>();
+	private MultiSelectionModel<UserDO> memebersSelectionModel = new MultiSelectionModel<UserDO>();
+	private MultiSelectionModel<UserDO> othersSelectionModel = new MultiSelectionModel<UserDO>();
+	
 	private ArrayList<UserDO> members = null;
 	private ArrayList<UserDO> others = null;
 	private ArrayList<TeamDO> teams = new ArrayList<TeamDO>();
 	
 	public TeamActivity(ClientFactory clientFactory) {
-		this.clientFactory = clientFactory;
-		this.teamsView = clientFactory.getTeamsView();
+		view = clientFactory.getTeamsView();
+		view.getTeamsList().setSelectionModel(teamSelectionModel);
+		view.getFromList().setSelectionModel(memebersSelectionModel);
+		view.getToList().setSelectionModel(othersSelectionModel);
 		initTeams();
 		bind();
 	}
@@ -38,7 +45,7 @@ public class TeamActivity extends AbstractActivity {
 			@Override
 			public void onSuccess(ArrayList<TeamDO> result) {
 				teams = result;
-				teamsView.setTeams(result);
+				view.getTeamsList().setRowData(teams);
 			}
 			
 			@Override
@@ -49,27 +56,27 @@ public class TeamActivity extends AbstractActivity {
 	}
 
 	private void bind(){
-		teamsView.getTeamSelection().addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+		teamSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				doOnSelectionChanged();
 			}
 		});
-		teamsView.getAddBtn().addClickHandler(new ClickHandler() {
+		view.getAddBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doOnAddBtnClicked();
 			}
 		});
-		teamsView.getRemoveBtn().addClickHandler(new ClickHandler() {
+		view.getRemoveBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doOnRemoveBtnClicked();
 			}
 		});
-		teamsView.getCreateBtn().addClickHandler(new ClickHandler() {
+		view.getCreateBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doOnCreateBtnClicked();
 			}
 		});
-		teamsView.getDeleteBtn().addClickHandler(new ClickHandler() {
+		view.getDeleteBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doOnDeleteBtnClicked();
 			}
@@ -77,15 +84,16 @@ public class TeamActivity extends AbstractActivity {
 	}
 	
 	private void doOnDeleteBtnClicked() {
-		final TeamDO selectedTeam = teamsView.getSelectedTeam();
+		final TeamDO selectedTeam = teamSelectionModel.getSelectedObject();
 		if (selectedTeam != null && teams.contains(selectedTeam)) {
-			ManagerService.Util.getService().deleteTeam(teamsView.getSelectedObject(), new AsyncCallback<Void>() {
+			ManagerService.Util.getService().deleteTeam(selectedTeam.getId(), new AsyncCallback<Void>() {
 
 				@Override
 				public void onSuccess(Void result) {
 					teams.remove(selectedTeam);
-					teamsView.setTeams(teams);
-					teamsView.clearListToList();
+					view.getTeamsList().setRowData(teams);
+					view.getFromList().setRowData(new ArrayList<UserDO>());
+					view.getToList().setRowData(new ArrayList<UserDO>());
 				}
 
 				@Override
@@ -97,15 +105,15 @@ public class TeamActivity extends AbstractActivity {
 	}
 
 	private void doOnCreateBtnClicked() {
-		String value = teamsView.getTeamName().getValue();
+		String value = view.getTeamName().getValue();
 		if (value != null && !value.isEmpty()) {
 			ManagerService.Util.getService().addTeam(value, new AsyncCallback<TeamDO>() {
 
 				@Override
 				public void onSuccess(TeamDO result) {
 					teams.add(result);
-					teamsView.setTeams(teams);
-					teamsView.getTeamName().setValue("");
+					view.getTeamsList().setRowData(teams);
+					view.getTeamName().setValue("");
 				}
 
 				@Override
@@ -117,16 +125,16 @@ public class TeamActivity extends AbstractActivity {
 	}
 
 	private void doOnRemoveBtnClicked() {
-		Long selectedTeam = teamsView.getSelectedObject();
-		final Set<UserDO> teamMembers = teamsView.getSelectedMembers();
+		Long selectedTeam = teamSelectionModel.getSelectedObject().getId();
+		final Set<UserDO> teamMembers = memebersSelectionModel.getSelectedSet();
 		ManagerService.Util.getService().removeUsersFromTeam(convertUserIds(teamMembers), selectedTeam, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
 				members.removeAll(teamMembers);
 				others.addAll(teamMembers);
-				teamsView.setTeamMembers(members);
-				teamsView.setOtherUsers(others);
+				view.getFromList().setRowData(members);
+				view.getToList().setRowData(others);
 			}
 			
 			@Override
@@ -137,17 +145,16 @@ public class TeamActivity extends AbstractActivity {
 	}
 
 	private void doOnAddBtnClicked() {
-		Long selectedTeam = teamsView.getSelectedObject();
-		Set<UserDO> otherMembers = teamsView.getSelectedOthers();
-		members.addAll(otherMembers);
-		others.removeAll(otherMembers);
-		teamsView.setTeamMembers(members);
-		teamsView.setOtherUsers(others);
+		Long selectedTeam = teamSelectionModel.getSelectedObject().getId();
+		final Set<UserDO> otherMembers = othersSelectionModel.getSelectedSet();
 		ManagerService.Util.getService().addUsersToTeam(convertUserIds(otherMembers), selectedTeam, new AsyncCallback<Void>() {
 			
 			@Override
 			public void onSuccess(Void result) {
-				System.out.println("success");
+				members.addAll(otherMembers);
+				others.removeAll(otherMembers);
+				view.getFromList().setRowData(members);
+				view.getToList().setRowData(others);
 			}
 			
 			@Override
@@ -167,13 +174,13 @@ public class TeamActivity extends AbstractActivity {
 	}
 
 	private void doOnSelectionChanged(){
-		Long selectedObject = teamsView.getSelectedObject();
-		ManagerService.Util.getService().fetchTeamMembers(selectedObject, new AsyncCallback<ArrayList<UserDO>>() {
+		Long teamId = teamSelectionModel.getSelectedObject().getId();
+		ManagerService.Util.getService().fetchTeamMembers(teamId, new AsyncCallback<ArrayList<UserDO>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<UserDO> result) {
 				members = result;
-				teamsView.setTeamMembers(members);
+				view.getFromList().setRowData(members);
 			}
 			
 			@Override
@@ -181,12 +188,12 @@ public class TeamActivity extends AbstractActivity {
 				Window.alert("Team members fetch failed!");
 			}
 		});
-		ManagerService.Util.getService().fetchNotTeamMembers(selectedObject, new AsyncCallback<ArrayList<UserDO>>() {
+		ManagerService.Util.getService().fetchNotTeamMembers(teamId, new AsyncCallback<ArrayList<UserDO>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<UserDO> result) {
 				others = result;
-				teamsView.setOtherUsers(others);
+				view.getToList().setRowData(others);
 			}
 			
 			@Override
@@ -198,7 +205,7 @@ public class TeamActivity extends AbstractActivity {
 	
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		panel.setWidget(teamsView);
+		panel.setWidget(view);
 	}
 	
 }

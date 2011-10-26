@@ -404,5 +404,10 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 	public Map<String, Integer> getSprintHistory(Long sprintId) {
 		return sprintDAO.getHistory(sprintId);
 	}
+
+	@Override
+	public void changeUserPassword(Long userId, String password) {
+		userDAO.changePassword(userId, password);
+	}
 	
 }

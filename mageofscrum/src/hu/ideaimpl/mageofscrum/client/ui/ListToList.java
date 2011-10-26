@@ -1,82 +1,79 @@
 package hu.ideaimpl.mageofscrum.client.ui;
 
+import hu.ideaimpl.mageofscrum.client.resources.ListResource;
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellList;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class ListToList extends Composite {
+public class ListToList<T> extends Composite {
 
 	private Label fromListLbl = new Label();
 	private Label toListLbl = new Label();
 	private Button addBtn = new Button("<< add");
-	private Button removeBtn = new Button("remove >");
-	private CellList<?> toList;
-	private CellList<?> fromList;
-	private AbsolutePanel absolutePanel = new AbsolutePanel();
+	private Button removeBtn = new Button("remove >>");
+	private CellList<T> fromList;
+	private CellList<T> toList;
+	private HorizontalPanel hPanel = new HorizontalPanel();
+	private TitledPanel fromPanel = new TitledPanel();
+	private TitledPanel toPanel = new TitledPanel();
 
-	public ListToList(CellList<?> toList, CellList<?> fromList) {
-		this.toList = toList;
-		this.fromList = fromList;
+	public ListToList(AbstractCell<T> cell) {
+		initWidget(hPanel);
+		hPanel.setSpacing(10);
+
+		toList = new CellList<T>(cell);
+		toList.setSize("200px", "466px");
+		fromList = new CellList<T>(cell);
+		fromList.setSize("196px", "466px");
 		
-		initWidget(absolutePanel);
-		absolutePanel.setSize("571px", "500px");
-
-//		toList = new CellList<Object>(new AbstractCell<Object>() {
-//			@Override
-//			public void render(Context context, Object value, SafeHtmlBuilder sb) {
-//				// TODO
-//			}
-//		});
-		this.toList.setStyleName("mosCellList");
-		absolutePanel.add(this.toList, 0, 30);
-		this.toList.setSize("200px", "466px");
-
-//		fromList = new CellList<Object>(new AbstractCell<Object>() {
-//			@Override
-//			public void render(Context context, Object value, SafeHtmlBuilder sb) {
-//				// TODO
-//			}
-//		});
-		this.fromList.setStyleName("mosCellList");
-		absolutePanel.add(this.fromList, 370, 30);
-		this.fromList.setSize("196px", "466px");
-		addBtn.setStyleName("menuButton");
-
-		absolutePanel.add(addBtn, 235, 90);
+		VerticalPanel buttonBar = new VerticalPanel();
+		buttonBar.setSpacing(1);
+		buttonBar.add(addBtn);
+		buttonBar.add(removeBtn);
+		addBtn.setStyleName(Resources.instance.mosStyle().commandBtn());
+		removeBtn.setStyleName(Resources.instance.mosStyle().commandBtn());
+		
+		hPanel.add(fromPanel);
+		hPanel.add(buttonBar);
+		fromPanel.setText("user's roles");
+		fromPanel.addContent(fromList);
+		fromPanel.setSize("200px", "400px");
+		
+		hPanel.add(toPanel);
+		toPanel.setText("user's roles");
+		toPanel.addContent(toList);
+		toPanel.setSize("200px", "400px");
+		
 		addBtn.setSize("100px", "30px");
-		removeBtn.setText("remove >>");
-		removeBtn.setStyleName("menuButton");
-
-		absolutePanel.add(removeBtn, 235, 135);
 		removeBtn.setSize("100px", "30px");
-
-		toListLbl.setStyleName("simpleLbl");
-		absolutePanel.add(toListLbl, 0, 0);
-		toListLbl.setSize("199px", "30px");
-
-		fromListLbl.setStyleName("simpleLbl");
-		absolutePanel.add(fromListLbl, 370, 0);
-		fromListLbl.setSize("199px", "30px");
 	}
 	
+	public CellList<T> getFromList(){
+		return fromList;
+	}
+	public CellList<T> getToList(){
+		return toList;
+	}
 	public void setHeight(int height){
-		absolutePanel.setHeight(Integer.toString(height)+"px");
+		hPanel.setHeight(Integer.toString(height)+"px");
 		fromList.setHeight(Integer.toString(height-34)+"px");
 		toList.setHeight(Integer.toString(height-34)+"px");
 	}
 	
-	public void setFromLbl(String text){
-		fromListLbl.setText(text);
+	public void setToLbl(String text){
+		fromPanel.setText(text);
 	}
 	
-	public void setToLbl(String text){
-		toListLbl.setText(text);
+	public void setFromLbl(String text){
+		toPanel.setText(text);
 	}
 
 	public HasText getFromLbl() {

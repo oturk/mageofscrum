@@ -94,7 +94,7 @@ public class BacklogActivity extends AbstractActivity {
 		});
 		dialog.getSaveBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				if(projectSelectionModel.getSelectedObject() != null && dialog.validateForm()){
+				if(projectSelectionModel.getSelectedObject() != null && dialog.validate()){
 					doOnSaveBtnClicked();
 					dialog.hide();
 				}

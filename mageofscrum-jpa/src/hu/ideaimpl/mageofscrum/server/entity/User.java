@@ -120,6 +120,7 @@ public class User implements Serializable {
 	
 	public UserDO getUserDO(){
 		UserDO ret = new UserDO();
+		ret.setId(id);
 		ret.setUsername(username);
 		return ret;
 	}

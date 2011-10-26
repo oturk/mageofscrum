@@ -1,5 +1,6 @@
 package hu.ideaimpl.mageofscrum.client;
 
+import hu.ideaimpl.mageofscrum.client.resources.ListResource;
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
@@ -42,6 +43,7 @@ public class MageOfScrum implements EntryPoint {
 				} else {
 					RootLayoutPanel.get().add(new SecurityShell());
 				}
+				ListResource.instance.cellListStyle().ensureInjected();
 			}
 
 			@Override

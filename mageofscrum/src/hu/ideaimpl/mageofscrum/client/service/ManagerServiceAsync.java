@@ -89,5 +89,7 @@ public interface ManagerServiceAsync {
 	void fetchSprints(Long projectId, AsyncCallback<ArrayList<SprintDO>> callback);
 
 	void getSprintHistory(Long sprintId, AsyncCallback<Map<String, Integer>> callback);
+
+	void changeUserPassword(Long userId, String password, AsyncCallback<Void> callback);
 	
 }

@@ -1,25 +1,29 @@
-package hu.ideaimpl.mageofscrum.client.ui.inputfields;
+package hu.ideaimpl.mageofscrum.client.ui.fields;
 
 
+import java.util.Date;
+
+import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.IntegerBox;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.datepicker.client.DateBox;
 
-public class NumberInputField extends Composite implements HasValidator, HasText {
+public class DateInputField extends Composite implements HasValidator, HasText {
 
 	private Label lblTitle = new Label("title:");
-	private IntegerBox textBox = new IntegerBox();
+	private DateBox textBox = new DateBox();
 	private boolean required = false;
 
-	public NumberInputField() {
+	public DateInputField() {
 
 		AbsolutePanel absolutePanel = new AbsolutePanel();
 		initWidget(absolutePanel);
-		absolutePanel.setSize("272px", "37px");
-
+		absolutePanel.setSize("390px", "37px");
+		
 		lblTitle.setStyleName("loginLbl");
 		lblTitle.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
 		absolutePanel.add(lblTitle, 0, 6);
@@ -27,13 +31,16 @@ public class NumberInputField extends Composite implements HasValidator, HasText
 
 		absolutePanel.add(textBox, 116, 0);
 		textBox.setSize("151px", "30px");
+		
+		DateTimeFormat format = DateTimeFormat.getFormat(PredefinedFormat.YEAR_MONTH_NUM_DAY);
+		textBox.setFormat(new DateBox.DefaultFormat(format));
 	}
 
-	public Integer getValue() {
+	public Date getValue() {
 		return textBox.getValue();
 	}
 
-	public void setValue(Integer value) {
+	public void setValue(Date value) {
 		textBox.setValue(value);
 	}
 
@@ -62,4 +69,9 @@ public class NumberInputField extends Composite implements HasValidator, HasText
 		lblTitle.setText(text);
 	}
 
+	@Override
+	public void setValidState(boolean isValid) {
+		// TODO Auto-generated method stub
+		
+	}
 }

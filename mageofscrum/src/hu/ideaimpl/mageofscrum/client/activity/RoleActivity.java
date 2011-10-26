@@ -1,18 +1,16 @@
 package hu.ideaimpl.mageofscrum.client.activity;
 
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
-import hu.ideaimpl.mageofscrum.client.place.SprintPlace;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
-import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
-import hu.ideaimpl.mageofscrum.shared.Roles;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -23,7 +21,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 
 public class RoleActivity extends AbstractActivity {
 
-	private RolesView roleView;
+	private RolesView view;
 	private MultiSelectionModel<UserDO> usersSelection = new MultiSelectionModel<UserDO>();
 	private MultiSelectionModel<RoleDO> hasRoleSelection = new MultiSelectionModel<RoleDO>();
 	private MultiSelectionModel<RoleDO> otherRoleSelection = new MultiSelectionModel<RoleDO>();
@@ -32,45 +30,77 @@ public class RoleActivity extends AbstractActivity {
 	private ArrayList<RoleDO> otherRoles = new ArrayList<RoleDO>();
 
 	public RoleActivity(ClientFactory clientFactory) {
-		roleView = clientFactory.getRoleView();
-		roleView.getUsersList().setSelectionModel(usersSelection);
-		roleView.getHasRolesList().setSelectionModel(hasRoleSelection);
-		roleView.getOthersList().setSelectionModel(otherRoleSelection);
+		view = clientFactory.getRoleView();
+		view.getUsersList().setSelectionModel(usersSelection);
+		view.getFromList().setSelectionModel(hasRoleSelection);
+		view.getToList().setSelectionModel(otherRoleSelection);
 		bind();
 	}
 
 	private void bind() {
-		roleView.getCreateBtn().addClickHandler(new ClickHandler() {
+		view.getCreateBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				if (roleView.validateUserForm()) {
+				if (view.validateUserForm()) {
 					doOnCreateBtnClicked();
 				}
 			}
 		});
-		roleView.getDeleteBtn().addClickHandler(new ClickHandler() {
+		view.getDeleteBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (usersSelection.getSelectedSet().size() > 0) {
 					doOnDeleteBtnClicked();
 				}
 			}
 		});
-		roleView.getAddRoleBtn().addClickHandler(new ClickHandler() {
+		view.getAddRoleBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (otherRoleSelection.getSelectedSet().size() > 0 && usersSelection.getSelectedSet().size() == 1) {
 					doOnAddBtnClicked();
 				}
 			}
 		});
-		roleView.getRemoveRoleBtn().addClickHandler(new ClickHandler() {
+		view.getRemoveRoleBtn().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				if (hasRoleSelection.getSelectedSet().size() > 0 && usersSelection.getSelectedSet().size() == 1) {
 					doOnRemoveBtnClicked();
 				}
 			}
 		});
+		view.getChangePassBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+					public void execute() {
+						if (usersSelection.getSelectedSet() == null || usersSelection.getSelectedSet().size() < 1) {
+							view.getErrorLbl().setText("select a user first");
+						}else{
+							if ((usersSelection.getSelectedSet() != null || usersSelection.getSelectedSet().size() == 1) && view.validatePassword()) {
+								doOnChangePassBtnClicked();
+							}
+						}
+					}
+				});
+			}
+		});
 		usersSelection.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				doOnSelectionChanged();
+			}
+		});
+	}
+
+	protected void doOnChangePassBtnClicked() {
+		Long userId = usersSelection.getSelectedSet().iterator().next().getId();
+		UserDO user = view.getNewUser();
+		ManagerService.Util.getService().changeUserPassword(userId, user.getPassword(), new AsyncCallback<Void>() {
+
+			@Override
+			public void onSuccess(Void result) {
+				view.clearUserForm();
+			}
+
+			@Override
+			public void onFailure(Throwable caught) {
+				System.out.println("failed");
 			}
 		});
 	}
@@ -83,7 +113,7 @@ public class RoleActivity extends AbstractActivity {
 				@Override
 				public void onSuccess(ArrayList<RoleDO> result) {
 					usersRoles = result;
-					roleView.getHasRolesList().setRowData(usersRoles);
+					view.getFromList().setRowData(usersRoles);
 				}
 
 				@Override
@@ -97,7 +127,7 @@ public class RoleActivity extends AbstractActivity {
 				@Override
 				public void onSuccess(ArrayList<RoleDO> result) {
 					otherRoles = result;
-					roleView.getOthersList().setRowData(otherRoles);
+					view.getToList().setRowData(otherRoles);
 				}
 
 				@Override
@@ -127,8 +157,8 @@ public class RoleActivity extends AbstractActivity {
 			public void onSuccess(Void result) {
 				usersRoles.addAll(newRoles);
 				otherRoles.removeAll(newRoles);
-				roleView.getOthersList().setRowData(otherRoles);
-				roleView.getHasRolesList().setRowData(usersRoles);
+				view.getToList().setRowData(otherRoles);
+				view.getFromList().setRowData(usersRoles);
 			}
 
 			@Override
@@ -159,8 +189,8 @@ public class RoleActivity extends AbstractActivity {
 			public void onSuccess(Void result) {
 				usersRoles.removeAll(deleteRoles);
 				otherRoles.addAll(deleteRoles);
-				roleView.getOthersList().setRowData(otherRoles);
-				roleView.getHasRolesList().setRowData(usersRoles);
+				view.getToList().setRowData(otherRoles);
+				view.getFromList().setRowData(usersRoles);
 			}
 
 			@Override
@@ -182,11 +212,11 @@ public class RoleActivity extends AbstractActivity {
 			public void onSuccess(Void result) {
 				for (UserDO selected : usersSelection.getSelectedSet()) {
 					users.remove(selected);
-					roleView.getUsersList().setRowData(users);
+					view.getUsersList().setRowData(users);
 					usersRoles.clear();
 					otherRoles.clear();
-					roleView.getHasRolesList().setRowData(usersRoles);
-					roleView.getOthersList().setRowData(otherRoles);
+					view.getFromList().setRowData(usersRoles);
+					view.getToList().setRowData(otherRoles);
 					usersSelection.clear();
 				}
 			}
@@ -199,16 +229,16 @@ public class RoleActivity extends AbstractActivity {
 	}
 
 	private void doOnCreateBtnClicked() {
-		ManagerService.Util.getService().addUser(roleView.getNewUser(), new AsyncCallback<UserDO>() {
+		ManagerService.Util.getService().addUser(view.getNewUser(), new AsyncCallback<UserDO>() {
 
 			@Override
 			public void onSuccess(UserDO result) {
 				if (result != null) {
 					users.add(result);
-					roleView.getUsersList().setRowData(users);
-					roleView.clearUserForm();
+					view.getUsersList().setRowData(users);
+					view.clearUserForm();
 				} else {
-					roleView.getErrorLbl().setText("user already exist");
+					view.getErrorLbl().setText("user already exist");
 				}
 			}
 
@@ -221,7 +251,7 @@ public class RoleActivity extends AbstractActivity {
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		panel.setWidget(roleView);
+		panel.setWidget(view);
 		fetchUsers();
 	}
 
@@ -231,7 +261,7 @@ public class RoleActivity extends AbstractActivity {
 			@Override
 			public void onSuccess(ArrayList<UserDO> result) {
 				users = result;
-				roleView.getUsersList().setRowData(users);
+				view.getUsersList().setRowData(users);
 			}
 
 			@Override

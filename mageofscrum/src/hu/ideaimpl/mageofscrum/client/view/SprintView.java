@@ -1,6 +1,5 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
-import hu.ideaimpl.mageofscrum.client.resources.ListResource;
 import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.resources.TableResource;
@@ -66,7 +65,7 @@ public class SprintView extends Composite {
 			public void render(Context context, ProjectDO value, SafeHtmlBuilder sb) {
 				sb.appendHtmlConstant(value.getName());
 			}
-		}, ListResource.instance);
+		});
 		projectsList.setSize("260px", "175px");
 
 		TitledPanel projectsPanel = new TitledPanel();

@@ -1,5 +1,7 @@
-package hu.ideaimpl.mageofscrum.client.ui.inputfields;
+package hu.ideaimpl.mageofscrum.client.ui.fields;
 
+
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
 
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -21,7 +23,7 @@ public class PasswordInputField extends Composite implements HasValidator, HasTe
 
 		AbsolutePanel absolutePanel = new AbsolutePanel();
 		initWidget(absolutePanel);
-		absolutePanel.setSize("272px", "37px");
+		absolutePanel.setSize("273px", "37px");
 
 		lblTitle.setStyleName("loginLbl");
 		lblTitle.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
@@ -73,6 +75,15 @@ public class PasswordInputField extends Composite implements HasValidator, HasTe
 	@Override
 	public void setText(String text) {
 		lblTitle.setText(text);
+	}
+
+	@Override
+	public void setValidState(boolean isValid) {
+		if(!isValid){
+			lblTitle.setStyleName(Resources.instance.mosStyle().invalidInputField());
+		}else{
+			lblTitle.setStyleName(Resources.instance.mosStyle().inputField());
+		}
 	}
 
 }

@@ -1,9 +1,8 @@
 package hu.ideaimpl.mageofscrum.shared;
 
-import java.io.Serializable;
+import com.google.gwt.user.client.rpc.IsSerializable;
 
-public class RoleDO implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class RoleDO implements IsSerializable {
 	
 	private Long id;
 	private String name;

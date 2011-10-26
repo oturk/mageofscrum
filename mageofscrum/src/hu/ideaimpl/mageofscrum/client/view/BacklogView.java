@@ -94,7 +94,7 @@ public class BacklogView extends Composite {
 			public void render(Context context, ProjectDO value, SafeHtmlBuilder sb) {
 				sb.appendEscaped(value.getName());
 			}
-		}, ListResource.instance);
+		});
 //		horizontalPanel.add(projectsList);
 		projectsList.setSize("260px", "400px");
 		

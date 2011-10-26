@@ -1,4 +1,4 @@
-package hu.ideaimpl.mageofscrum.client.ui.inputfields;
+package hu.ideaimpl.mageofscrum.client.ui.fields;
 
 import java.util.List;
 

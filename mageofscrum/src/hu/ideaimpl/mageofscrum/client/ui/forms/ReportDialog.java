@@ -1,18 +1,20 @@
 package hu.ideaimpl.mageofscrum.client.ui.forms;
 
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
+import hu.ideaimpl.mageofscrum.client.ui.DialogPanel;
 import hu.ideaimpl.mageofscrum.client.ui.ReportData;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.DateInputField;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.HasValidator;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.NumberInputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.DateInputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.HasValidator;
+import hu.ideaimpl.mageofscrum.client.ui.fields.NumberInputField;
 
 import java.util.Date;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 
@@ -26,48 +28,48 @@ public class ReportDialog extends DialogBox implements HasValidator, HasForm<Rep
 
 	public ReportDialog() {
 		setGlassEnabled(true);
+		setStyleName("");
 		setGlassStyleName("mosDialogGlass");
 
-		AbsolutePanel absolutePanel = new AbsolutePanel();
-		setWidget(absolutePanel);
-		absolutePanel.setSize("404px", "391px");
-		absolutePanel.setStylePrimaryName("mosDialog");
+		DialogPanel dialogPanel = new DialogPanel();
+		dialogPanel.setText("report");
+		setWidget(dialogPanel);
+		dialogPanel.setSize(413, 390);
 
 		numberInputField.setText("time:");
 		numberInputField.setRequired(true);
-		absolutePanel.add(numberInputField, 0, 62);
+		numberInputField.setFocus(true);
+		dialogPanel.add(numberInputField);
 
 		dateInputField.setText("date:");
 		dateInputField.setRequired(true);
-		absolutePanel.add(dateInputField, 0, 105);
-
-		Label lblNewLabel = new Label("Report to task");
-		lblNewLabel.setStyleName("loginHeader");
-		absolutePanel.add(lblNewLabel, 0, 0);
-		lblNewLabel.setSize("100%", "30px");
+		dialogPanel.add(dateInputField);
 
 		Label lblNewLabel_1 = new Label("description:");
 		lblNewLabel_1.setStyleName("loginLbl");
-		absolutePanel.add(lblNewLabel_1, 0, 148);
+		dialogPanel.add(lblNewLabel_1);
 		lblNewLabel_1.setSize("272px", "24px");
 
-		absolutePanel.add(textArea, 0, 178);
+		dialogPanel.add(textArea);
 		textArea.setSize("392px", "162px");
 
-		btnReport.setStyleName("menuButton");
-		absolutePanel.add(btnReport, 0, 352);
-
+		HorizontalPanel buttonBar = new HorizontalPanel();
+		buttonBar.setSpacing(1);
+		btnReport.setStyleName(Resources.instance.mosStyle().commandBtn());
+		buttonBar.add(btnReport);
+		
 		Button btnCancel = new Button("cancel");
 		btnCancel.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				ReportDialog.this.hide();
 			}
 		});
-		btnCancel.setStyleName("menuButton");
-		absolutePanel.add(btnCancel, 61, 352);
+		btnCancel.setStyleName(Resources.instance.mosStyle().commandBtn());
+		buttonBar.add(btnCancel);
+		dialogPanel.add(buttonBar);
 
 		lblError.setStyleName("errorLbl");
-		absolutePanel.add(lblError, 0, 36);
+		dialogPanel.add(lblError);
 		lblError.setSize("100%", "20px");
 	}
 
@@ -102,11 +104,17 @@ public class ReportDialog extends DialogBox implements HasValidator, HasForm<Rep
 	}
 
 	@Override
-	public void setFormData() {
+	public void setFormData(ReportData data) {
 	}
 
 	@Override
 	public ReportData getFormData() {
 		return new ReportData(numberInputField.getValue(), dateInputField.getValue(), textArea.getValue());
+	}
+
+	@Override
+	public void setValidState(boolean isValid) {
+		// TODO Auto-generated method stub
+		
 	}
 }

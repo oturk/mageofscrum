@@ -50,6 +50,7 @@ public interface ManagerService extends RemoteService {
 	public UserDataDO fetchUserData();
 	public void updateUserData(UserDataDO data);
 	public void changePassword(String password);
+	public void changeUserPassword(Long userId, String password);
 	//Project operations
 	public ArrayList<ProjectDO> fetchProjects();
 	public ArrayList<UserDO> fetchOwners();

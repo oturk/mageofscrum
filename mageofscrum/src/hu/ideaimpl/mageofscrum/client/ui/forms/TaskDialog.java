@@ -1,153 +1,88 @@
 package hu.ideaimpl.mageofscrum.client.ui.forms;
 
-import hu.ideaimpl.mageofscrum.client.ui.RichTextToolbar;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.HasValidator;
+import hu.ideaimpl.mageofscrum.client.resources.Resources;
+import hu.ideaimpl.mageofscrum.client.ui.DialogPanel;
+import hu.ideaimpl.mageofscrum.client.ui.fields.HasValidator;
+import hu.ideaimpl.mageofscrum.client.ui.fields.InputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.NumberInputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.RichTextInputField;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.HasHorizontalAlignment;
-import com.google.gwt.user.client.ui.IntegerBox;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RichTextArea;
-import com.google.gwt.user.client.ui.TextBox;
 
-public class TaskDialog extends DialogBox implements HasValidator{
+public class TaskDialog extends DialogBox implements HasValidator, HasForm<TaskDO>{
 
-	private Label nameLbl = new Label("name:");
-	private TextBox name = new TextBox();
-	private Label estTimeLbl = new Label("estimate time");
-	private IntegerBox estTime = new IntegerBox();
-	private Label priorityLbl = new Label("priority");
-	private IntegerBox priority = new IntegerBox();
-	private Label descLbl = new Label("description:");
-	private RichTextArea description = new RichTextArea();
-	private RichTextToolbar toolbar = new RichTextToolbar(description);
-	private Label titleLbl = new Label("Create new task");
+	private InputField nameField = new InputField();
+	private NumberInputField estTime = new NumberInputField();
+	private NumberInputField priority = new NumberInputField();
+	private RichTextInputField description = new RichTextInputField();
 	private Button btnSave = new Button("save");
 	private Label errorlbl = new Label("");
 	private TaskDO formTask = null;
 	private Button btnCancel = new Button("cancel");
-	private AbsolutePanel absolutePanel;
+	private DialogPanel dialogPanel;
 
 	public TaskDialog() {
 		setGlassEnabled(true);
 		setGlassStyleName("mosDialogGlass");
+		setStyleName("");
 		
-		absolutePanel = new AbsolutePanel();
-//		absolutePanel.setSize("500px", "573px");
-		absolutePanel.setStylePrimaryName("mosDialog");
+		dialogPanel = new DialogPanel();
+		dialogPanel.setText("create task");
+		dialogPanel.setSize(652, 550);
 		
-		nameLbl.setStyleName("loginLbl");
-		nameLbl.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(nameLbl,10,53);
-		nameLbl.setSize("113px", "24px");
+		nameField.setText("name:");
+		nameField.setRequired(true);
+		nameField.setFocus(true);
+		dialogPanel.add(nameField);
 		
-		absolutePanel.add(name, 124, 47);
-		name.setSize("151px", "30px");
+		estTime.setText("estimate time:");
+		estTime.setRequired(true);
+		dialogPanel.add(estTime);
 		
-		estTimeLbl.setStyleName("loginLbl");
-		estTimeLbl.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(estTimeLbl, 10, 97);
-		estTimeLbl.setSize("113px", "24px");
+		priority.setText("priority:");
+		priority.setRequired(true);
+		dialogPanel.add(priority);
+		dialogPanel.add(description);
 		
-		absolutePanel.add(estTime, 124, 91);
-		estTime.setSize("151px", "30px");
+		HorizontalPanel buttonBar = new HorizontalPanel();
+		buttonBar.setSpacing(1);
+		btnSave.setStyleName(Resources.instance.mosStyle().commandBtn());
+		buttonBar.add(btnSave);
 		
-		priorityLbl.setStyleName("loginLbl");
-		priorityLbl.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);
-		absolutePanel.add(priorityLbl, 10, 141);
-		priorityLbl.setSize("113px", "24px");
-		
-		absolutePanel.add(priority, 124, 135);
-		priority.setSize("151px", "30px");
-		
-		descLbl.setStyleName("loginLbl");
-		absolutePanel.add(descLbl, 10, 177);
-		descLbl.setSize("269px", "24px");
-		
-//		absolutePanel.add(toolbar,10,206);
-//		toolbar.setWidth("480px");
-//		absolutePanel.add(description, 10, 288);
-//		description.setSize("480px", "236px");
-		
-		titleLbl.setStyleName("loginHeader");
-		absolutePanel.add(titleLbl, 0, 0);
-		titleLbl.setSize("500px", "30px");
-		
-		btnSave.setStyleName("menuButton");
-		absolutePanel.add(btnSave, 10, 534);
-		
-		btnCancel.setStyleName("menuButton");
-//		absolutePanel.add(btnCancel, 62, 534);
-		
+		btnCancel.setStyleName(Resources.instance.mosStyle().commandBtn());
+		buttonBar.add(btnCancel);
+		dialogPanel.add(buttonBar);
 		btnCancel.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TaskDialog.this.hide();
 			}
 		});
 		
-		setWidget(absolutePanel);
+		setWidget(dialogPanel);
 		
 		errorlbl.setStyleName("errorLbl");
-		absolutePanel.add(errorlbl, 124, 534);
+		dialogPanel.add(errorlbl);
 		errorlbl.setSize("361px", "20px");
-	}
-	
-	public boolean validateForm(){
-		boolean result = true;
-		String msg = "";
-		if(name.getValue().isEmpty()){
-			nameLbl.setStyleName("invalidInputField");
-			result = false;
-		}else{
-			nameLbl.setStyleName("inputField");
-		}
-		try{
-			estTime.getValueOrThrow();		
-			estTimeLbl.setStyleName("inputField");
-		} catch (java.text.ParseException e) {
-			if (result) {
-				msg = "Invalid number format!";
-			}
-			estTimeLbl.setStyleName("invalidInputField");
-			result = false;
-		}
-		try{
-			priority.getValueOrThrow();		
-			priorityLbl.setStyleName("inputField");
-		} catch (java.text.ParseException e) {
-			if (result) {
-				msg = "Invalid number format!";
-			}
-			priorityLbl.setStyleName("invalidInputField");
-			result = false;
-		}
-		if(!result & msg.isEmpty()){
-			msg = "Fill require fields!";
-		}
-		errorlbl.setText(msg);
-		return result;
 	}
 	
 	public void clearForm(){
 		formTask = null;
-		name.setValue("");
-		nameLbl.setStyleName("inputField");
+		nameField.setValue("");
 		estTime.setValue(null);
-		estTimeLbl.setStyleName("inputField");
 		priority.setValue(null);
-		priorityLbl.setStyleName("inputField");
 		description.setHTML("");
 	}
 	
 	public void setFormData(TaskDO task){
 		this.formTask = task;
-		name.setValue(task.getName());
+		nameField.setValue(task.getName());
 		description.setHTML(task.getDescription());
 		estTime.setValue(task.getEstimateTime());
 		priority.setValue(task.getPriority());
@@ -158,7 +93,7 @@ public class TaskDialog extends DialogBox implements HasValidator{
 			formTask = new TaskDO();
 		}
 
-		formTask.setName(name.getValue());
+		formTask.setName(nameField.getValue());
 		formTask.setDescription(description.getHTML());
 		if (estTime.getValue() != null) {
 			formTask.setEstimateTime(estTime.getValue());
@@ -179,44 +114,46 @@ public class TaskDialog extends DialogBox implements HasValidator{
 		super.hide();
 	}
 	
+	@Override
+	public boolean validate() {
+		boolean result = true;
+		String msg ="";
+		if(!nameField.validate()){
+			result = false;
+		}
+		if(!estTime.validate()){
+			result = false;
+		}
+		if(!priority.validate()){
+			result = false;
+		}
+		if(!result){
+			msg = "fill required fields";
+		}
+		errorlbl.setText(msg);
+		return result;
+	}
+	
 	public static TaskDialog getTaskDialog(){
 		TaskDialog dialog = new TaskDialog();
-		
-		dialog.absolutePanel.add(dialog.toolbar,10,206);
-		dialog.toolbar.setWidth("480px");
-		dialog.absolutePanel.add(dialog.description, 10, 288);
-		dialog.description.setSize("480px", "236px");
-		dialog.absolutePanel.add(dialog.btnCancel, 62, 534);
-		dialog.absolutePanel.setSize("500px", "573px");
-		
 		return dialog;
 	}
 	
 	public static TaskDialog getDetailsDialog(){
 		TaskDialog dialog = new TaskDialog();
-		dialog.titleLbl.setText("Task details");
-		dialog.btnSave.setVisible(false);
-		dialog.btnCancel.setText("close");
-		dialog.description.setEnabled(false);
-		dialog.name.setEnabled(false);
-		dialog.name.setStylePrimaryName("inputFieldDisabled");
+		dialog.nameField.setEnabled(false);
 		dialog.estTime.setEnabled(false);
-		dialog.estTime.setStylePrimaryName("inputFieldDisabled");
 		dialog.priority.setEnabled(false);
-		dialog.priority.setStylePrimaryName("inputFieldDisabled");
-		dialog.toolbar.setVisible(false);
-		
-		dialog.absolutePanel.add(dialog.description, 10, 210);
-		dialog.description.setSize("480px", "236px");
-		dialog.absolutePanel.add(dialog.btnCancel, 62, 460);
-		dialog.absolutePanel.setSize("500px", "500px");
-		
+		dialog.description.setEnabled(false);
+		dialog.btnSave.setVisible(false);
 		return dialog;
 	}
 
 	@Override
-	public boolean validate() {
+	public void setValidState(boolean isValid) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
+
+
 }

@@ -3,9 +3,9 @@ package hu.ideaimpl.mageofscrum.client.ui.forms;
 import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.HasValidator;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.InputField;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.PasswordInputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.HasValidator;
+import hu.ideaimpl.mageofscrum.client.ui.fields.InputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.PasswordInputField;
 
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -94,6 +94,12 @@ public class LoginForm extends Composite implements HasValidator {
 		}
 		lblError.setText(msg);
 		return result;
+	}
+
+	@Override
+	public void setValidState(boolean isValid) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

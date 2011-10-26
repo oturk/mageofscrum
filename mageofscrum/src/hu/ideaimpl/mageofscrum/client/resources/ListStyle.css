@@ -9,6 +9,7 @@
 	height: 30px;
 	cursor: pointer;
 	border-bottom: 1px solid #E5E5E5;
+	text-align: center;
 }
 .cellListEvenItem:hover,
 .cellListOddItem:hover{
@@ -16,8 +17,12 @@
 }
 .cellListOddItem {
 }
-.cellListKeyboardSelectedItem {
+@sprite .cellListKeyboardSelectedItem {
+	gwt-image: 'cellListSelectedBackground';
 	background-color: #FFFFCC;
+	color: #222222;
+	text-align: center;
+	height: 30px;
 }
 @sprite .cellListSelectedItem {
 	gwt-image: 'cellListSelectedBackground';

@@ -4,7 +4,7 @@ import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.resources.TableResource;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
-import hu.ideaimpl.mageofscrum.client.ui.inputfields.ComboBoxInputField;
+import hu.ideaimpl.mageofscrum.client.ui.fields.ComboBoxInputField;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
