@@ -1,8 +1,9 @@
-package hu.ideaimpl.mageofscrum.client.ui.forms;
+package hu.ideaimpl.mageofscrum.client.ui.dialog;
 
 import hu.ideaimpl.mageofscrum.client.ui.DialogPanel;
 import hu.ideaimpl.mageofscrum.client.ui.fields.HasValidator;
 import hu.ideaimpl.mageofscrum.client.ui.fields.PasswordInputField;
+import hu.ideaimpl.mageofscrum.client.ui.forms.HasForm;
 
 import com.google.gwt.user.client.ui.DialogBox;
 

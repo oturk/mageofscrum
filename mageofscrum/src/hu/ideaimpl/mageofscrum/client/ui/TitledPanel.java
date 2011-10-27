@@ -61,7 +61,7 @@ public class TitledPanel extends Composite implements HasText {
 
 	@Override
 	public void setSize(String width, String height) {
-		contentPanel.setSize(width, height);
+//		contentPanel.setSize(width, height);
 		super.setSize(width, height);
 	}
 

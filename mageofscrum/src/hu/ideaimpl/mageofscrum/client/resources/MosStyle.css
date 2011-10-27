@@ -1,47 +1,63 @@
-.commandBtn,
-.commandBtn:hover{
-height: 30px;
-color: #FFFFFF;
-font-weight: bold;
-font-size: 11px;
-cursor: pointer;
+.commandBtn,.commandBtn:hover {
+	height: 30px;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 11px;
+	cursor: pointer;
 }
-.commandBtn{
-background-color: #4D90FE;
-border: 1px solid #3079ED;
+
+.commandBtn {
+	background-color: #4D90FE;
+	border: 1px solid #3079ED;
 }
-.commandBtn:hover{
-background-color: #357AE8;
-border: 1px solid #2F5BB7;
+
+.commandBtn:hover {
+	background-color: #357AE8;
+	border: 1px solid #2F5BB7;
 }
+
 .errorLbl {
 	color: firebrick;
 	margin-left: 5px;
 }
-.dialogHeader,
-.dialogHeaderText{
+
+.dialogHeader,.dialogHeaderText {
 	background: #4D90FE;
 }
-.dialogHeaderText{
+
+.errorDialog,.dialogHeaderText {
 	padding-top: 5px;
 	padding-left: 10px;
 	color: #FFFFFF;
-	text-transform:uppercase;
+	text-transform: uppercase;
 	position: absolute;
 	left: 0px;
 	top: 10px;
 }
-.dialogPanel{
+
+.dialogPanel {
 	background-color: #FFFFFF;
 	border-radius: 10px;
 	padding: 45px 10px 10px 10px;
 }
-.invalidInputField{
+
+.errorDialog {
+	background-color: #FF0000;
+	cursor: pointer;
+}
+.errorDialog:hover{
+	background-color: #FF5B5B;
+	cursor:pointer;
+}
+
+.invalidInputField {
 	background-color: firebrick;
 }
-.inputField{
+
+.inputField {
 	background-color: lightgray;
 }
+
 .inputFieldTitle {
 	background-color: lightgray;
 }

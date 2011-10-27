@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.ErrorDialog;
 import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
@@ -62,7 +63,8 @@ public class SecurityShell extends Composite {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				loginForm.getLblError().setText("Sorry our server is temporarly unavailable!");
+				ErrorDialog.show("Server error", caught.getMessage());
+//				loginForm.getLblError().setText("Sorry our server is temporarly unavailable!");
 			}
 		});
 	}

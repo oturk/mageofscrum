@@ -1,4 +1,4 @@
-package hu.ideaimpl.mageofscrum.client.ui.forms;
+package hu.ideaimpl.mageofscrum.client.ui.dialog;
 
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.DialogPanel;
@@ -6,6 +6,7 @@ import hu.ideaimpl.mageofscrum.client.ui.ReportData;
 import hu.ideaimpl.mageofscrum.client.ui.fields.DateInputField;
 import hu.ideaimpl.mageofscrum.client.ui.fields.HasValidator;
 import hu.ideaimpl.mageofscrum.client.ui.fields.NumberInputField;
+import hu.ideaimpl.mageofscrum.client.ui.forms.HasForm;
 
 import java.util.Date;
 

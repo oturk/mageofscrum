@@ -33,7 +33,7 @@ public interface ClientFactory {
 
 	public HasWidgets getContainer();
 
-	public SecurityServiceAsync getSecurityService();
+//	public SecurityServiceAsync getSecurityService();
 
 	// Places@Activities
 	public PlaceController getPlaceController();

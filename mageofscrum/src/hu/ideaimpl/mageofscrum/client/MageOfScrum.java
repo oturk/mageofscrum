@@ -2,10 +2,10 @@ package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.resources.ListResource;
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.ErrorDialog;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
@@ -27,7 +27,8 @@ public class MageOfScrum implements EntryPoint {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("Something goes wrong!");
+				ErrorDialog.show("authentication error", caught.getMessage());
+//				Window.alert("Something goes wrong!");
 			}
 		});
 	}

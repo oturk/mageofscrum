@@ -3,8 +3,9 @@ package hu.ideaimpl.mageofscrum.client.activity;
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
 import hu.ideaimpl.mageofscrum.client.ui.ReportData;
-import hu.ideaimpl.mageofscrum.client.ui.forms.ReportDialog;
-import hu.ideaimpl.mageofscrum.client.ui.forms.TaskDialog;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.ErrorDialog;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.ReportDialog;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.TaskDialog;
 import hu.ideaimpl.mageofscrum.client.view.SprintView;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
@@ -99,7 +100,7 @@ public class SprintActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -128,7 +129,7 @@ public class SprintActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -157,7 +158,7 @@ public class SprintActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -179,7 +180,7 @@ public class SprintActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}

@@ -29,6 +29,7 @@ public class LoginForm extends Composite implements HasValidator {
 		style.ensureInjected();
 
 		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.setSpacing(1);
 		initWidget(verticalPanel);
 
 		VerticalPanel contentPanel = new VerticalPanel();

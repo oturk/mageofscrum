@@ -1,4 +1,4 @@
-package hu.ideaimpl.mageofscrum.client.ui.forms;
+package hu.ideaimpl.mageofscrum.client.ui.dialog;
 
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.DialogPanel;
@@ -6,6 +6,7 @@ import hu.ideaimpl.mageofscrum.client.ui.fields.HasValidator;
 import hu.ideaimpl.mageofscrum.client.ui.fields.InputField;
 import hu.ideaimpl.mageofscrum.client.ui.fields.NumberInputField;
 import hu.ideaimpl.mageofscrum.client.ui.fields.RichTextInputField;
+import hu.ideaimpl.mageofscrum.client.ui.forms.HasForm;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
 
 import com.google.gwt.event.dom.client.ClickEvent;

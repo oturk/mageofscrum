@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.activity;
 
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.ErrorDialog;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
@@ -100,7 +101,7 @@ public class RoleActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -118,7 +119,7 @@ public class RoleActivity extends AbstractActivity {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					System.out.println("failed");
+					ErrorDialog.show("Server error", caught.getMessage());
 
 				}
 			});
@@ -132,7 +133,7 @@ public class RoleActivity extends AbstractActivity {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					System.out.println("failed");
+					ErrorDialog.show("Server error", caught.getMessage());
 				}
 			});
 		}
@@ -163,7 +164,7 @@ public class RoleActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 
@@ -195,7 +196,7 @@ public class RoleActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 
@@ -223,7 +224,7 @@ public class RoleActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -244,7 +245,7 @@ public class RoleActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -266,7 +267,7 @@ public class RoleActivity extends AbstractActivity {
 
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}

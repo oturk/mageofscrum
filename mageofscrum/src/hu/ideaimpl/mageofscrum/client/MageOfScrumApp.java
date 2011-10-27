@@ -38,7 +38,6 @@ public class MageOfScrumApp {
 	}
 
 	private void bind() {
-		System.out.println("MosApp: " + MageOfScrum.role);
 		menuBar.getLogout().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				doOnUserLogout();

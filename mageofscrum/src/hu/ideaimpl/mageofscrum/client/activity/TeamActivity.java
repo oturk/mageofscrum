@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.activity;
 
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.ErrorDialog;
 import hu.ideaimpl.mageofscrum.client.view.TeamsView;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
@@ -98,7 +99,7 @@ public class TeamActivity extends AbstractActivity {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					System.out.println("deletion failed");
+					ErrorDialog.show("Server error", caught.getMessage());
 				}
 			});
 		}
@@ -118,7 +119,7 @@ public class TeamActivity extends AbstractActivity {
 
 				@Override
 				public void onFailure(Throwable caught) {
-					System.out.println("failed");
+					ErrorDialog.show("Server error", caught.getMessage());
 				}
 			});
 		}

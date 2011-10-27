@@ -1,8 +1,6 @@
 package hu.ideaimpl.mageofscrum.client;
 
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
-import hu.ideaimpl.mageofscrum.client.service.SecurityService;
-import hu.ideaimpl.mageofscrum.client.service.SecurityServiceAsync;
 import hu.ideaimpl.mageofscrum.client.ui.Header;
 import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm;
@@ -14,7 +12,6 @@ import hu.ideaimpl.mageofscrum.client.view.RolesView;
 import hu.ideaimpl.mageofscrum.client.view.SprintView;
 import hu.ideaimpl.mageofscrum.client.view.TeamsView;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
@@ -22,34 +19,34 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 
 public class ClientFactoryImpl implements ClientFactory {
-	private static final TeamsView teamsView = new TeamsView();
-	private static final HasWidgets container = RootLayoutPanel.get();
-	private static final SecurityServiceAsync securityService = GWT.create(SecurityService.class);
+	private static TeamsView teamsView;
+	private static HasWidgets container;
 	private EventBus eBus = new SimpleEventBus();
 	private PlaceController placeController = new PlaceController(eBus);
-	private static final MenuBar menuBar = new MenuBar();
-	private static final Header header = new Header(Resources.instance.mageofscrumLogo());
-	private static final LoginForm loginForm = new LoginForm();
-	private static final RolesView roleView = new RolesView();
-	private static final ProfileView profileView = new ProfileView();
-	private static final ProjectsView projectView = new ProjectsView();
-	private static final BacklogView backlogView = new BacklogView();
-	private static final SprintView sprintView = new SprintView();
-	private static final DiagnoseView diagnoseView = new DiagnoseView();
+	private static MenuBar menuBar;
+	private static Header header;
+	private static LoginForm loginForm;
+	private static RolesView roleView;
+	private static ProfileView profileView;
+	private static ProjectsView projectView;
+	private static BacklogView backlogView;
+	private static SprintView sprintView;
+	private static DiagnoseView diagnoseView;
 
 	@Override
 	public TeamsView getTeamsView() {
+		if (teamsView == null) {
+			teamsView = new TeamsView();
+		}
 		return teamsView;
 	}
 
 	@Override
 	public HasWidgets getContainer() {
+		if (container == null) {
+			container = RootLayoutPanel.get();
+		}
 		return container;
-	}
-
-	@Override
-	public SecurityServiceAsync getSecurityService() {
-		return securityService;
 	}
 
 	@Override
@@ -64,6 +61,10 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public MenuBar getMenuBar() {
+		if (menuBar == null) {
+			menuBar = new MenuBar();
+		}
+
 		menuBar.updateMenuBar();
 		return menuBar;
 	}
@@ -75,41 +76,65 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public Header getHeader() {
+		if (header == null) {
+			header = new Header(Resources.instance.mageofscrumLogo());
+		}
 		return header;
 	}
 
 	@Override
 	public LoginForm getLoginForm() {
+		if (loginForm == null) {
+			loginForm = new LoginForm();
+		}
 		return loginForm;
 	}
 
 	@Override
 	public RolesView getRoleView() {
+		if (roleView == null) {
+			roleView = new RolesView();
+		}
 		return roleView;
 	}
 
 	@Override
 	public ProfileView getProfileView() {
+		if (profileView == null) {
+			profileView = new ProfileView();
+		}
 		return profileView;
 	}
 
 	@Override
 	public ProjectsView getProjectsView() {
+		if (projectView == null) {
+			projectView = new ProjectsView();
+		}
 		return projectView;
 	}
 
 	@Override
 	public BacklogView getBacklogView() {
+		if (backlogView == null) {
+			backlogView = new BacklogView();
+		}
 		return backlogView;
 	}
 
 	@Override
 	public SprintView getSprintView() {
+		if (sprintView == null) {
+			sprintView = new SprintView();
+		}
 		return sprintView;
 	}
 
 	@Override
 	public DiagnoseView getDiagnoseView() {
+		if (diagnoseView == null) {
+			diagnoseView = new DiagnoseView();
+		}
 		return diagnoseView;
 	}
 

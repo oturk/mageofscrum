@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 import hu.ideaimpl.mageofscrum.client.ClientFactory;
 import hu.ideaimpl.mageofscrum.client.service.ManagerService;
-import hu.ideaimpl.mageofscrum.client.ui.forms.TaskDialog;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.ErrorDialog;
+import hu.ideaimpl.mageofscrum.client.ui.dialog.TaskDialog;
 import hu.ideaimpl.mageofscrum.client.view.BacklogView;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
@@ -50,7 +51,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -129,7 +130,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -145,7 +146,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -165,7 +166,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -180,7 +181,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -197,7 +198,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -214,7 +215,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -241,7 +242,7 @@ public class BacklogActivity extends AbstractActivity {
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				System.out.println("failed");
+				ErrorDialog.show("Server error", caught.getMessage());
 			}
 		});
 	}
@@ -249,13 +250,11 @@ public class BacklogActivity extends AbstractActivity {
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
 		running = true;
-		System.out.println("activityStart");
 		panel.setWidget(view);
 	}
 	
 	@Override
 	public void onStop() {
-		System.out.println("activityOnStop");
 		super.onStop();
 	}
 	

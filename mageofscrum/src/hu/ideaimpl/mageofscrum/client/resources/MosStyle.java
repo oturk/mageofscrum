@@ -11,4 +11,5 @@ public interface MosStyle extends CssResource {
 	String inputField();
 	String invalidInputField();
 	String inputFieldTitle();
+	String errorDialog();
 }

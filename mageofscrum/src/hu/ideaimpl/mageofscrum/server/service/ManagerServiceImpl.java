@@ -319,7 +319,6 @@ public class ManagerServiceImpl extends RemoteServiceServlet implements ManagerS
 		Project proj = projectDAO.findProject(projectId);
 		ArrayList<TaskDO> result = new ArrayList<TaskDO>();
 		for(Task t : proj.getTasks()){
-			System.out.println(t.getStatus().getStatus()+" "+TaskStatuses.BACKLOG.name());
 			if(t.getStatus().getStatus().equals(TaskStatuses.BACKLOG.name()) || t.getStatus().getStatus().equals(TaskStatuses.MOVEDBACK.name())){
 				result.add(t.getTaskDO());
 			}

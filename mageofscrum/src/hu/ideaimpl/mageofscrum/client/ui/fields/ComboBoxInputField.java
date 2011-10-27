@@ -18,6 +18,7 @@ public class ComboBoxInputField<T> extends Composite implements Focusable, HasVa
 	private ListBox listBox = new ListBox();
 	private boolean required = false;
 	private List<T> items;
+	private List<String> labels;
 	
 	public ComboBoxInputField() {
 
@@ -62,6 +63,8 @@ public class ComboBoxInputField<T> extends Composite implements Focusable, HasVa
 	@Override
 	public void addItems(List<String> labels, List<T> values) {
 		this.items = values;
+		this.labels = labels;
+		listBox.clear();
 		for(String label : labels){
 			listBox.addItem(label);
 		}
@@ -107,7 +110,12 @@ public class ComboBoxInputField<T> extends Composite implements Focusable, HasVa
 	@Override
 	public void setValidState(boolean isValid) {
 		// TODO Auto-generated method stub
-		
+	}
+
+	@Override
+	public void selectItem(String item) {
+		int index = labels.indexOf(item);
+		listBox.setItemSelected(index, true);
 	}
 
 }

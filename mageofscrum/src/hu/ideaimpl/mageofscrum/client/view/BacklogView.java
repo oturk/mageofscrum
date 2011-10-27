@@ -37,10 +37,10 @@ public class BacklogView extends Composite {
 	public BacklogView() {
 		MosStyle style = Resources.instance.mosStyle();
 		style.ensureInjected();
-		
+
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
-		
+
 		HorizontalPanel buttonBar = new HorizontalPanel();
 		buttonBar.setSpacing(1);
 		buttonBar.add(btnCreate);
@@ -58,62 +58,34 @@ public class BacklogView extends Composite {
 		errorLbl.setHeight("24px");
 
 		verticalPanel.add(buttonBar);
-//		AbsolutePanel absolutePanel = new AbsolutePanel();
-//		verticalPanel.add(absolutePanel);
-//		absolutePanel.setHeight("52px");
-//		absolutePanel.add(btnStartSprint,176,0);
-//		absolutePanel.add(btnStopSprint,258,0);
-//		absolutePanel.add(btnMoveToSprint,341,0);
-//		
-//		absolutePanel.add(btnCreate, 88, 0);
-//		
-//		absolutePanel.add(btnDelete, 0, 0);
-//		
-//		absolutePanel.add(errorLbl, 0, 32);
-		
-//		AbsolutePanel absolutePanel_1 = new AbsolutePanel();
-//		verticalPanel.add(absolutePanel_1);
-//		absolutePanel_1.setHeight("30px");
-//		
-//		Label lblProjects = new Label("projects");
-//		lblProjects.setStyleName("loginHeader");
-//		absolutePanel_1.add(lblProjects, 0, 0);
-//		lblProjects.setSize("256px", "30px");
-//		
-//		Label lblNewLabel = new Label("tasks");
-//		lblNewLabel.setStyleName("loginHeader");
-//		absolutePanel_1.add(lblNewLabel, 263, 0);
-//		lblNewLabel.setSize("100%", "30px");
-		
+
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.setSpacing(5);
 		verticalPanel.add(horizontalPanel);
-		
-		projectsList = new CellList<ProjectDO>(new AbstractCell<ProjectDO>(){
+
+		projectsList = new CellList<ProjectDO>(new AbstractCell<ProjectDO>() {
 			@Override
 			public void render(Context context, ProjectDO value, SafeHtmlBuilder sb) {
 				sb.appendEscaped(value.getName());
 			}
 		});
-//		horizontalPanel.add(projectsList);
 		projectsList.setSize("260px", "400px");
-		
+
 		TitledPanel projectsPanel = new TitledPanel();
 		horizontalPanel.add(projectsPanel);
 		projectsPanel.setText("projects");
 		projectsPanel.addContent(projectsList);
 		projectsPanel.setSize("260px", "400px");
-		
+
 		backlogTable = new CellTable<TaskDO>(20, TableResource.instance);
-//		horizontalPanel.add(backlogTable);
 		backlogTable.setWidth("537px");
-		
+
 		TitledPanel sprintPanel = new TitledPanel();
 		horizontalPanel.add(sprintPanel);
 		sprintPanel.setText("tasks");
 		sprintPanel.addContent(backlogTable);
 		sprintPanel.setSize("540px", "400px");
-		
+
 		TextColumn<TaskDO> nameColumn = new TextColumn<TaskDO>() {
 			@Override
 			public String getValue(TaskDO object) {
@@ -121,7 +93,7 @@ public class BacklogView extends Composite {
 			}
 		};
 		backlogTable.addColumn(nameColumn, "name");
-		
+
 		TextColumn<TaskDO> estTimeColumn = new TextColumn<TaskDO>() {
 			@Override
 			public String getValue(TaskDO object) {
@@ -129,7 +101,7 @@ public class BacklogView extends Composite {
 			}
 		};
 		backlogTable.addColumn(estTimeColumn, "estimate time");
-		
+
 		TextColumn<TaskDO> priorityColumn = new TextColumn<TaskDO>() {
 			@Override
 			public String getValue(TaskDO object) {
@@ -146,36 +118,36 @@ public class BacklogView extends Composite {
 		};
 		backlogTable.addColumn(createdColumn, "created");
 	}
-	
-	public CellList<ProjectDO> getProjectsList(){
+
+	public CellList<ProjectDO> getProjectsList() {
 		return projectsList;
 	}
-	
-	public HasText getErrorLbl(){
+
+	public HasText getErrorLbl() {
 		return errorLbl;
 	}
-	
-	public HasClickHandlers getCreateBtn(){
+
+	public HasClickHandlers getCreateBtn() {
 		return btnCreate;
 	}
-	
-	public HasClickHandlers getDeleteBtn(){
+
+	public HasClickHandlers getDeleteBtn() {
 		return btnDelete;
 	}
-	
-	public HasClickHandlers getStartSprintBtn(){
+
+	public HasClickHandlers getStartSprintBtn() {
 		return btnStartSprint;
 	}
-	
-	public HasClickHandlers getStopSprintBtn(){
+
+	public HasClickHandlers getStopSprintBtn() {
 		return btnStopSprint;
 	}
-	
-	public HasClickHandlers getMoveToSprintBtn(){
+
+	public HasClickHandlers getMoveToSprintBtn() {
 		return btnMoveToSprint;
 	}
-	
-	public CellTable<TaskDO> getBacklogTable(){
+
+	public CellTable<TaskDO> getBacklogTable() {
 		return backlogTable;
 	}
 }
