@@ -1,5 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import java.util.ArrayList;
+
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.ListToList;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
@@ -18,7 +20,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class TeamsView extends Composite {
+public class TeamsView extends Composite implements HasInitState{
 
 	private CellList<TeamDO> teamList;
 	private ListToList<UserDO> listToList;
@@ -114,6 +116,14 @@ public class TeamsView extends Composite {
 	
 	public CellList<UserDO> getToList(){
 		return listToList.getToList();
+	}
+
+	@Override
+	public void initState() {
+		teamList.setRowData(new ArrayList<TeamDO>());
+		listToList.getFromList().setRowData(new ArrayList<UserDO>());
+		listToList.getToList().setRowData(new ArrayList<UserDO>());
+		teamName.setValue("");
 	}
 	
 }

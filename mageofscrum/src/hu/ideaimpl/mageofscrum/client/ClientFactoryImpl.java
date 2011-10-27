@@ -6,6 +6,7 @@ import hu.ideaimpl.mageofscrum.client.ui.MenuBar;
 import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm;
 import hu.ideaimpl.mageofscrum.client.view.BacklogView;
 import hu.ideaimpl.mageofscrum.client.view.DiagnoseView;
+import hu.ideaimpl.mageofscrum.client.view.HasInitState;
 import hu.ideaimpl.mageofscrum.client.view.ProfileView;
 import hu.ideaimpl.mageofscrum.client.view.ProjectsView;
 import hu.ideaimpl.mageofscrum.client.view.RolesView;
@@ -38,6 +39,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		if (teamsView == null) {
 			teamsView = new TeamsView();
 		}
+		runInitState(teamsView);
 		return teamsView;
 	}
 
@@ -95,6 +97,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		if (roleView == null) {
 			roleView = new RolesView();
 		}
+		runInitState(roleView);
 		return roleView;
 	}
 
@@ -103,6 +106,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		if (profileView == null) {
 			profileView = new ProfileView();
 		}
+		runInitState(profileView);
 		return profileView;
 	}
 
@@ -111,6 +115,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		if (projectView == null) {
 			projectView = new ProjectsView();
 		}
+		runInitState(projectView);
 		return projectView;
 	}
 
@@ -119,6 +124,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		if (backlogView == null) {
 			backlogView = new BacklogView();
 		}
+		runInitState(backlogView);
 		return backlogView;
 	}
 
@@ -127,6 +133,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		if (sprintView == null) {
 			sprintView = new SprintView();
 		}
+		runInitState(sprintView);
 		return sprintView;
 	}
 
@@ -135,7 +142,14 @@ public class ClientFactoryImpl implements ClientFactory {
 		if (diagnoseView == null) {
 			diagnoseView = new DiagnoseView();
 		}
+		runInitState(diagnoseView);
 		return diagnoseView;
+	}
+
+	private void runInitState(Object obj) {
+		if (obj instanceof HasInitState) {
+			((HasInitState) obj).initState();
+		}
 	}
 
 }

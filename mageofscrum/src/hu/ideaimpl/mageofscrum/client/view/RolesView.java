@@ -1,5 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import java.util.ArrayList;
+
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.ListToList;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
@@ -17,7 +19,7 @@ import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class RolesView extends Composite {
+public class RolesView extends Composite implements HasInitState{
 
 	private CellList<UserDO> usersList;
 	private Button btnDelete = new Button("delete");
@@ -42,8 +44,6 @@ public class RolesView extends Composite {
 			}
 		});
 		
-		
-//		usersList.setStyleName("mosCellList");
 		VerticalPanel leftPanel = new VerticalPanel();
 		leftPanel.add(btnDelete);
 		
@@ -119,6 +119,14 @@ public class RolesView extends Composite {
 	}
 	
 	public void clearUserForm(){
+		userForm.clearForm();
+	}
+
+	@Override
+	public void initState() {
+		usersList.setRowData(new ArrayList<UserDO>());
+		listToList.getFromList().setRowData(new ArrayList<RoleDO>());
+		listToList.getToList().setRowData(new ArrayList<RoleDO>());
 		userForm.clearForm();
 	}
 }

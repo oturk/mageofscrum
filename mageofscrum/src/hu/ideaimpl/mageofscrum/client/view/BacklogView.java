@@ -1,6 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
-import hu.ideaimpl.mageofscrum.client.resources.ListResource;
+import java.util.ArrayList;
+
 import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.resources.TableResource;
@@ -16,7 +17,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
@@ -24,7 +24,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class BacklogView extends Composite {
+public class BacklogView extends Composite implements HasInitState{
 	private CellTable<TaskDO> backlogTable;
 	private Button btnCreate = new Button("create");
 	private Button btnDelete = new Button("delete");
@@ -149,5 +149,12 @@ public class BacklogView extends Composite {
 
 	public CellTable<TaskDO> getBacklogTable() {
 		return backlogTable;
+	}
+
+	@Override
+	public void initState() {
+		backlogTable.setRowData(new ArrayList<TaskDO>());
+		projectsList.setRowData(new ArrayList<ProjectDO>());
+		errorLbl.setText("");
 	}
 }

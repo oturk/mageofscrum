@@ -5,6 +5,7 @@ import hu.ideaimpl.mageofscrum.client.ui.charts.BurndownChart;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.SprintDO;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -14,7 +15,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class DiagnoseView extends Composite {
+public class DiagnoseView extends Composite implements HasInitState{
 
 	private CellList<ProjectDO> projectsList;
 	private CellList<SprintDO> sprintsList;
@@ -72,6 +73,13 @@ public class DiagnoseView extends Composite {
 
 	public CellList<SprintDO> getSprintsList() {
 		return sprintsList;
+	}
+
+	@Override
+	public void initState() {
+		projectsList.setRowData(new ArrayList<ProjectDO>());
+		sprintsList.setRowData(new ArrayList<SprintDO>());
+		chartsPanel.clear();
 	}
 
 }

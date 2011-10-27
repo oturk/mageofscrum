@@ -1,5 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import java.util.ArrayList;
+
 import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.resources.TableResource;
@@ -22,7 +24,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-public class SprintView extends Composite {
+public class SprintView extends Composite implements HasInitState{
 	private CellTable<TaskDO> sprintTable;
 	private Button btnReport = new Button("report");
 	private Button btnRemove = new Button("remove");
@@ -137,5 +139,12 @@ public class SprintView extends Composite {
 
 	public CellTable<TaskDO> getSprintTable() {
 		return sprintTable;
+	}
+
+	@Override
+	public void initState() {
+		sprintTable.setRowData(new ArrayList<TaskDO>());
+		projectsList.setRowData(new ArrayList<ProjectDO>());
+		errorLbl.setText("");
 	}
 }

@@ -1,5 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import java.util.ArrayList;
+
 import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
@@ -15,7 +17,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionModel;
 
-public class ProjectsView extends Composite {
+public class ProjectsView extends Composite implements HasInitState{
 
 	private Button btnDelete = new Button("delete");
 	private Button btnNewButton = new Button("create");
@@ -96,6 +98,12 @@ public class ProjectsView extends Composite {
 
 	public void setSelectionModel(SelectionModel<ProjectDO> selectionModel) {
 		projectsTable.setSelectionModel(selectionModel);
+	}
+
+	@Override
+	public void initState() {
+		projectsTable.setRowData(new ArrayList<ProjectDO>());
+		lblError.setText("");
 	}
 
 }
