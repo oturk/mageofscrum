@@ -45,9 +45,10 @@
 	background-color: #FF0000;
 	cursor: pointer;
 }
-.errorDialog:hover{
+
+.errorDialog:hover {
 	background-color: #FF5B5B;
-	cursor:pointer;
+	cursor: pointer;
 }
 
 .invalidInputField {
@@ -60,4 +61,28 @@
 
 .inputFieldTitle {
 	background-color: lightgray;
+}
+
+.menuBarPanel {
+	background-color: #464440;
+}
+
+.menuItemDown,.menuItem {
+	width: 145px;
+	height: 25px;
+	margin-bottom: 2px;
+	padding-top: 5px;
+	padding-left:5px;
+	font-weight: bold;
+	text-align: left;
+	cursor: pointer;
+	border: none;
+}
+
+.menuItem {
+	background-color: white;
+}
+
+.menuItemDown {
+	background-color: lightblue;
 }

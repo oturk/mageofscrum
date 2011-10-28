@@ -28,8 +28,6 @@ public class BacklogActivity extends AbstractActivity {
 	private ArrayList<TaskDO> tasks = new ArrayList<TaskDO>();
 	private SingleSelectionModel<ProjectDO> projectSelectionModel = new SingleSelectionModel<ProjectDO>();
 	private SingleSelectionModel<TaskDO> taskSelectionModel = new SingleSelectionModel<TaskDO>();
-	private TaskDO selectedTask = null;
-	private boolean running = false;
 	
 	public BacklogActivity() {
 		initProjectList();
@@ -106,15 +104,22 @@ public class BacklogActivity extends AbstractActivity {
 				doOnSelectionChanged();
 			}
 		});
-		view.getBacklogTable().addDomHandler(new DoubleClickHandler() {
-			
-			@Override
-			public void onDoubleClick(DoubleClickEvent event) {
-				dialog.setFormData(taskSelectionModel.getSelectedObject());
-				dialog.center();
-				dialog.show();
+		view.getDetailsBtn().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (taskSelectionModel.getSelectedObject() != null) {
+					dialog.setFormData(taskSelectionModel.getSelectedObject());
+					dialog.center();
+					dialog.show();
+				}
+				
 			}
-		}, DoubleClickEvent.getType());
+		});
+//		view.getBacklogTable().addDomHandler(new DoubleClickHandler() {
+//			
+//			@Override
+//			public void onDoubleClick(DoubleClickEvent event) {
+//			}
+//		}, DoubleClickEvent.getType());
 	}
 
 	protected void doOnMoveBtnClicked() {
@@ -249,23 +254,7 @@ public class BacklogActivity extends AbstractActivity {
 
 	@Override
 	public void start(AcceptsOneWidget panel, EventBus eventBus) {
-		running = true;
 		panel.setWidget(view);
 	}
 	
-	@Override
-	public void onStop() {
-		super.onStop();
-	}
-	
-	@Override
-	public String mayStop() {
-		return null;
-	}
-	
-	@Override
-	public void onCancel() {
-		onStop();
-	}
-
 }

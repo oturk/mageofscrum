@@ -65,6 +65,7 @@
 	cursor: pointer;
 	border-bottom: 1px solid #E5E5E5;
 	background: #FFFFFF;
+	text-align: center;
 }
 
 .cellTableEvenRowCell {
@@ -73,8 +74,8 @@
 .cellTableOddRow {
 	
 }
-
-.cellTableOddRowCell {
+.cellTableEvenRowCell,
+.cellTableOddRowCell{
 	border: 2px solid #FFFFFF;
 }
 

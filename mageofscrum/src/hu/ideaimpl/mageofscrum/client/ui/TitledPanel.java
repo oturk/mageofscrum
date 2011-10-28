@@ -7,13 +7,13 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TitledPanel extends Composite implements HasText {
 
 	private Label lblTitle;
-	private SimplePanel contentPanel = new SimplePanel();
+	private ScrollPanel contentPanel = new ScrollPanel();
 	private final Style style;
 
 	public interface Resources extends ClientBundle {

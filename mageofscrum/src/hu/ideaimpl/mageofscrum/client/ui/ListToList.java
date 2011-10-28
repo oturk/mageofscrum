@@ -29,9 +29,9 @@ public class ListToList<T> extends Composite {
 		initWidget(hPanel);
 		hPanel.setSpacing(10);
 
-		toList = new CellList<T>(cell);
+		toList = new CellList<T>(cell,ListResource.instance);
 		toList.setSize("200px", "466px");
-		fromList = new CellList<T>(cell);
+		fromList = new CellList<T>(cell,ListResource.instance);
 		fromList.setSize("196px", "466px");
 		
 		VerticalPanel buttonBar = new VerticalPanel();

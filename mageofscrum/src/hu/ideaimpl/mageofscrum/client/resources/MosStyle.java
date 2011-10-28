@@ -12,4 +12,7 @@ public interface MosStyle extends CssResource {
 	String invalidInputField();
 	String inputFieldTitle();
 	String errorDialog();
+	String menuBarPanel();
+	String menuItem();
+	String menuItemDown();
 }

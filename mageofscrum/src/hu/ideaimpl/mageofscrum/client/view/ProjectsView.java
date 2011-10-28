@@ -1,11 +1,12 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
-import java.util.ArrayList;
-
 import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
+import hu.ideaimpl.mageofscrum.client.resources.TableResource;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
+
+import java.util.ArrayList;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -22,7 +23,7 @@ public class ProjectsView extends Composite implements HasInitState{
 	private Button btnDelete = new Button("delete");
 	private Button btnNewButton = new Button("create");
 	private Button btnDetails = new Button("details");
-	private CellTable<ProjectDO> projectsTable = new CellTable<ProjectDO>(3);
+	private CellTable<ProjectDO> projectsTable = new CellTable<ProjectDO>(3,TableResource.instance);
 	private Label lblError = new Label("");
 
 	public ProjectsView() {

@@ -1,13 +1,14 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
-import java.util.ArrayList;
-
+import hu.ideaimpl.mageofscrum.client.resources.ListResource;
 import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.resources.TableResource;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
 import hu.ideaimpl.mageofscrum.shared.TaskDO;
+
+import java.util.ArrayList;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -28,6 +29,7 @@ public class BacklogView extends Composite implements HasInitState{
 	private CellTable<TaskDO> backlogTable;
 	private Button btnCreate = new Button("create");
 	private Button btnDelete = new Button("delete");
+	private Button btnDetails = new Button("details");
 	private Button btnMoveToSprint = new Button("move to sprint");
 	private Button btnStartSprint = new Button("start sprint");
 	private Button btnStopSprint = new Button("stop sprint");
@@ -45,11 +47,13 @@ public class BacklogView extends Composite implements HasInitState{
 		buttonBar.setSpacing(1);
 		buttonBar.add(btnCreate);
 		buttonBar.add(btnDelete);
+		buttonBar.add(btnDetails);
 		buttonBar.add(btnMoveToSprint);
 		buttonBar.add(btnStartSprint);
 		buttonBar.add(btnStopSprint);
 		buttonBar.add(errorLbl);
 		btnCreate.setStyleName(style.commandBtn());
+		btnDetails.setStyleName(style.commandBtn());
 		btnStartSprint.setStyleName(style.commandBtn());
 		btnStopSprint.setStyleName(style.commandBtn());
 		btnMoveToSprint.setStyleName(style.commandBtn());
@@ -68,7 +72,7 @@ public class BacklogView extends Composite implements HasInitState{
 			public void render(Context context, ProjectDO value, SafeHtmlBuilder sb) {
 				sb.appendEscaped(value.getName());
 			}
-		});
+		},ListResource.instance);
 		projectsList.setSize("260px", "400px");
 
 		TitledPanel projectsPanel = new TitledPanel();
@@ -145,6 +149,10 @@ public class BacklogView extends Composite implements HasInitState{
 
 	public HasClickHandlers getMoveToSprintBtn() {
 		return btnMoveToSprint;
+	}
+	
+	public HasClickHandlers getDetailsBtn(){
+		return btnDetails;
 	}
 
 	public CellTable<TaskDO> getBacklogTable() {

@@ -15,6 +15,7 @@ public class MageOfScrum implements EntryPoint {
 	@Override
 	public void onModuleLoad() {
 		checkAuthentication();
+		ListResource.instance.cellListStyle().ensureInjected();
 	}
 	
 	private void checkAuthentication() {
@@ -44,7 +45,6 @@ public class MageOfScrum implements EntryPoint {
 				} else {
 					RootLayoutPanel.get().add(new SecurityShell());
 				}
-				ListResource.instance.cellListStyle().ensureInjected();
 			}
 
 			@Override

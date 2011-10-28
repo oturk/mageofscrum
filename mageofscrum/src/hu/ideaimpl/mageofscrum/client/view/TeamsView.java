@@ -1,13 +1,14 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
-import java.util.ArrayList;
-
+import hu.ideaimpl.mageofscrum.client.resources.ListResource;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.ListToList;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.client.ui.fields.InputField;
 import hu.ideaimpl.mageofscrum.shared.TeamDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
+
+import java.util.ArrayList;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -44,7 +45,7 @@ public class TeamsView extends Composite implements HasInitState{
 			public void render(Context context, TeamDO value, SafeHtmlBuilder sb) {
 				sb.appendEscaped(value.getName());
 			}
-		});
+		},ListResource.instance);
 		
 		VerticalPanel vPanel = new VerticalPanel();
 		vPanel.setSpacing(1);

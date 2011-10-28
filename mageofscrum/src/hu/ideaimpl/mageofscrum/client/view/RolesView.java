@@ -2,6 +2,7 @@ package hu.ideaimpl.mageofscrum.client.view;
 
 import java.util.ArrayList;
 
+import hu.ideaimpl.mageofscrum.client.resources.ListResource;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.ListToList;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
@@ -42,7 +43,7 @@ public class RolesView extends Composite implements HasInitState{
 			public void render(Context context, UserDO value, SafeHtmlBuilder sb) {
 				sb.appendEscaped(value.getUsername());
 			}
-		});
+		}, ListResource.instance);
 		
 		VerticalPanel leftPanel = new VerticalPanel();
 		leftPanel.add(btnDelete);
@@ -55,7 +56,7 @@ public class RolesView extends Composite implements HasInitState{
 		leftPanel.add(usersPanel);
 		
 		hPanel.add(leftPanel);
-		usersList.setSize("200px", "424px");
+		usersList.setSize("180px", "360px");
 		
 		VerticalPanel rightPanel = new VerticalPanel();
 		listToList = new ListToList<RoleDO>(listCell);

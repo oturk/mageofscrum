@@ -1,5 +1,6 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import hu.ideaimpl.mageofscrum.client.resources.ListResource;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.client.ui.charts.BurndownChart;
 import hu.ideaimpl.mageofscrum.shared.ProjectDO;
@@ -30,7 +31,7 @@ public class DiagnoseView extends Composite implements HasInitState{
 			public void render(Context context, ProjectDO value, SafeHtmlBuilder sb) {
 				sb.appendEscaped(value.getName());
 			}
-		});
+		},ListResource.instance);
 
 		VerticalPanel listPanel = new VerticalPanel();
 		listPanel.setSpacing(5);
@@ -48,7 +49,7 @@ public class DiagnoseView extends Composite implements HasInitState{
 			public void render(Context context, SprintDO value, SafeHtmlBuilder sb) {
 				sb.appendEscaped(value.getInterval());
 			}
-		});
+		},ListResource.instance);
 		TitledPanel sprintPanel = new TitledPanel();
 		listPanel.add(sprintPanel);
 		sprintPanel.setText("sprints");
