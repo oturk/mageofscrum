@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class User implements Serializable {
@@ -31,16 +29,15 @@ public class User implements Serializable {
 	private String username;
 	@Column(nullable = false)
 	private String password;
+	@OneToOne
+	private UserData data;
+	@OneToMany(mappedBy = "user")
+	private List<Project> projects;
 	@ManyToMany
 	@JoinTable(name = "USER_ROLES", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
 	private List<Role> roles;
-	@OneToOne
-	private UserData data;
 	@ManyToMany(mappedBy = "users")
-//	@JoinTable(name = "USER_TEAMS", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = { @JoinColumn(name = "TEAM_ID") })
 	private List<Team> teams;
-	@OneToMany(mappedBy = "user")
-	private List<Project> projects;
 
 	public User() {
 	}

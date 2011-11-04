@@ -27,13 +27,13 @@ public class Task implements Serializable {
 	private int reportTime;
 	private int priority;
 	private Date created;
-	@ManyToOne
-	@JoinTable(name="PROJECT_TASKS",joinColumns = @JoinColumn(name="TASK_ID"), inverseJoinColumns = @JoinColumn(name="PROJECT_ID"))
-	private Project project;
 	@OneToOne
 	private TaskStatus status;
 	@ManyToOne
-	@JoinTable(name="SPRINT_TASKS",joinColumns = @JoinColumn(name="TASK_ID"), inverseJoinColumns = @JoinColumn(name="SPRINT_ID"))
+	@JoinColumn(name = "PROJECT_FK")
+	private Project project;
+	@ManyToOne
+	@JoinColumn(name = "SPRINT_FK")
 	private Sprint sprint;
 
 	public Task() {

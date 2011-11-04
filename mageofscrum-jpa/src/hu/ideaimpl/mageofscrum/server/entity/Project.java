@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -24,17 +23,16 @@ public class Project implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
-	@ManyToOne
-	@JoinTable(name="OWNER_PROJECTS",joinColumns = @JoinColumn(name="PROJECT_ID"), inverseJoinColumns = @JoinColumn(name="OWNER_ID"))
-//	@JoinColumn(name = "USER_FK")
-	private User user;
-	@ManyToOne
-	@JoinTable(name="TEAMS_PROJECTS",joinColumns = @JoinColumn(name="PROJECT_ID"), inverseJoinColumns = @JoinColumn(name="TEAM_ID"))
-	private Team team;
 	@OneToMany(mappedBy = "project")
 	private List<Task> tasks;
 	@OneToMany(mappedBy = "project")
 	private List<Sprint> sprints;
+	@ManyToOne
+	@JoinColumn(name = "USER_FK")
+	private User user;
+	@ManyToOne
+	@JoinColumn(name = "TEAM_FK")
+	private Team team;
 	
 	public static Project convertToProjectObj(ProjectDO data){
 		Project result = new Project();

@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.Check;
@@ -29,7 +28,7 @@ public class History implements Serializable {
 	@Column(nullable = false)
 	private Date modDate;
 	@ManyToOne
-	@JoinTable(name = "SPRINT_HISTORY", joinColumns = @JoinColumn(name = "HISTORY_ID"), inverseJoinColumns = @JoinColumn(name = "SPRINT_ID"))
+	@JoinColumn(name = "SPRINT_FK")
 	private Sprint sprint;
 
 	public History() {

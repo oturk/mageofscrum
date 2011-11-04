@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -26,13 +25,13 @@ public class Sprint implements Serializable {
 	private Long id;
 	private Date startDate;
 	private Date endDate;
-	@ManyToOne
-	@JoinTable(name="PROJECT_SPRINTS",joinColumns = @JoinColumn(name="SPRINT_ID"), inverseJoinColumns = @JoinColumn(name="PROJECT_ID"))
-	private Project project;
 	@OneToMany(mappedBy = "sprint")
 	private List<Task> tasks;
 	@OneToMany(mappedBy = "sprint")
 	private List<History> history;
+	@ManyToOne
+	@JoinColumn(name = "PROJECT_FK")
+	private Project project;
 
 	public Sprint() {
 	}

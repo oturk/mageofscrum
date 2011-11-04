@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -22,11 +21,11 @@ public class Team {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String name;
-	@ManyToMany
-	@JoinTable(name = "USER_TEAMS", joinColumns = { @JoinColumn(name = "TEAM_ID") }, inverseJoinColumns = { @JoinColumn(name = "USER_ID") })
-	private List<User> users;
 	@OneToMany(mappedBy = "team")
 	private List<Project> projects = new ArrayList<Project>();
+	@ManyToMany
+	@JoinColumn(name = "USER_FK")
+	private List<User> users;
 
 	public Team() {
 	}

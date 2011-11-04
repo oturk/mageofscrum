@@ -322,88 +322,96 @@ public class CreateData extends HttpServlet {
 			
 			List<BigInteger> projId = em.createNativeQuery("select id from project where name = 'projet_1'").getResultList();
 			
-			em.createNativeQuery("INSERT INTO sprint (id, startdate, enddate) values(:id, '2011-09-01 14:26:02.380000','2011-09-20 14:26:02.380000')")
+			em.createNativeQuery("INSERT INTO sprint (id, startdate, enddate, project_fk) values(:id, '2011-09-01 14:26:02.380000','2011-09-20 14:26:02.380000', :pFk)")
 			.setParameter("id", 10000L)
+			.setParameter("pFk", projId.get(0))
 			.executeUpdate();
 			
-			em.createNativeQuery("insert into project_sprints (project_id, sprint_id) values(:pId, :sId)")
-			.setParameter("pId", projId.get(0))
-			.setParameter("sId", 10000L)
-			.executeUpdate();
+//			em.createNativeQuery("insert into project_sprints (project_id, sprint_id) values(:pId, :sId)")
+//			.setParameter("pId", projId.get(0))
+//			.setParameter("sId", 10000L)
+//			.executeUpdate();
 			
 			long day = 86400000;
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = dateFormat.parse("2011-09-01");
 			
-			em.createNativeQuery("insert into history (id, moddate, operation, time) values(:sId, :moddate, 'ADD', 8)")
+			em.createNativeQuery("insert into history (id, moddate, operation, time, sprint_fk) values(:sId, :moddate, 'ADD', 8, :sFk)")
 			.setParameter("sId", 10010L)
 			.setParameter("moddate", new Date(date.getTime() + day * 2))
+			.setParameter("sFk", 10000L)
 			.executeUpdate();
 			
-				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
-				.setParameter("sId", 10000L)
-				.setParameter("hId", 10010L)
-				.executeUpdate();
+//				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
+//				.setParameter("sId", 10000L)
+//				.setParameter("hId", 10010L)
+//				.executeUpdate();
 			
-			em.createNativeQuery("insert into history (id, moddate, operation, time) values(:sId, :moddate, 'ADD', 8)")
+			em.createNativeQuery("insert into history (id, moddate, operation, time, sprint_fk) values(:sId, :moddate, 'ADD', 8, :sFk)")
 			.setParameter("sId", 10011L)
 			.setParameter("moddate", new Date(date.getTime() + day * 2))
+			.setParameter("sFk", 10000L)
 			.executeUpdate();
 			
-				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
-				.setParameter("sId", 10000L)
-				.setParameter("hId", 10011L)
-				.executeUpdate();
+//				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
+//				.setParameter("sId", 10000L)
+//				.setParameter("hId", 10011L)
+//				.executeUpdate();
 			
-			em.createNativeQuery("insert into history (id, moddate, operation, time) values(:sId, :moddate, 'ADD', 8)")
+			em.createNativeQuery("insert into history (id, moddate, operation, time, sprint_fk) values(:sId, :moddate, 'ADD', 8, :sFk)")
 			.setParameter("sId", 10012L)
 			.setParameter("moddate", new Date(date.getTime() + day * 2))
+			.setParameter("sFk", 10000L)
 			.executeUpdate();
 			
-				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
-				.setParameter("sId", 10000L)
-				.setParameter("hId", 10012L)
-				.executeUpdate();
+//				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
+//				.setParameter("sId", 10000L)
+//				.setParameter("hId", 10012L)
+//				.executeUpdate();
 			
-			em.createNativeQuery("insert into history (id, moddate, operation, time) values(:sId, :moddate, 'ADD', 8)")
+			em.createNativeQuery("insert into history (id, moddate, operation, time, sprint_fk) values(:sId, :moddate, 'ADD', 8, :sFk)")
 			.setParameter("sId", 10013L)
 			.setParameter("moddate", new Date(date.getTime() + day * 2))
+			.setParameter("sFk", 10000L)
 			.executeUpdate();
 			
-				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
-				.setParameter("sId", 10000L)
-				.setParameter("hId", 10013L)
-				.executeUpdate();
+//				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
+//				.setParameter("sId", 10000L)
+//				.setParameter("hId", 10013L)
+//				.executeUpdate();
 			
-			em.createNativeQuery("insert into history (id, moddate, operation, time) values(:sId, :moddate, 'ADD', 8)")
+			em.createNativeQuery("insert into history (id, moddate, operation, time, sprint_fk) values(:sId, :moddate, 'ADD', 8, :sFk)")
 			.setParameter("sId", 10014L)
 			.setParameter("moddate", new Date(date.getTime() + day * 2))
+			.setParameter("sFk", 10000L)
 			.executeUpdate();
 			
-				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
-				.setParameter("sId", 10000L)
-				.setParameter("hId", 10014L)
-				.executeUpdate();
+//				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
+//				.setParameter("sId", 10000L)
+//				.setParameter("hId", 10014L)
+//				.executeUpdate();
 				
-			em.createNativeQuery("insert into history (id, moddate, operation, time) values(:sId, :moddate, 'REPORT', 2)")
+			em.createNativeQuery("insert into history (id, moddate, operation, time, sprint_fk) values(:sId, :moddate, 'REPORT', 8, :sFk)")
 			.setParameter("sId", 10015L)
-			.setParameter("moddate", new Date(date.getTime() + day * 5))
+			.setParameter("moddate", new Date(date.getTime() + day * 4))
+			.setParameter("sFk", 10000L)
 			.executeUpdate();
 			
-				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
-				.setParameter("sId", 10000L)
-				.setParameter("hId", 10015L)
-				.executeUpdate();
+//				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
+//				.setParameter("sId", 10000L)
+//				.setParameter("hId", 10015L)
+//				.executeUpdate();
 				
-			em.createNativeQuery("insert into history (id, moddate, operation, time) values(:sId, :moddate, 'REPORT', 4)")
+			em.createNativeQuery("insert into history (id, moddate, operation, time, sprint_fk) values(:sId, :moddate, 'REPORT', 8, :sFk)")
 			.setParameter("sId", 10016L)
-			.setParameter("moddate", new Date(date.getTime() + day * 5))
+			.setParameter("moddate", new Date(date.getTime() + day * 6))
+			.setParameter("sFk", 10000L)
 			.executeUpdate();
 			
-				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
-				.setParameter("sId", 10000L)
-				.setParameter("hId", 10016L)
-				.executeUpdate();
+//				em.createNativeQuery("insert into sprint_history (sprint_id, history_id) values(:sId, :hId)")
+//				.setParameter("sId", 10000L)
+//				.setParameter("hId", 10016L)
+//				.executeUpdate();
 			
 			tx.commit();
 		} catch (RuntimeException ex) {

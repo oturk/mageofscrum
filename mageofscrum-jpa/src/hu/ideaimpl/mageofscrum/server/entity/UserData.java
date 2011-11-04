@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class UserData implements Serializable {
@@ -23,8 +22,6 @@ public class UserData implements Serializable {
 	private String city;
 	private String address;
 	private String phone;
-//	@OneToOne(mappedBy = "data")
-//	private User user;
 
 	public UserData() {
 	}
@@ -100,13 +97,5 @@ public class UserData implements Serializable {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-
-//	public User getUser() {
-//		return user;
-//	}
-//
-//	public void setUser(User user) {
-//		this.user = user;
-//	}
 
 }
