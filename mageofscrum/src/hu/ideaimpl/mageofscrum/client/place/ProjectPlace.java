@@ -9,7 +9,7 @@ public class ProjectPlace extends Place {
 	public ProjectPlace() {
 	}
 
-	@Prefix("!n")
+	@Prefix("projects")
 	public static class Tokenizer implements PlaceTokenizer<ProjectPlace>{
 
 		@Override
@@ -19,7 +19,7 @@ public class ProjectPlace extends Place {
 
 		@Override
 		public String getToken(ProjectPlace place) {
-			return "projects";
+			return "";
 		}
 
 

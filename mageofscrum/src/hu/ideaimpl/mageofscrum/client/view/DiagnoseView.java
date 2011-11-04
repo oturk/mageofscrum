@@ -42,7 +42,7 @@ public class DiagnoseView extends Composite implements HasInitState{
 		listPanel.add(projectsPanel);
 		projectsPanel.setText("projects");
 		projectsPanel.addContent(projectsList);
-		projectsPanel.setSize("220px", "230px");
+		projectsPanel.setSize(220, 200);
 		
 		sprintsList = new CellList<SprintDO>(new AbstractCell<SprintDO>() {
 			@Override
@@ -54,7 +54,7 @@ public class DiagnoseView extends Composite implements HasInitState{
 		listPanel.add(sprintPanel);
 		sprintPanel.setText("sprints");
 		sprintPanel.addContent(sprintsList);
-		sprintPanel.setSize("220px", "230px");
+		sprintPanel.setSize(220, 200);
 		
 		hPanel.add(listPanel);
 		sprintsList.setSize("220px", "200px");

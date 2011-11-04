@@ -69,7 +69,7 @@ public class AppActivityMapper implements ActivityMapper {
 	}
 	
 	private boolean hasAdminsRoles(){
-		if(MageOfScrum.role == Roles.ADMIN || MageOfScrum.role == Roles.MASTER || MageOfScrum.role == Roles.OWNER){
+		if(MageOfScrum.hasRole(Roles.ADMIN) || MageOfScrum.hasRole(Roles.MASTER) || MageOfScrum.hasRole(Roles.OWNER)){
 			return true;
 		}
 		return false;

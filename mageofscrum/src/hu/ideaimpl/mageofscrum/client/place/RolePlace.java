@@ -10,7 +10,7 @@ public class RolePlace extends Place {
 		
 	}
 	
-	@Prefix("!uar")
+	@Prefix("users_roles")
 	public static class Tokenizer implements PlaceTokenizer<RolePlace>{
 
 		@Override
@@ -20,7 +20,7 @@ public class RolePlace extends Place {
 
 		@Override
 		public String getToken(RolePlace place) {
-			return "users_roles";
+			return "";
 		}
 		
 	}

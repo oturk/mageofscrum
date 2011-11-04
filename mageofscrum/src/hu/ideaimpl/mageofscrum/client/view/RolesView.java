@@ -1,14 +1,15 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
-import java.util.ArrayList;
-
 import hu.ideaimpl.mageofscrum.client.resources.ListResource;
+import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.ListToList;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.client.ui.forms.NewUserForm;
 import hu.ideaimpl.mageofscrum.shared.RoleDO;
 import hu.ideaimpl.mageofscrum.shared.UserDO;
+
+import java.util.ArrayList;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -35,6 +36,9 @@ public class RolesView extends Composite implements HasInitState{
 	};
 
 	public RolesView() {
+		MosStyle style = Resources.instance.mosStyle();
+		style.ensureInjected();
+		
 		HorizontalPanel hPanel = new HorizontalPanel();
 		initWidget(hPanel);
 		
@@ -52,7 +56,8 @@ public class RolesView extends Composite implements HasInitState{
 		leftPanel.add(usersPanel);
 		usersPanel.setText("users");
 		usersPanel.addContent(usersList);
-		usersPanel.setSize("200px", "400px");
+//		usersPanel.setSize("200px", "400px");
+		usersPanel.setSize(180, 360);
 		leftPanel.add(usersPanel);
 		
 		hPanel.add(leftPanel);
@@ -67,7 +72,7 @@ public class RolesView extends Composite implements HasInitState{
 		listToList.setFromLbl("has role");
 		listToList.setHeight(271);
 		btnDelete.setText("delete user");
-		btnDelete.setStyleName(Resources.instance.mosStyle().commandBtn());
+		btnDelete.setStyleName(style.commandBtn());
 		btnDelete.setHeight("30px");
 	}
 	

@@ -69,21 +69,21 @@ public class SprintView extends Composite implements HasInitState{
 				sb.appendHtmlConstant(value.getName());
 			}
 		},ListResource.instance);
-		projectsList.setSize("260px", "175px");
+		projectsList.setSize("180px", "360px");
 
 		TitledPanel projectsPanel = new TitledPanel();
 		horizontalPanel.add(projectsPanel);
 		projectsPanel.setText("projects");
 		projectsPanel.addContent(projectsList);
-		projectsPanel.setSize("260px", "400px");
+		projectsPanel.setSize(180, 360);
 
 		sprintTable = new CellTable<TaskDO>(20, TableResource.instance);
 		TitledPanel sprintPanel = new TitledPanel();
 		horizontalPanel.add(sprintPanel);
 		sprintPanel.setText("tasks");
 		sprintPanel.addContent(sprintTable);
-		sprintPanel.setSize("540px", "400px");
-		sprintTable.setWidth("537px");
+		sprintPanel.setSize(540, 400);
+		sprintTable.setWidth("540px");
 
 		TextColumn<TaskDO> nameColumn = new TextColumn<TaskDO>() {
 			@Override

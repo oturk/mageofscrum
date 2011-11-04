@@ -23,7 +23,7 @@ public class ProjectsView extends Composite implements HasInitState{
 	private Button btnDelete = new Button("delete");
 	private Button btnNewButton = new Button("create");
 	private Button btnDetails = new Button("details");
-	private CellTable<ProjectDO> projectsTable = new CellTable<ProjectDO>(3,TableResource.instance);
+	private CellTable<ProjectDO> projectsTable = new CellTable<ProjectDO>(100,TableResource.instance);
 	private Label lblError = new Label("");
 
 	public ProjectsView() {
@@ -41,20 +41,25 @@ public class ProjectsView extends Composite implements HasInitState{
 		buttonBar.add(btnDelete);
 
 		btnNewButton.setText("create");
-		btnNewButton.setStyleName(Resources.instance.mosStyle().commandBtn());
-		btnDetails.setStyleName(Resources.instance.mosStyle().commandBtn());
+		btnNewButton.setStyleName(style.commandBtn());
+		btnDetails.setStyleName(style.commandBtn());
 		buttonBar.add(btnDetails);
 		buttonBar.add(lblError);
 		btnDelete.setStyleName(style.commandBtn());
 		lblError.setStyleName(style.errorLbl());
 		lblError.setSize("548px", "24px");
 
-		projectsTable.setWidth("560px");
+		projectsTable.setWidth("540px");
 		TitledPanel projectsPanel = new TitledPanel();
 		verticalPanel.add(projectsPanel);
 		projectsPanel.setText("projects");
 		projectsPanel.addContent(projectsTable);
-		projectsPanel.setSize("560px", "450px");
+		projectsPanel.setSize(540, 400);
+		
+//		ScrollPanel scroll = new ScrollPanel();
+//		scroll.setSize("560px", "400px");
+//		scroll.add(projectsTable);
+//		verticalPanel.add(scroll);
 
 		TextColumn<ProjectDO> nameColumn = new TextColumn<ProjectDO>() {
 			@Override

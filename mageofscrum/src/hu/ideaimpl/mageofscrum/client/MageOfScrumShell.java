@@ -5,12 +5,13 @@ import hu.ideaimpl.mageofscrum.client.ui.Header;
 
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.SplitLayoutPanel;
 
 public class MageOfScrumShell extends Composite{
 
-	private SimplePanel contentPanel = new SimplePanel();
+	private ScrollPanel contentPanel = new ScrollPanel();
 	
 	public MageOfScrumShell() {
 		

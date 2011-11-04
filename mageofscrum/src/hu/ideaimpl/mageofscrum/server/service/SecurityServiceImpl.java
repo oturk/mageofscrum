@@ -3,6 +3,8 @@ package hu.ideaimpl.mageofscrum.server.service;
 import hu.ideaimpl.mageofscrum.client.service.SecurityService;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
+import java.util.ArrayList;
+
 import javax.servlet.annotation.WebServlet;
 
 import org.apache.shiro.SecurityUtils;
@@ -59,20 +61,24 @@ public class SecurityServiceImpl extends RemoteServiceServlet implements Securit
 	}
 
 	@Override
-	public Roles getRole() {
+	public ArrayList<Roles> getRoles() {
+		ArrayList<Roles> result = new ArrayList<Roles>();
 		Subject currentUser = SecurityUtils.getSubject();
-
+		
 		if (currentUser.hasRole(Roles.ADMIN.name())) {
-			return Roles.ADMIN;
-		} else if (currentUser.hasRole(Roles.OWNER.name())) {
-			return Roles.OWNER;
-		} else if (currentUser.hasRole(Roles.MASTER.name())) {
-			return Roles.MASTER;
-		} else if (currentUser.hasRole(Roles.USER.name())) {
-			return Roles.USER;
+			result.add(Roles.ADMIN);
+		}
+		if (currentUser.hasRole(Roles.OWNER.name())) {
+			result.add(Roles.OWNER);
+		}
+		if (currentUser.hasRole(Roles.MASTER.name())) {
+			result.add(Roles.MASTER);
+		}
+		if (currentUser.hasRole(Roles.USER.name())) {
+			result.add(Roles.USER);
 		}
 
-		return Roles.UNKNOWN;
+		return result;
 	}
 
 }

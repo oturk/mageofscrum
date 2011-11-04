@@ -76,15 +76,22 @@
 }
 .cellTableEvenRowCell,
 .cellTableOddRowCell{
-	border: 2px solid #FFFFFF;
+	border-top: 2px solid #FFFFFF;
+	border-left:2px solid #FFFFFF;
+	border-right:2px solid #FFFFFF; 
+	border-bottom: 1px solid #E5E5E5;
 }
 
 .cellTableHoveredRow {
 	background: #FFFFCC;
+	border-bottom: 1px solid #E5E5E5;
 }
 .cellTableHoveredRowCell{
 	background: #FFFFCC;
-	border: 2px solid #FFFFCC;
+	border-top: 2px solid #FFFFCC;
+	border-left:2px solid #FFFFCC;
+	border-right:2px solid #FFFFCC;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 .cellTableKeyboardSelectedRow {
@@ -97,6 +104,7 @@
 	background: #ffffcc;
 	color: #222222;
 	height: 30px;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 .cellTableSelectedRowCell {

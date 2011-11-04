@@ -127,11 +127,11 @@ public class MageOfScrumApp {
 		});
 	}
 	
-	private boolean hasAdminsRoles(){
-		if(MageOfScrum.role == Roles.ADMIN || MageOfScrum.role == Roles.MASTER || MageOfScrum.role == Roles.OWNER){
-			return true;
-		}
-		return false;
-	}
+//	private boolean hasAdminsRoles(){
+//		if(MageOfScrum.hasRole(Roles.ADMIN) || MageOfScrum.hasRole(Roles.MASTER) || MageOfScrum.hasRole(Roles.OWNER)){
+//			return true;
+//		}
+//		return false;
+//	}
 
 }

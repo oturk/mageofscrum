@@ -9,7 +9,7 @@ public class BacklogPlace extends Place {
 	public BacklogPlace() {
 	}
 	
-	@Prefix("!blp")
+	@Prefix("backlog")
 	public static class Tokenizer implements PlaceTokenizer<BacklogPlace>{
 
 		@Override
@@ -19,7 +19,7 @@ public class BacklogPlace extends Place {
 
 		@Override
 		public String getToken(BacklogPlace place) {
-			return "backlog";
+			return "";
 		}
 		
 	}

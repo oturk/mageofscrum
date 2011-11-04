@@ -9,7 +9,7 @@ public class DiagnosePlace extends Place {
 	public DiagnosePlace() {
 	}
 
-	@Prefix("!diag")
+	@Prefix("diagnose")
 	public static class Tokenizer implements PlaceTokenizer<DiagnosePlace>{
 
 		@Override
@@ -19,7 +19,7 @@ public class DiagnosePlace extends Place {
 
 		@Override
 		public String getToken(DiagnosePlace place) {
-			return "diagnose";
+			return "";
 		}
 		
 	}

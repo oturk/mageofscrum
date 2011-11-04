@@ -1,6 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
 import hu.ideaimpl.mageofscrum.client.resources.ListResource;
+import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.ListToList;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
@@ -37,6 +38,9 @@ public class TeamsView extends Composite implements HasInitState{
 	};
 
 	public TeamsView() {
+		MosStyle style = Resources.instance.mosStyle();
+		style.ensureInjected();
+		
 		HorizontalPanel hPanel = new HorizontalPanel();
 		initWidget(hPanel);
 		
@@ -62,12 +66,12 @@ public class TeamsView extends Composite implements HasInitState{
 		vPanel.add(teamsPanel);
 		teamsPanel.setText("teams");
 		teamsPanel.addContent(teamList);
-		teamsPanel.setSize("200px", "400px");
+		teamsPanel.setSize(200, 400);
 		vPanel.add(teamsPanel);
 		
 		hPanel.add(vPanel);
 		
-		teamList.setSize("200px", "396px");
+		teamList.setSize("200px", "400px");
 		
 		listToList = new ListToList<UserDO>(listCell);
 		hPanel.add(listToList);
@@ -78,10 +82,10 @@ public class TeamsView extends Composite implements HasInitState{
 		lblNewLabel.setStyleName("simpleLbl");
 		lblNewLabel.setSize("199px", "30px");
 		
-		btnCreate.setStyleName(Resources.instance.mosStyle().commandBtn());
+		btnCreate.setStyleName(style.commandBtn());
 		btnCreate.setWidth("90px");
 		
-		btnDelete.setStyleName(Resources.instance.mosStyle().commandBtn());
+		btnDelete.setStyleName(style.commandBtn());
 		btnDelete.setWidth("90px");
 		
 		teamName.setText("team:");

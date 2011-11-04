@@ -30,9 +30,9 @@ public class ListToList<T> extends Composite {
 		hPanel.setSpacing(10);
 
 		toList = new CellList<T>(cell,ListResource.instance);
-		toList.setSize("200px", "466px");
+		toList.setSize("180px", "360px");
 		fromList = new CellList<T>(cell,ListResource.instance);
-		fromList.setSize("196px", "466px");
+		fromList.setSize("180px", "360px");
 		
 		VerticalPanel buttonBar = new VerticalPanel();
 		buttonBar.setSpacing(1);
@@ -45,12 +45,12 @@ public class ListToList<T> extends Composite {
 		hPanel.add(buttonBar);
 		fromPanel.setText("user's roles");
 		fromPanel.addContent(fromList);
-		fromPanel.setSize("200px", "400px");
+		fromPanel.setSize(180, 360);
 		
 		hPanel.add(toPanel);
 		toPanel.setText("user's roles");
 		toPanel.addContent(toList);
-		toPanel.setSize("200px", "400px");
+		toPanel.setSize(180, 360);
 		
 		addBtn.setSize("100px", "30px");
 		removeBtn.setSize("100px", "30px");

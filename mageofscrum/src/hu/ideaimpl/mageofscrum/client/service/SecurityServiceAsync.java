@@ -2,6 +2,8 @@ package hu.ideaimpl.mageofscrum.client.service;
 
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface SecurityServiceAsync {
@@ -19,5 +21,5 @@ public interface SecurityServiceAsync {
 
 	void forgotPassword(String email, AsyncCallback<Boolean> callback);
 
-	void getRole(AsyncCallback<Roles> callback);
+	void getRoles(AsyncCallback<ArrayList<Roles>> callback);
 }

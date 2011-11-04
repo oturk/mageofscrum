@@ -1,5 +1,6 @@
 package hu.ideaimpl.mageofscrum.client.view;
 
+import hu.ideaimpl.mageofscrum.client.resources.MosStyle;
 import hu.ideaimpl.mageofscrum.client.resources.Resources;
 import hu.ideaimpl.mageofscrum.client.ui.TitledPanel;
 import hu.ideaimpl.mageofscrum.client.ui.fields.InputField;
@@ -25,12 +26,15 @@ public class ProfileView extends Composite {
 	private Label lblPasswordError = new Label("");
 
 	public ProfileView() {
+		MosStyle style = Resources.instance.mosStyle();
+		style.ensureInjected();
+		
 		VerticalPanel vPanel = new VerticalPanel();
 		initWidget(vPanel);
 		
 		VerticalPanel userPanel = new VerticalPanel();
 		userPanel.setSpacing(1);
-		lblSaveError.setStyleName(Resources.instance.mosStyle().errorLbl());
+		lblSaveError.setStyleName(style.errorLbl());
 		userPanel.add(lblSaveError);
 		lblSaveError.setSize("263px", "30px");
 		
@@ -47,7 +51,7 @@ public class ProfileView extends Composite {
 		userPanel.add(email);
 		userPanel.add(surname);
 		userPanel.add(forename);
-		btnSave.setStyleName(Resources.instance.mosStyle().commandBtn());
+		btnSave.setStyleName(style.commandBtn());
 		userPanel.add(btnSave);
 		
 		TitledPanel userTitledPanel = new TitledPanel();
@@ -59,14 +63,14 @@ public class ProfileView extends Composite {
 		VerticalPanel passwordPanel = new VerticalPanel();
 		passwordPanel.setSpacing(1);
 		
-		lblPasswordError.setStyleName(Resources.instance.mosStyle().errorLbl());
+		lblPasswordError.setStyleName(style.errorLbl());
 		passwordPanel.add(lblPasswordError);
 		lblPasswordError.setSize("265px", "30px");
 		
 		passwordPanel.add(password);
 		
 		passwordPanel.add(confirmPass);
-		btnChangePassword.setStyleName(Resources.instance.mosStyle().commandBtn());
+		btnChangePassword.setStyleName(style.commandBtn());
 		passwordPanel.add(btnChangePassword);
 		
 		TitledPanel passTitledPanel = new TitledPanel();

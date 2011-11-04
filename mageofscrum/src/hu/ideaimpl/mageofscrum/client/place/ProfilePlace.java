@@ -9,7 +9,7 @@ public class ProfilePlace extends Place {
 	public ProfilePlace() {
 	}
 	
-	@Prefix("place")
+	@Prefix("profile")
 	public static class Tokenizer implements PlaceTokenizer<ProfilePlace>{
 
 		@Override
@@ -19,7 +19,7 @@ public class ProfilePlace extends Place {
 
 		@Override
 		public String getToken(ProfilePlace place) {
-			return "userprofile";
+			return "";
 		}
 		
 	}

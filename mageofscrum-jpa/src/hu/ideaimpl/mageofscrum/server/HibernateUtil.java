@@ -1,14 +1,8 @@
 package hu.ideaimpl.mageofscrum.server;
 
-import hu.ideaimpl.mageofscrum.server.dao.ProjectDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.RoleDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dao.SprintDAO;
-import hu.ideaimpl.mageofscrum.server.dao.SprintDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dao.TaskDAO;
-import hu.ideaimpl.mageofscrum.server.dao.TaskDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAO;
 import hu.ideaimpl.mageofscrum.server.dao.TaskStatusDAOImpl;
-import hu.ideaimpl.mageofscrum.server.dao.TeamDAOImpl;
 import hu.ideaimpl.mageofscrum.server.dao.UserDAOImpl;
 import hu.ideaimpl.mageofscrum.server.entity.History;
 import hu.ideaimpl.mageofscrum.server.entity.Project;
@@ -19,12 +13,8 @@ import hu.ideaimpl.mageofscrum.server.entity.TaskStatus;
 import hu.ideaimpl.mageofscrum.server.entity.Team;
 import hu.ideaimpl.mageofscrum.server.entity.User;
 import hu.ideaimpl.mageofscrum.server.entity.UserData;
-import hu.ideaimpl.mageofscrum.shared.Operations;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 import hu.ideaimpl.mageofscrum.shared.TaskStatuses;
-import hu.ideaimpl.mageofscrum.shared.UserDataDO;
-
-import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -49,13 +39,9 @@ public class HibernateUtil {
 	}
 
 	static {
-//		TeamDAOImpl teamDAO = new TeamDAOImpl();
 		UserDAOImpl userDAO = new UserDAOImpl();
-//		ProjectDAOImpl projectDAO = new ProjectDAOImpl();
 		RoleDAOImpl roleDAO = new RoleDAOImpl();
 		TaskStatusDAO statusDAO = new TaskStatusDAOImpl();
-//		TaskDAO taskDAO = new TaskDAOImpl();
-//		SprintDAO sprintDAO = new SprintDAOImpl();
 //		
 		roleDAO.saveRole(Roles.ADMIN.name(), "Admin role");
 		roleDAO.saveRole(Roles.OWNER.name(), "Owner role");
@@ -67,53 +53,13 @@ public class HibernateUtil {
 		statusDAO.saveStatus(TaskStatuses.STARTED.name());
 		statusDAO.saveStatus(TaskStatuses.COMPLETED.name());
 		statusDAO.saveStatus(TaskStatuses.MOVEDBACK.name());
-//		
-//		teamDAO.saveTeam("A team");
-//		teamDAO.saveTeam("B team");
-//		teamDAO.saveTeam("C team");
-//		
-//		
+		
+		Role admin = roleDAO.findRole(Roles.ADMIN.name());
+		
 		userDAO.saveUser("admin", "admin");
-//		userDAO.saveUser("sys", "sys");
-//		Team bTeam = teamDAO.findTeam("B team");
-//		teamDAO.addUser(bTeam.getId(), "sys");
-//		userDAO.saveUser("dzinnn", "dzinnn");
-//		
-//		projectDAO.saveProject("First projet", "Some important project");
-//		
-//		Task task1 = taskDAO.findTask("first task");
-//		Task task2 = taskDAO.findTask("second task");
-//		Task task3 = taskDAO.findTask("third task");
-//		Project proj = projectDAO.findProject("First projet");
-//		
-//		taskDAO.saveTask(proj.getId(), "first task", "This is my first task", 8, 1);
-//		taskDAO.saveTask(proj.getId(), "second task", "This is my second task", 8, 1);
-//		taskDAO.saveTask(proj.getId(), "third task", "This is my third task", 8, 1);
-////		
-////		projectDAO.addTask(proj.getId(), task1.getId());
-////		projectDAO.addTask(proj.getId(), task2.getId());
-////		projectDAO.addTask(proj.getId(), task3.getId());
-//		
-//		User user = userDAO.findUser("oturk");
-//		UserDataDO data = new UserDataDO();
-//		data.setEmail("oturk@email.hu");
-//		data.setSurname("Ottó");
-//		data.setForename("Türk");
-//		userDAO.updateUserData(1L, data);
-//		Role role = roleDAO.findRole(Roles.ADMIN.name());
-//		Role owner = roleDAO.findRole(Roles.OWNER.name());
-//		Team team = teamDAO.findTeam("A team");
-//		
-//		Project project = projectDAO.findProject("First projet");
-//		Task task = taskDAO.findTask("first task");
-//		sprintDAO.startSprint(project.getId());
-//		sprintDAO.addTask(project.getId(), task.getId());
-//		
-//		userDAO.addRole(user.getId(), role.getId());
-//		userDAO.addRole(user.getId(), owner.getId());
-//		projectDAO.addOwner("oturk", project.getId());
-//		projectDAO.addTeam(team.getId(), project.getId());
-//		teamDAO.addUser(team.getId(), "oturk");
+		Long userId = userDAO.findUser("admin").getId();
+		userDAO.addRole(userId, admin.getId());
+		
 //		
 //		long day = 86400000;
 //		
@@ -207,8 +153,6 @@ public class HibernateUtil {
 //		sprintDAO.logHistory(project.getId(), Operations.REPORT, 2, new Date(System.currentTimeMillis() + day * 14));
 //		sprintDAO.logHistory(project.getId(), Operations.REPORT, 4, new Date(System.currentTimeMillis() + day * 14));
 //		sprintDAO.logHistory(project.getId(), Operations.REPORT, 8, new Date(System.currentTimeMillis() + day * 14));
-//		
-//	
 	}
 
 	public static EntityManager getEntityManager() {

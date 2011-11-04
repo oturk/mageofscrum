@@ -109,15 +109,18 @@ public class MenuBar extends Composite {
 	}
 
 	public void updateMenuBar() {
-		Roles result = MageOfScrum.role;
-		if (result == Roles.ADMIN || result == Roles.OWNER || result == Roles.MASTER) {
+		roles.setVisible(false);
+		projects.setVisible(false);
+		teams.setVisible(false);
+		
+		if(MageOfScrum.hasRole(Roles.ADMIN)){
 			roles.setVisible(true);
-			teams.setVisible(true);
+		}
+		if(MageOfScrum.hasRole(Roles.OWNER)){
 			projects.setVisible(true);
-		} else {
-			projects.setVisible(false);
-			roles.setVisible(false);
-			teams.setVisible(false);
+		}
+		if(MageOfScrum.hasRole(Roles.MASTER)){
+			teams.setVisible(true);
 		}
 	}
 

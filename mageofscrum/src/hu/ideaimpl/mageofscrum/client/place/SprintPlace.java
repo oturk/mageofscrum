@@ -10,7 +10,7 @@ public class SprintPlace extends Place {
 		
 	}
 	
-	@Prefix("!sp")
+	@Prefix("sprint")
 	public static class Tokenizer implements PlaceTokenizer<SprintPlace>{
 
 		@Override
@@ -20,7 +20,7 @@ public class SprintPlace extends Place {
 
 		@Override
 		public String getToken(SprintPlace place) {
-			return "sprint";
+			return "";
 		}
 		
 	}

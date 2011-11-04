@@ -6,6 +6,8 @@ import hu.ideaimpl.mageofscrum.client.ui.dialog.ErrorDialog;
 import hu.ideaimpl.mageofscrum.client.ui.forms.LoginForm;
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
+import java.util.ArrayList;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -70,17 +72,18 @@ public class SecurityShell extends Composite {
 	}
 	
 	protected void updateRoles() {
-		SecurityService.Util.getService().getRole(new AsyncCallback<Roles>() {
+		SecurityService.Util.getService().getRoles(new AsyncCallback<ArrayList<Roles>>() {
 
 			@Override
-			public void onSuccess(Roles result) {
-				MageOfScrum.role = result;
+			public void onSuccess(ArrayList<Roles> result) {
+				MageOfScrum.roles = result;
 				ClientFactory.Util.getClientFactory().getMageOfScrumApp().run(RootLayoutPanel.get());
 			}
 
 			@Override
 			public void onFailure(Throwable caught) {
-				MageOfScrum.role = Roles.USER;
+				MageOfScrum.roles = new ArrayList<Roles>();
+				MageOfScrum.roles.add(Roles.USER);
 				ClientFactory.Util.getClientFactory().getMageOfScrumApp().run(RootLayoutPanel.get());
 			}
 		});

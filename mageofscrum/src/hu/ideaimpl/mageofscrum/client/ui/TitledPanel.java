@@ -3,11 +3,11 @@ package hu.ideaimpl.mageofscrum.client.ui;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class TitledPanel extends Composite implements HasText {
@@ -15,6 +15,7 @@ public class TitledPanel extends Composite implements HasText {
 	private Label lblTitle;
 	private ScrollPanel contentPanel = new ScrollPanel();
 	private final Style style;
+	private VerticalPanel vPanel = new VerticalPanel();
 
 	public interface Resources extends ClientBundle {
 		@Source("TitledPanel.css")
@@ -33,16 +34,19 @@ public class TitledPanel extends Composite implements HasText {
 		Resources res = GWT.create(Resources.class);
 		style = res.titledPanelStyle();
 		style.ensureInjected();
-		AbsolutePanel absolutePanel = new AbsolutePanel();
-		absolutePanel.setStyleName(style.titledPanel());
-		initWidget(absolutePanel);
+		vPanel.setSpacing(1);
+		vPanel.setStyleName(style.titledPanel());
+//		AbsolutePanel absolutePanel = new AbsolutePanel();
+//		absolutePanel.setStyleName(style.titledPanel());
+//		initWidget(absolutePanel);
+		initWidget(vPanel);
 
 		lblTitle = new Label("");
 		lblTitle.setStyleName(style.titledPanelTitle());
-		absolutePanel.add(lblTitle);
+		vPanel.add(lblTitle);
 		lblTitle.setSize("", "25px");
 
-		absolutePanel.add(contentPanel);
+		vPanel.add(contentPanel);
 	}
 
 	public void addContent(Widget widget) {
@@ -58,11 +62,18 @@ public class TitledPanel extends Composite implements HasText {
 	public void setText(String text) {
 		lblTitle.setText(text);
 	}
+	
+	public void setSize(int width, int height){
+		vPanel.setSize((width+30)+"px", height+"px");
+		lblTitle.setSize((width)+"px", "25px");
+		contentPanel.setSize((width+30)+"px", height+"px");
+	}
 
-	@Override
 	public void setSize(String width, String height) {
+		vPanel.setSize(width, height);
+		contentPanel.setSize(width, height);
 //		contentPanel.setSize(width, height);
-		super.setSize(width, height);
+//		super.setSize(width, height);
 	}
 
 }

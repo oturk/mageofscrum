@@ -1,5 +1,7 @@
 package hu.ideaimpl.mageofscrum.client.service;
 
+import java.util.ArrayList;
+
 import hu.ideaimpl.mageofscrum.shared.Roles;
 
 import com.google.gwt.core.client.GWT;
@@ -31,5 +33,5 @@ public interface SecurityService extends RemoteService {
 
 	public boolean forgotPassword(String email);
 	
-	public Roles getRole();
+	public ArrayList<Roles> getRoles();
 }
