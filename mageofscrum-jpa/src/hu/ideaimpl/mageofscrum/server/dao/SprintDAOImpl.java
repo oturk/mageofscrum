@@ -220,6 +220,7 @@ public class SprintDAOImpl implements SprintDAO {
 			} else if (Operations.REPORT.name().equals(history.getOperation())) {
 				value -= history.getTime();
 			}
+			System.out.println("key: "+ key +" value: "+ value);
 			result.put(key, value);
 		}
 
